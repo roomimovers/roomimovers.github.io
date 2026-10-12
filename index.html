@@ -217,6 +217,44 @@ footer a{color:#E9E2D6}
 .photo-cap{position:absolute;left:clamp(16px,4vw,48px);bottom:clamp(16px,3vw,32px);display:grid;gap:2px;background:rgba(10,18,51,.82);color:#FFFFFF;padding:12px 18px;border-radius:12px;border-left:4px solid #FF6B4A}
 .photo-cap b{font-family:var(--display);font-size:18px}
 .photo-cap span{font-size:14px;color:#CBD3E3}
+
+/* scroll journey: one orange line draws the truck, the route, the home and the room */
+.journey{--ink:#0B1C3D;--muted:#4A5672;--coral:#F7652F;--coral-ink:#B8441A;--line:#E4D6C2;--band:#F7EEE2;
+  position:relative;background:#FBF7F0;color:var(--ink);border-bottom:1px solid var(--line)}
+.journey.is-live{height:520vh;height:520svh}
+.journey-pin{display:flex;flex-direction:column;gap:6px;padding-block:28px 20px;background:#FBF7F0}
+.journey.is-live .journey-pin{position:sticky;top:var(--bar-h,60px);height:calc(100vh - var(--bar-h,60px));height:calc(100svh - var(--bar-h,60px));overflow:hidden;padding-block:20px 14px}
+.journey-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 36px;width:100%}
+.j-copy{max-width:660px;display:grid;gap:8px}
+.j-stack{display:grid}
+.j-stack>*{grid-area:1/1;opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.j-stack>.is-on{opacity:1;transform:none}
+.j-title{font-size:clamp(30px,4.4vw,52px);font-weight:900;letter-spacing:-.025em;color:var(--ink)}
+.j-sub{color:var(--muted);font-size:clamp(15px,1.5vw,18px);margin:0}
+.j-cta{display:flex;flex-wrap:wrap;gap:10px}
+.j-stage{position:relative;width:100%;height:clamp(300px,54vh,560px)}
+.journey.is-live .j-stage{height:auto;flex:1 1 0;min-height:0}
+.j-stage svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.j-progress{position:relative;height:2px;background:var(--line);border-radius:2px;margin-top:2px;display:none}
+.journey.is-live .j-progress{display:block}
+.j-progress i{position:absolute;inset:0;background:var(--coral);transform-origin:left;transform:scaleX(0)}
+.j-hint{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:opacity .4s;display:none}
+.journey.is-live .j-hint{display:block}
+.j-skip{position:absolute;left:12px;top:-60px;z-index:5;background:#061A3C;color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none}
+.j-skip:focus{top:8px}
+.journey svg .j-ink{fill:none;stroke:#12306B;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+.journey svg .j-house{fill:none;stroke:#061A3C;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.journey svg .j-or{fill:none;stroke:#F7652F;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.journey svg .j-wheel{fill:#FBF7F0}
+.journey svg .j-route{fill:none;stroke:#12306B;stroke-opacity:.2;stroke-width:1.2;stroke-dasharray:1 8;stroke-linecap:round}
+.journey.is-js svg .j-draw{stroke-dasharray:1;stroke-dashoffset:0}
+.journey:not(.is-live) .final{display:none}
+@media (max-width:860px){
+  .journey.is-live .journey-pin{padding-bottom:78px}
+  .j-call{display:none}
+  .j-cta .btn{padding-inline:20px}
+}
+@media (prefers-reduced-motion:reduce){.j-stack>*{transition:none}}
 </style>
 
 <div class="util">
@@ -299,6 +337,133 @@ footer a{color:#E9E2D6}
         <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="14" height="10"/><path d="M15 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>Truck &amp; Equipment Included</li>
         <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Free, Upfront Quotes</li>
       </ul>
+    </div>
+  </section>
+
+  <section class="journey" id="journey" aria-labelledby="j-title">
+    <a class="j-skip" href="#services">Skip animation</a>
+    <div class="journey-pin">
+      <div class="wrap journey-top">
+        <div class="j-copy">
+          <p class="eyebrow">Roomi Movers · Tampa Bay</p>
+          <h2 class="j-title j-stack" id="j-title">
+            <span data-stage="0">We bring the truck.</span>
+            <span data-stage="1">Across Tampa, door to door.</span>
+            <span data-stage="2">Right to your door.</span>
+            <span class="is-on" data-stage="3">We make room.</span>
+          </h2>
+          <div class="j-sub j-stack">
+            <p data-stage="0">On full-service moves, the truck and equipment are included.</p>
+            <p data-stage="1">Serving Tampa, Wesley Chapel, Lutz and Carrollwood.</p>
+            <p data-stage="2">A two-hour arrival window, every time.</p>
+            <p class="is-on" data-stage="3">Every box carried in, every piece set in place.</p>
+          </div>
+        </div>
+        <div class="j-cta">
+          <a class="btn btn-primary" href="#quote">Get a Free Estimate</a>
+          <a class="btn btn-ghost j-call ph" href="tel:+18134363216">Call (813) 436-3216</a>
+        </div>
+      </div>
+
+      <div class="j-stage">
+        <svg id="jSvg" viewBox="0 60 900 470" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustration: a Roomi Movers truck drives across Tampa to a home, then boxes are carried through the doorway into a cozy room." focusable="false">
+          <defs>
+            <clipPath id="jOpen"><path d="M-85 0V-165A85 85 0 0 1 85-165V0Z"/></clipPath>
+            <radialGradient id="jGlow"><stop offset="0" stop-color="#F7652F" stop-opacity=".34"/><stop offset="1" stop-color="#F7652F" stop-opacity="0"/></radialGradient>
+          </defs>
+
+          <!-- faint route guide -->
+          <path class="j-route" id="jRoute" d="M120 452C260 452 320 426 450 426S640 466 780 460S1000 446 1140 446"/>
+
+          <!-- Tampa details -->
+          <g id="jDecor">
+            <g class="j-detail" data-abs="1" data-s=".22" data-e=".32">
+              <path class="j-ink j-draw" d="M670 140a30 30 0 1 0 60 0a30 30 0 1 0-60 0"/>
+              <path class="j-ink j-draw" d="M738 140H748M727 167L734 174M700 178V188M673 167L666 174M662 140H652M673 113L666 106M700 102V92M727 113L734 106"/>
+            </g>
+            <g class="j-detail" data-x="240" data-s=".15" data-e=".25" transform="translate(240 449)">
+              <path class="j-ink j-draw" d="M0 0C8-38-2-78 12-118"/>
+              <path class="j-ink j-draw" d="M12-118C-6-138-34-134-52-114"/>
+              <path class="j-ink j-draw" d="M12-118C2-146-20-158-44-154"/>
+              <path class="j-ink j-draw" d="M12-118C16-148 34-160 58-152"/>
+              <path class="j-ink j-draw" d="M12-118C32-134 56-126 68-104"/>
+              <path class="j-ink j-draw" d="M12-118C10-140 14-160 6-174"/>
+            </g>
+            <g class="j-detail" data-x="490" data-s=".26" data-e=".42" transform="translate(490 429)">
+              <g transform="scale(.82)">
+              <path class="j-ink j-draw" d="M-5 0L-2-252L2-252L5 0"/>
+              <path class="j-ink j-draw" d="M-190-6L-50-44L50-44L190-6"/>
+              <path class="j-ink j-draw" d="M0-246L179-9M0-232L153-16M0-218L128-23M0-204L102-30M0-190L77-37M0-176L34-44M0-162L18-44"/>
+              <path class="j-ink j-draw" d="M0-246L-179-9M0-232L-153-16M0-218L-128-23M0-204L-102-30M0-190L-77-37M0-176L-34-44M0-162L-18-44"/>
+              <path class="j-ink j-draw" d="M-120 24q12-8 24 0t24 0t24 0t24 0t24 0t24 0t24 0t24 0t24 0t24 0"/>
+              <path class="j-ink j-draw" d="M-84 38q12-8 24 0t24 0t24 0t24 0t24 0t24 0t24 0"/>
+              </g>
+            </g>
+            <g class="j-detail" data-x="780" data-s=".40" data-e=".53" transform="translate(780 460)">
+              <path class="j-ink j-draw" d="M-100 0V-44H100V0"/>
+              <path class="j-ink j-draw" d="M-82-10V-22A7 7 0 0 1-68-22V-10M-52-10V-22A7 7 0 0 1-38-22V-10M-22-10V-22A7 7 0 0 1-8-22V-10M8-10V-22A7 7 0 0 1 22-22V-10M38-10V-22A7 7 0 0 1 52-22V-10M68-10V-22A7 7 0 0 1 82-22V-10"/>
+              <path class="j-ink j-draw" d="M-84-44V-104M-76-44V-104M-86-104C-89-112-83-119-80-130C-77-119-71-112-74-104ZM-80-130V-138"/>
+              <path class="j-ink j-draw" d="M-44-44V-120M-36-44V-120M-46-120C-49-128-43-135-40-146C-37-135-31-128-34-120ZM-40-146V-154"/>
+              <path class="j-ink j-draw" d="M-4-44V-144M4-44V-144M-6-144C-9-152-3-159 0-170C3-159 9-152 6-144ZM0-170V-180"/>
+              <path class="j-ink j-draw" d="M36-44V-120M44-44V-120M34-120C31-128 37-135 40-146C43-135 49-128 46-120ZM40-146V-154"/>
+              <path class="j-ink j-draw" d="M76-44V-104M84-44V-104M74-104C71-112 77-119 80-130C83-119 89-112 86-104ZM80-130V-138"/>
+            </g>
+          </g>
+
+          <!-- orange route line (the road) -->
+          <path id="jTrail" class="j-or j-draw" d="M120 452C260 452 320 426 450 426S640 466 780 460S1000 446 1140 446"/>
+
+          <!-- the home -->
+          <g id="jHouse" class="j-detail" data-x="1140" data-s=".50" data-e=".62" transform="translate(1140 446)">
+            <path class="j-house j-draw" d="M-112 0V-98L0-196L112-98V0"/>
+            <path class="j-house j-draw" d="M64-142V-176H84V-124"/>
+            <path class="j-house j-draw" d="M-86-62h28v28h-28ZM-72-62v28M-86-48h28"/>
+            <path class="j-house j-draw" d="M58-62h28v28h-28ZM72-62v28M58-48h28"/>
+            <path class="j-house j-draw" d="M-24 0V-70A24 24 0 0 1 24-70V0"/>
+            <path class="j-house j-draw" d="M112 0H146"/>
+          </g>
+
+          <!-- the truck -->
+          <g id="jTruck" transform="translate(940 450) scale(1.2) translate(-60 0)">
+            <path id="jTruckFill" d="M0-10L0-54Q0-60 6-60L74-60Q80-60 80-54L80-40L100-40Q104-40 107-36L118-22Q120-19 120-15L120-12Q120-10 118-10Z" fill="#FBF7F0"/>
+            <path class="j-or j-draw" d="M0-10L0-54Q0-60 6-60L74-60Q80-60 80-54L80-40L100-40Q104-40 107-36L118-22Q120-19 120-15L120-12Q120-10 118-10L0-10M80-10L80-40"/>
+            <path class="j-or j-draw" d="M86-36L100-36L110-24L86-24Z"/>
+            <path class="j-or j-draw" d="M27-14V-34A13 13 0 0 1 53-34V-14"/>
+            <path class="j-or j-draw j-wheel" d="M12-10a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/>
+            <path class="j-or j-draw j-wheel" d="M86-10a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/>
+            <path class="j-or j-spoke" id="jSpoke1" d="M22-10V-17"/>
+            <path class="j-or j-spoke" id="jSpoke2" d="M96-10V-17"/>
+          </g>
+
+          <!-- Roomi doorway symbol, then the room -->
+          <g id="jSym" class="final" transform="translate(1140 446) scale(.3)" style="opacity:0">
+            <g clip-path="url(#jOpen)">
+              <path d="M-85 0V-165A85 85 0 0 1 85-165V0Z" fill="#FFF4E8"/>
+              <path d="M-85-20H85V0H-85Z" fill="#F4DDC6"/>
+              <circle cx="74" cy="-120" r="54" fill="url(#jGlow)"/>
+              <path class="j-fill" data-s=".80" data-e=".86" d="M-50-100V-138A23 23 0 0 1-4-138V-100Z" fill="#FFE5BE"/>
+              <path class="j-fill" data-s=".84" data-e=".90" d="M-34-6a46 6 0 1 0 92 0a46 6 0 1 0-92 0" fill="#F7652F" fill-opacity=".25"/>
+              <path class="j-ink j-draw j-rl" data-s=".80" data-e=".88" d="M-85-20H85"/>
+              <path class="j-ink j-draw j-rl" data-s=".80" data-e=".88" d="M-50-100V-138A23 23 0 0 1-4-138V-100ZM-27-161V-100M-50-126H-4M-56-100H2"/>
+              <path class="j-ink j-draw j-rl" data-s=".83" data-e=".90" d="M-35-100L-33-110H-21L-19-100ZM-27-110C-40-118-42-130-38-136M-27-110C-27-122-26-134-27-142M-27-110C-14-118-12-130-16-136"/>
+              <path class="j-ink j-draw j-rl" data-s=".84" data-e=".92" d="M8-166H50V-112H8ZM8-122Q22-132 34-124T50-126M23-140a6 6 0 1 0 12 0a6 6 0 1 0-12 0"/>
+              <path class="j-ink j-draw j-rl" data-s=".86" data-e=".95" d="M-2-16V-40Q-2-48 6-48H54Q62-48 62-40V-16ZM6-48V-64Q6-70 12-70H48Q54-70 54-64V-48M30-48V-30M4-16V-10M56-16V-10"/>
+              <path class="j-ink j-draw j-rl" data-s=".88" data-e=".96" d="M74-10V-112M64-10H84M62-112H86L81-134H67Z"/>
+            </g>
+            <g id="jLeaf" style="opacity:0">
+              <path d="M-85 0V-165A85 85 0 0 1 85-165V0Z" fill="#F7652F"/>
+              <path d="M-62-20V-160A62 62 0 0 1 62-160V-20Z" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/>
+              <circle cx="60" cy="-80" r="4" fill="#FBF7F0"/>
+            </g>
+            <path id="jArch" class="j-or j-draw" style="stroke-width:2.6" d="M-85 0V-165A85 85 0 0 1 85-165V0H150V-218L0-352L-150-218V0H-85"/>
+            <g class="jbox" data-sx="-300" data-fx="-30" data-fy="-8" data-fs="1" style="opacity:0"><path d="M-15 0h30v-24h-30Z M-15-16H15M-4-24V-16" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.7" stroke-linejoin="round"/><path d="M-4-24V-16" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/></g>
+            <g class="jbox" data-sx="-380" data-fx="-30" data-fy="-32" data-fs=".8" style="opacity:0"><path d="M-15 0h30v-24h-30Z M-15-16H15" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.7" stroke-linejoin="round"/><path d="M-4-24V-16" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/></g>
+            <g class="jbox" data-sx="-460" data-fx="-62" data-fy="-8" data-fs=".9" style="opacity:0"><path d="M-15 0h30v-24h-30Z M-15-16H15" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.7" stroke-linejoin="round"/><path d="M-4-24V-16" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/></g>
+          </g>
+        </svg>
+        <span class="j-hint" id="jHint" aria-hidden="true">Scroll</span>
+      </div>
+      <div class="j-progress" aria-hidden="true"><i id="jBar"></i></div>
     </div>
   </section>
 
@@ -484,6 +649,199 @@ footer a{color:#E9E2D6}
     <p class="legal">© 2026 Roomi Movers LLC · Tampa, Florida</p>
   </div>
 </footer>
+
+<script>
+/* Scroll journey: progress p (0..1) drives the whole illustration. */
+(function () {
+  var root = document.getElementById('journey');
+  if (!root) return;
+  var svg = document.getElementById('jSvg');
+  var pin = root.querySelector('.journey-pin');
+  var bar = document.querySelector('.bar');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var DOOR = 1140, PARK = 0.82, VB_Y = 60, VB_H = 470;
+  function clamp(v, a, b) { return v < (a === undefined ? 0 : a) ? (a === undefined ? 0 : a) : v > (b === undefined ? 1 : b) ? (b === undefined ? 1 : b) : v; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function smooth(t) { return t * t * (3 - 2 * t); }
+
+  root.classList.add('is-js');
+  var all = [].slice.call(root.querySelectorAll('.j-draw'));
+  all.forEach(function (el) { el.setAttribute('pathLength', '1'); });
+
+  var road = document.getElementById('jTrail');
+  var total = road.getTotalLength();
+  var N = 480, xs = [], ys = [];
+  for (var i = 0; i <= N; i++) { var q = road.getPointAtLength(total * i / N); xs.push(q.x); ys.push(q.y); }
+  function roadY(x) {
+    if (x <= xs[0]) return ys[0];
+    if (x >= xs[N]) return ys[N];
+    var lo = 0, hi = N;
+    while (hi - lo > 1) { var m = (lo + hi) >> 1; if (xs[m] <= x) lo = m; else hi = m; }
+    return lerp(ys[lo], ys[hi], (x - xs[lo]) / (xs[hi] - xs[lo]));
+  }
+  var DOORY = roadY(DOOR);
+
+  function setDraw(el, f) {
+    if (f <= 0.002) { el.style.opacity = 0; return; }
+    el.style.opacity = 1;
+    el.style.strokeDashoffset = (1 - clamp(f)).toFixed(4);
+  }
+  function setGroup(parts, f, spread) {
+    var n = parts.length;
+    for (var k = 0; k < n; k++) {
+      var d = spread * k, w = 1 - spread * (n - 1);
+      setDraw(parts[k], clamp((f - d) / w));
+    }
+  }
+
+  var details = [].slice.call(root.querySelectorAll('.j-detail')).map(function (g) {
+    var x = parseFloat(g.getAttribute('data-x'));
+    if (!g.hasAttribute('data-abs') && !isNaN(x)) {
+      g.setAttribute('transform', 'translate(' + x + ' ' + roadY(x).toFixed(1) + ')');
+    }
+    return { g: g, s: parseFloat(g.getAttribute('data-s')), e: parseFloat(g.getAttribute('data-e')), parts: [].slice.call(g.querySelectorAll('.j-draw')) };
+  });
+  var decor = document.getElementById('jDecor');
+  var house = document.getElementById('jHouse');
+  var truck = document.getElementById('jTruck');
+  var truckFill = document.getElementById('jTruckFill');
+  var truckParts = [].slice.call(truck.querySelectorAll('.j-draw'));
+  var spokes = [document.getElementById('jSpoke1'), document.getElementById('jSpoke2')];
+  var sym = document.getElementById('jSym');
+  var arch = document.getElementById('jArch');
+  var leaf = document.getElementById('jLeaf');
+  var room = [].slice.call(sym.querySelectorAll('.j-rl')).map(function (el) {
+    return { el: el, s: parseFloat(el.getAttribute('data-s')), e: parseFloat(el.getAttribute('data-e')) };
+  });
+  var fills = [].slice.call(sym.querySelectorAll('.j-fill')).map(function (el) {
+    return { el: el, s: parseFloat(el.getAttribute('data-s')), e: parseFloat(el.getAttribute('data-e')) };
+  });
+  var boxes = [].slice.call(sym.querySelectorAll('.jbox')).map(function (el) {
+    return { el: el, sx: +el.getAttribute('data-sx'), fx: +el.getAttribute('data-fx'), fy: +el.getAttribute('data-fy'), fs: +el.getAttribute('data-fs') };
+  });
+  var caps = [].slice.call(root.querySelectorAll('.j-stack > *'));
+  var hint = document.getElementById('jHint');
+  var barFill = document.getElementById('jBar');
+  var stage = -1, vbW = 800, lastCam = null;
+
+  function setStage(s) {
+    if (s === stage) return;
+    stage = s;
+    caps.forEach(function (c) {
+      var on = +c.getAttribute('data-stage') === s;
+      c.classList.toggle('is-on', on);
+      c.setAttribute('aria-hidden', on ? 'false' : 'true');
+    });
+  }
+
+  function render(p) {
+    // 1) truck outline draws itself
+    var f1 = ease(clamp(p / 0.12));
+    setGroup(truckParts, f1, 0.1);
+    truckFill.style.opacity = clamp((f1 - 0.55) / 0.45);
+    spokes.forEach(function (s) { s.style.opacity = f1 > 0.9 ? 1 : 0; });
+
+    // 2) truck follows the road; the orange line trails behind it
+    var m = clamp((p - 0.13) / 0.47);
+    var len = total * PARK * m;
+    var pt = road.getPointAtLength(len);
+    var a = road.getPointAtLength(Math.max(0, len - 20));
+    var b = road.getPointAtLength(Math.min(total, len + 20));
+    var ang = Math.atan2(b.y - a.y, b.x - a.x) * 57.2958;
+    truck.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + (pt.y + 0.5).toFixed(1) + ') rotate(' + ang.toFixed(2) + ') scale(1.2) translate(-60 0)');
+    var spin = (len / 12 * 57.2958).toFixed(1);
+    spokes[0].setAttribute('transform', 'rotate(' + spin + ' 22 -10)');
+    spokes[1].setAttribute('transform', 'rotate(' + spin + ' 96 -10)');
+    truck.style.opacity = 1 - clamp((p - 0.67) / 0.06);
+
+    var tf = p > 0.60 ? lerp(PARK, 1, ease(clamp((p - 0.60) / 0.07))) : len / total;
+    setDraw(road, tf);
+
+    // Tampa details + home draw in as the truck approaches
+    details.forEach(function (d) {
+      setGroup(d.parts, ease(clamp((p - d.s) / (d.e - d.s))), 0.06);
+    });
+    decor.style.opacity = 1 - clamp((p - 0.66) / 0.1);
+    house.style.opacity = 1 - clamp((p - 0.70) / 0.07);
+
+    // 3) the line becomes Roomi's doorway
+    var s = clamp((p - 0.64) / 0.14), se = ease(s);
+    sym.setAttribute('transform', 'translate(' + DOOR + ' ' + DOORY.toFixed(1) + ') scale(' + lerp(0.3, 1, se).toFixed(4) + ')');
+    sym.style.opacity = clamp(s * 6);
+    setDraw(arch, se);
+    leaf.style.opacity = clamp((p - 0.71) / 0.04);
+    var sx = 1 - 0.93 * ease(clamp((p - 0.79) / 0.07));
+    leaf.setAttribute('transform', 'translate(-85 0) scale(' + sx.toFixed(3) + ' 1) translate(85 0)');
+
+    // 4) boxes glide through, the room draws in
+    room.forEach(function (r) { setDraw(r.el, ease(clamp((p - r.s) / (r.e - r.s)))); });
+    fills.forEach(function (r) { r.el.style.opacity = clamp((p - r.s) / (r.e - r.s)); });
+    boxes.forEach(function (bx, i) {
+      var u = clamp((p - (0.83 + i * 0.03)) / 0.10), e = ease(u);
+      var lx = lerp(bx.sx, bx.fx, e);
+      var gy = roadY(DOOR + lx) - DOORY;
+      var inside = smooth(clamp((lx + 110) / 40));
+      var y = lerp(gy, bx.fy, inside) - Math.sin(Math.PI * u) * 10 * (1 - inside * 0.6);
+      bx.el.setAttribute('transform', 'translate(' + lx.toFixed(1) + ' ' + y.toFixed(1) + ') scale(' + lerp(1, bx.fs, inside).toFixed(3) + ')');
+      bx.el.style.opacity = clamp(u * 10);
+    });
+
+    // camera: follow the truck, then settle on the doorway
+    var maxFollow = Math.max(0, DOOR - vbW / 2);
+    var follow = clamp(pt.x - vbW * 0.38, 0, maxFollow);
+    var fin = DOOR - vbW / 2;
+    var cam = lerp(follow, fin, ease(clamp((p - 0.58) / 0.16)));
+    var v = cam.toFixed(1) + ' ' + VB_Y + ' ' + vbW.toFixed(1) + ' ' + VB_H;
+    if (v !== lastCam) { svg.setAttribute('viewBox', v); lastCam = v; }
+
+    setStage(p < 0.13 ? 0 : p < 0.5 ? 1 : p < 0.72 ? 2 : 3);
+    barFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+    hint.style.opacity = p > 0.02 ? 0 : 1;
+  }
+
+  function measureView() {
+    var r = svg.getBoundingClientRect();
+    if (r.width && r.height) vbW = clamp(VB_H * r.width / r.height, 330, 960);
+    if (bar) root.style.setProperty('--bar-h', bar.offsetHeight + 'px');
+  }
+  function progress() {
+    var r = root.getBoundingClientRect();
+    var barH = bar ? bar.offsetHeight : 0;
+    var span = root.offsetHeight - pin.offsetHeight;
+    return span > 0 ? clamp((barH - r.top) / span) : 0;
+  }
+
+  if (reduce) {
+    root.classList.add('is-static');
+    measureView();
+    render(0.655);
+    setStage(3);
+    window.addEventListener('resize', function () { measureView(); lastCam = null; render(0.655); });
+    return;
+  }
+
+  root.classList.add('is-live');
+  measureView();
+  var target = progress(), cur = target, raf = 0;
+  render(cur);
+  function tick() {
+    raf = 0;
+    var d = target - cur;
+    cur = Math.abs(d) < 0.0004 ? target : cur + d * 0.18;
+    render(cur);
+    if (cur !== target) raf = requestAnimationFrame(tick);
+  }
+  function onScroll() {
+    target = progress();
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { measureView(); lastCam = null; target = progress(); cur = target; render(cur); });
+  window.addEventListener('load', function () { measureView(); onScroll(); });
+})();
+</script>
 
 <nav class="actionbar" aria-label="Quick actions">
   <a href="tel:+18134363216">Call</a>
