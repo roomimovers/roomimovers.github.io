@@ -221,7 +221,7 @@ footer a{color:#E9E2D6}
 /* scroll journey: one orange line draws the truck, the route, the home and the room */
 .journey{--ink:#0B1C3D;--muted:#4A5672;--coral:#F7652F;--coral-ink:#B8441A;--line:#E4D6C2;--band:#F7EEE2;
   position:relative;background:#FBF7F0;color:var(--ink);border-bottom:1px solid var(--line)}
-.journey.is-live{height:900vh;height:900svh}
+.journey.is-live{height:1000vh;height:1000svh}
 .journey-pin{display:flex;flex-direction:column;gap:6px;padding-block:28px 20px;background:#FBF7F0}
 .journey.is-live .journey-pin{position:sticky;top:var(--bar-h,60px);height:calc(100vh - var(--bar-h,60px));height:calc(100svh - var(--bar-h,60px));overflow:hidden;padding-block:20px 14px}
 .journey-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 36px;width:100%}
@@ -246,11 +246,16 @@ footer a{color:#E9E2D6}
 @media (max-width:440px){.j-steps{gap:8px}.j-steps span{font-size:10.5px;letter-spacing:.06em;white-space:nowrap}}
 .journey svg .j-far{fill:none;stroke:#12306B;stroke-opacity:.22;stroke-width:1;stroke-linejoin:round}
 .journey svg .j-puff{fill:none;stroke:#12306B;stroke-width:.9;opacity:0}
-.journey svg .j-fillbg{fill:#FBF7F0}
+.journey svg .j-fillbg,.journey svg .j-house.j-fillbg{fill:#FBF7F0}
 .j-hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:opacity .4s;display:none}
 .journey.is-live .j-hint{display:block}
-.j-skip{position:absolute;left:12px;top:-60px;z-index:5;background:#061A3C;color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none}
-.j-skip:focus{top:8px}
+.j-foot{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px 22px}
+.j-foot .j-steps{flex:1 1 320px}
+.j-skip{display:none;font:600 13px/1 var(--body);color:var(--muted);text-decoration:underline;text-underline-offset:3px;white-space:nowrap;padding:6px 0}
+.journey.is-live .j-skip{display:inline-block}
+.j-skip:hover{color:var(--ink)}
+@media (max-width:560px){.j-skip{order:-1;margin-left:auto;padding:0 0 2px}}
+
 .journey svg .j-ink{fill:none;stroke:#12306B;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
 .journey svg .j-house{fill:none;stroke:#061A3C;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .journey svg .j-or{fill:none;stroke:#F7652F;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
@@ -353,7 +358,6 @@ footer a{color:#E9E2D6}
   </section>
 
   <section class="journey" id="journey" aria-labelledby="j-title">
-    <a class="j-skip" href="#services">Skip animation</a>
     <div class="journey-pin">
       <div class="wrap journey-top">
         <div class="j-copy">
@@ -382,6 +386,7 @@ footer a{color:#E9E2D6}
           <defs>
             <clipPath id="jOpen"><path d="M-85 0V-165A85 85 0 0 1 85-165V0Z"/></clipPath>
             <clipPath id="jMvClip" clipPathUnits="userSpaceOnUse"><path id="jMvClipPath" d="M0 0H1H0Z"/></clipPath>
+            <linearGradient id="jDoorIn" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E9D2BA"/><stop offset=".55" stop-color="#F4E4D2"/><stop offset="1" stop-color="#EEDAC5"/></linearGradient>
             <radialGradient id="jGlow"><stop offset="0" stop-color="#F7652F" stop-opacity=".34"/><stop offset="1" stop-color="#F7652F" stop-opacity="0"/></radialGradient>
           </defs>
 
@@ -396,15 +401,15 @@ footer a{color:#E9E2D6}
               <path class="j-far" d="M0 0h46a10 10 0 0 0-8-16a12 12 0 0 0-22-6a9 9 0 0 0-16 22Z" transform="translate(430 214)"/>
               <path class="j-far" d="M0 0h56a11 11 0 0 0-9-18a14 14 0 0 0-26-7a10 10 0 0 0-21 25Z" transform="translate(1010 200)"/>
             </g>
-            <g class="j-detail" data-x="150" data-s="0" data-e=".035" transform="translate(150 452)">
+            <g class="j-detail" data-pickup="1" data-x="150" data-s="0" data-e=".035" transform="translate(150 452)">
               <path class="j-house j-draw j-fillbg" d="M-74 0V-170H74V0M-80-170H80V-178H-80Z"/>
               <path class="j-house j-draw" d="M-55-154h18v20h-18ZM-9-154h18v20h-18ZM37-154h18v20h-18ZM-55-116h18v20h-18ZM-9-116h18v20h-18ZM37-116h18v20h-18ZM-55-58h18v20h-18ZM37-58h18v20h-18Z"/>
               <path class="j-ink j-draw" d="M-59-132h26v6h-26ZM-13-132h26v6h-26ZM33-132h26v6h-26ZM-59-94h26v6h-26ZM-13-94h26v6h-26ZM33-94h26v6h-26Z"/>
-              <path class="j-doorfill" d="M-20 0V-50A20 20 0 0 1 20-50V0Z" fill="#F1DFCB"/>
+              <path class="j-doorfill" d="M-20 0V-50A20 20 0 0 1 20-50V0Z" fill="url(#jDoorIn)"/>
               <path id="jAptLeaf" class="j-leaf" d="M-20 0V-50A20 20 0 0 1 20-50V0Z" fill="#F7652F"/>
               <path class="j-house j-draw" d="M-28-74H28L24-81H-24ZM-20 0V-50A20 20 0 0 1 20-50V0"/>
             </g>
-            <g class="j-detail" data-abs="1" data-s=".30" data-e=".38" transform="translate(-140 95)">
+            <g class="j-detail" data-abs="1" data-rx="560" data-s=".30" data-e=".38" transform="translate(-140 95)">
               <path class="j-ink j-draw" d="M670 140a30 30 0 1 0 60 0a30 30 0 1 0-60 0"/>
               <path class="j-ink j-draw" d="M738 140H748M727 167L734 174M700 178V188M673 167L666 174M662 140H652M673 113L666 106M700 102V92M727 113L734 106"/>
             </g>
@@ -446,7 +451,7 @@ footer a{color:#E9E2D6}
             <path class="j-house j-draw" d="M64-142V-176H84V-124"/>
             <path class="j-house j-draw" d="M-86-62h28v28h-28ZM-72-62v28M-86-48h28"/>
             <path class="j-house j-draw" d="M58-62h28v28h-28ZM72-62v28M58-48h28"/>
-            <path class="j-doorfill" d="M-24 0V-70A24 24 0 0 1 24-70V0Z" fill="#F1DFCB"/>
+            <path class="j-doorfill" d="M-24 0V-70A24 24 0 0 1 24-70V0Z" fill="url(#jDoorIn)"/>
             <path id="jHouseLeaf" class="j-leaf" d="M-24 0V-70A24 24 0 0 1 24-70V0Z" fill="#F7652F"/>
             <path class="j-house j-draw" d="M-24 0V-70A24 24 0 0 1 24-70V0M-36-102L0-118L36-102"/>
             <path class="j-ink j-draw" d="M-150 0V-50M-150-50C-172-50-178-74-164-84C-168-104-144-112-134-98C-116-102-108-80-120-70C-110-58-128-46-140-52"/>
@@ -455,6 +460,7 @@ footer a{color:#E9E2D6}
 
           <!-- the truck -->
           <g id="jTruck" transform="translate(295 452)">
+            <ellipse id="jShadow" cx="86" cy="1.2" rx="84" ry="3.2" fill="#12306B" fill-opacity=".08"/>
             <circle class="j-puff" r="3" cx="-2" cy="-20"/>
             <circle class="j-puff" r="3" cx="-2" cy="-20"/>
             <circle class="j-puff" r="3" cx="-2" cy="-20"/>
@@ -470,7 +476,7 @@ footer a{color:#E9E2D6}
                 <text x="61" y="-52" fill="#061A3C" style="font:900 16px Archivo,'Helvetica Neue',Arial,sans-serif;letter-spacing:-.4px">roomi</text>
                 <text x="62" y="-43" fill="#061A3C" style="font:800 5.6px Archivo,Arial,sans-serif;letter-spacing:2.3px">MOVERS</text>
               </g>
-              <path class="j-or j-draw j-ramp" d="M0-23L-68-1M0-18L-62-1M-17-17.5l-1.6 4.6M-34-12l-1.6 4.6M-51-6.5l-1.6 4.6"/>
+              <path id="jRamp" class="j-or" d="M0-23L-68-1M0-18L-62-1M-17-17.5l-1.6 4.6M-34-12l-1.6 4.6M-51-6.5l-1.6 4.6"/>
             </g>
             <path class="j-or j-draw j-wheel" d="M25-13a13 13 0 1 0 26 0a13 13 0 1 0-26 0"/>
             <path class="j-or j-draw j-wheel" d="M127-13a13 13 0 1 0 26 0a13 13 0 1 0-26 0"/>
@@ -480,6 +486,7 @@ footer a{color:#E9E2D6}
 
           <!-- Kareem and a teammate -->
           <g id="jMovers" clip-path="url(#jMvClip)"></g>
+          <g id="jFront"></g>
 
           <!-- Roomi doorway symbol, then the room -->
           <g id="jSym" class="final" transform="translate(1230 446) scale(.3)" style="opacity:0">
@@ -493,28 +500,32 @@ footer a{color:#E9E2D6}
               <path class="j-ink j-draw j-rl" data-s=".80" data-e=".88" d="M-50-100V-138A23 23 0 0 1-4-138V-100ZM-27-161V-100M-50-126H-4M-56-100H2"/>
               <path class="j-ink j-draw j-rl" data-s=".83" data-e=".90" d="M-35-100L-33-110H-21L-19-100ZM-27-110C-40-118-42-130-38-136M-27-110C-27-122-26-134-27-142M-27-110C-14-118-12-130-16-136"/>
               <path class="j-ink j-draw j-rl" data-s=".84" data-e=".92" d="M8-166H50V-112H8ZM8-122Q22-132 34-124T50-126M23-140a6 6 0 1 0 12 0a6 6 0 1 0-12 0"/>
-              <path class="j-ink j-draw j-rl" data-s=".86" data-e=".95" d="M-2-16V-40Q-2-48 6-48H54Q62-48 62-40V-16ZM6-48V-64Q6-70 12-70H48Q54-70 54-64V-48M30-48V-30M4-16V-10M56-16V-10"/>
+              <g class="j-delivered" transform="translate(32 -9) scale(.92)" style="opacity:0">
+                <path d="M-26-16V-25Q-26-29-22-29H22Q26-29 26-25V-16Z" fill="#FFFDF9" stroke="#12306B" stroke-width="1.3" stroke-linejoin="round"/>
+                <path d="M-31 0V-12Q-31-16-27-16H27Q31-16 31-12V0Z" fill="#FFFDF9" stroke="#12306B" stroke-width="1.3" stroke-linejoin="round"/>
+                <path d="M-31-12Q-35-12-35-8V0H-31M31-12Q35-12 35-8V0H31M0-16V-3M-28 0v3M28 0v3" fill="none" stroke="#12306B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M-24-24H-4" stroke="#F7652F" stroke-width="1.1" stroke-linecap="round" opacity=".7"/>
+              </g>
               <path class="j-ink j-draw j-rl" data-s=".88" data-e=".96" d="M74-10V-112M64-10H84M62-112H86L81-134H67Z"/>
             </g>
-            <g id="jLeaf" style="opacity:0">
+            <g id="jLeaf" style="opacity:0" transform="translate(-85 0) scale(.07 1) translate(85 0)">
               <path d="M-85 0V-165A85 85 0 0 1 85-165V0Z" fill="#F7652F"/>
               <path d="M-62-20V-160A62 62 0 0 1 62-160V-20Z" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/>
               <circle cx="60" cy="-80" r="4" fill="#FBF7F0"/>
             </g>
             <path id="jArch" class="j-or j-draw" style="stroke-width:2.6" d="M-85 0V-165A85 85 0 0 1 85-165V0H150V-218L0-352L-150-218V0H-85"/>
-            <g class="jbox" data-sx="-300" data-fx="-30" data-fy="-8" data-fs="1" style="opacity:0"><path d="M-15 0h30v-24h-30Z M-15-16H15" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.7" stroke-linejoin="round"/><path d="M-4-24V-16" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/></g>
-            <g class="jbox" data-sx="-380" data-fx="-30" data-fy="-32" data-fs=".8" style="opacity:0"><path d="M-15 0h30v-24h-30Z M-15-16H15" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.7" stroke-linejoin="round"/><path d="M-4-24V-16" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/></g>
-            <g class="jbox" data-sx="-460" data-fx="-62" data-fy="-8" data-fs=".9" style="opacity:0"><path d="M-15 0h30v-24h-30Z M-15-16H15" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.7" stroke-linejoin="round"/><path d="M-4-24V-16" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/></g>
+            <g class="j-delivered" transform="translate(-34 -8)" style="opacity:0"><path d="M-15 0h30v-24h-30Z" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.6" stroke-linejoin="round"/><path d="M0-24V-15" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/><path d="M-11-8h8M-11-4.5h6" stroke="#12306B" stroke-width="1.1" stroke-linecap="round"/></g>
+            <g class="j-delivered" transform="translate(-36 -32) scale(.86)" style="opacity:0"><path d="M-15 0h30v-24h-30Z" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.6" stroke-linejoin="round"/><path d="M0-24V-15" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/><path d="M-11-8h8M-11-4.5h6" stroke="#12306B" stroke-width="1.1" stroke-linecap="round"/></g>
           </g>
         </svg>
         <span class="j-hint" id="jHint" aria-hidden="true">Scroll</span>
       </div>
-      <div class="wrap"><ol class="j-steps" aria-hidden="true">
+      <div class="wrap j-foot"><ol class="j-steps" aria-hidden="true">
         <li><i><b></b></i><span>Load</span></li>
         <li><i><b></b></i><span>Drive</span></li>
         <li><i><b></b></i><span>Arrive</span></li>
         <li><i><b></b></i><span>Settle in</span></li>
-      </ol></div>
+      </ol><a class="j-skip" href="#services">Skip animation</a></div>
     </div>
   </section>
 
@@ -703,10 +714,11 @@ footer a{color:#E9E2D6}
 </footer>
 
 <script>
-/* Scroll journey: progress p (0..1) drives every frame, so scrolling back simply replays it in reverse.
-   0-.035 pickup + truck draw · .05-.235 load (couch together, walk back, a box each) · .26-.58 drive
-   .61-.79 unload at the home (couch together, walk back, a box each) · .79-.91 line becomes the Roomi doorway
-   .89-1 room appears with the delivered couch and boxes in place */
+/* Scroll journey. Everything is a pure function of scroll, so scrolling back replays it exactly in reverse.
+   entry (section scrolling into view): pickup + truck draw, ramp and door open
+   0-.165 load: couch together, walk back, a box each · .17-.40 drive · .40-.43 truck settles, ramp + door open
+   .425-.70 unload: couch together (longest beat), walk back, a box each · .70-.82 line becomes the Roomi doorway
+   .76-.90 the room fills in around the delivered couch and boxes · .90-1 hold on the finished room */
 (function () {
   var root = document.getElementById('journey');
   if (!root) return;
@@ -717,21 +729,23 @@ footer a{color:#E9E2D6}
   var NS = 'http://www.w3.org/2000/svg';
 
   var DOOR = 1230, START_X = 380, PICKUP_X = 150, VB_FULL = 470, VB_CLOSE = 360, VB_BOTTOM = 530;
-  var HALF = 85, DECK = 22, RAMP = 68;          // truck half-length, cargo floor height, ramp run
+  var HALF = 85, DECK = 22, RAMP = 68, RAMP_STOW = 107.9;
   var APT_DOOR = { half: 20, h: 70 }, HOUSE_DOOR = { half: 24, h: 94 };
+  var DRIVE = [0.17, 0.40];
   function clamp(v, a, b) { a = a === undefined ? 0 : a; b = b === undefined ? 1 : b; return v < a ? a : v > b ? b : v; }
   function lerp(a, b, t) { return a + (b - a) * t; }
   function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
   function sine(t) { return (1 - Math.cos(Math.PI * t)) / 2; }
   function span(p, a, b) { return clamp((p - a) / (b - a)); }
-  function mapRoom(x) { return .90 + (x - .80) * .6; }
+  function mapRoom(x) { return .76 + (x - .80) * .875; }
+  function f1(n) { return n.toFixed(1); }
   function el(tag, attrs, parent) {
     var e = document.createElementNS(NS, tag);
     for (var k in attrs) e.setAttribute(k, attrs[k]);
     if (parent) parent.appendChild(e);
     return e;
   }
-  function f1(n) { return n.toFixed(1); }
+  var D2R = Math.PI / 180;
 
   root.classList.add('is-js');
   [].slice.call(root.querySelectorAll('.j-draw')).forEach(function (e) { e.setAttribute('pathLength', '1'); });
@@ -766,6 +780,7 @@ footer a{color:#E9E2D6}
     }
   }
 
+  // scenery: the pickup draws as the section arrives; everything else draws just ahead of the truck
   var details = [].slice.call(root.querySelectorAll('.j-detail')).map(function (g) {
     var x = parseFloat(g.getAttribute('data-x'));
     if (!g.hasAttribute('data-abs') && !isNaN(x)) {
@@ -773,7 +788,7 @@ footer a{color:#E9E2D6}
       g.setAttribute('transform', 'translate(' + x + ' ' + f1(gy) + ')');
     }
     return {
-      s: parseFloat(g.getAttribute('data-s')), e: parseFloat(g.getAttribute('data-e')),
+      x: parseFloat(g.getAttribute('data-rx') || x), pickup: g.hasAttribute('data-pickup'),
       parts: [].slice.call(g.querySelectorAll('.j-draw')),
       solids: [].slice.call(g.querySelectorAll('.j-doorfill, .j-leaf'))
     };
@@ -784,8 +799,9 @@ footer a{color:#E9E2D6}
   var body = document.getElementById('jBody');
   var truckFill = document.getElementById('jTruckFill');
   var brand = document.getElementById('jBrand');
-  var truckParts = [].slice.call(truck.querySelectorAll('.j-draw:not(.j-ramp)'));
-  var ramp = truck.querySelector('.j-ramp');
+  var shadow = document.getElementById('jShadow');
+  var truckParts = [].slice.call(truck.querySelectorAll('.j-draw'));
+  var ramp = document.getElementById('jRamp');
   var rims = [document.getElementById('jRim1'), document.getElementById('jRim2')];
   var puffs = [].slice.call(truck.querySelectorAll('.j-puff'));
   var aptLeaf = document.getElementById('jAptLeaf'), houseLeaf = document.getElementById('jHouseLeaf');
@@ -798,169 +814,203 @@ footer a{color:#E9E2D6}
   var fills = [].slice.call(sym.querySelectorAll('.j-fill')).map(function (e) {
     return { el: e, s: mapRoom(parseFloat(e.getAttribute('data-s'))), e: mapRoom(parseFloat(e.getAttribute('data-e'))) };
   });
-  var roomBoxes = [].slice.call(sym.querySelectorAll('.jbox'));
-  roomBoxes.forEach(function (b) {
-    b.setAttribute('transform', 'translate(' + b.getAttribute('data-fx') + ' ' + b.getAttribute('data-fy') + ') scale(' + b.getAttribute('data-fs') + ')');
-  });
+  var delivered = [].slice.call(sym.querySelectorAll('.j-delivered'));
   var caps = [].slice.call(root.querySelectorAll('.j-stack > *'));
   var hint = document.getElementById('jHint');
   var steps = [].slice.call(root.querySelectorAll('.j-steps li')).map(function (li) { return { li: li, b: li.querySelector('b') }; });
-  var STEP_RANGES = [[0, .255], [.255, .60], [.60, .80], [.80, 1]];
+  var STEP_RANGES = [[0, .17], [.17, .40], [.40, .705], [.705, .90]];
   var far = document.getElementById('jFar');
   var stage = -1, aspect = 1.6, lastCam = null, lastClip = null;
 
   /* ---------- the crew ---------- */
   var moversG = document.getElementById('jMovers');
+  var front = document.getElementById('jFront');
   var clipPath = document.getElementById('jMvClipPath');
   var NAVY = '#12306B', INK = '#061A3C', ORANGE = '#F7652F', SKIN = '#EDB08F', SKIN_LINE = '#C9561F', PAPER = '#FFFDF9';
 
-  var couch = el('g', { 'class': 'j-couch', style: 'display:none' }, moversG);
-  el('path', { d: 'M-26-16V-25Q-26-29-22-29H22Q26-29 26-25V-16Z', fill: PAPER, stroke: NAVY, 'stroke-width': 1.3, 'stroke-linejoin': 'round' }, couch);
-  el('path', { d: 'M-31 0V-12Q-31-16-27-16H27Q31-16 31-12V0Z', fill: PAPER, stroke: NAVY, 'stroke-width': 1.3, 'stroke-linejoin': 'round' }, couch);
-  el('path', { d: 'M-31-12Q-35-12-35-8V0H-31M31-12Q35-12 35-8V0H31M0-16V-3M-28 0v3M28 0v3', fill: 'none', stroke: NAVY, 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, couch);
+  // door frames drawn in front of the crew, so they pass behind the jambs as they go inside
+  function frontFrame(cx, gy, d) {
+    var top = d.h - d.half;
+    return el('path', { 'class': 'j-house', transform: 'translate(' + cx + ' ' + f1(gy) + ')',
+      d: 'M-' + d.half + ' 0V-' + top + 'A' + d.half + ' ' + d.half + ' 0 0 1 ' + d.half + ' -' + top + 'V0' }, front);
+  }
+  var aptFront = frontFrame(PICKUP_X, APTY, APT_DOOR);
+  var houseFront = frontFrame(DOOR, DOORY, HOUSE_DOOR);
+
+  // the couch: the same drawing appears in the finished room
+  var COUCH = [
+    ['M-26-16V-25Q-26-29-22-29H22Q26-29 26-25V-16Z', PAPER],
+    ['M-31 0V-12Q-31-16-27-16H27Q31-16 31-12V0Z', PAPER],
+    ['M-31-12Q-35-12-35-8V0H-31M31-12Q35-12 35-8V0H31M0-16V-3M-28 0v3M28 0v3', 'none']
+  ];
+  var couch = el('g', { style: 'display:none' }, moversG);
+  COUCH.forEach(function (c) { el('path', { d: c[0], fill: c[1], stroke: NAVY, 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, couch); });
   el('path', { d: 'M-24-24H-4', fill: 'none', stroke: ORANGE, 'stroke-width': 1.1, 'stroke-linecap': 'round', opacity: .7 }, couch);
 
-  // two different builds, same uniform: Kareem is tall and lean with curls; his teammate is shorter and broader in a cap
+  // Kareem: tall and lean with auburn curls. His teammate: shorter, broader, cap and short beard. Same uniform.
   var BUILDS = [
-    { name: 'k', thigh: 16, shin: 15, sh: -17, t0: -5.5, t1: 6.5, headR: 5.4, leg: 5, hair: 'curls' },
-    { name: 't', thigh: 13.5, shin: 13.5, sh: -15, t0: -8, t1: 8.5, headR: 6, leg: 6.2, hair: 'cap' }
+    { name: 'k', thigh: 16, shin: 15, sh: -17, t0: -5.5, t1: 6.5, headR: 5.4, leg: 5, upper: 9.4, fore: 9, arm: 2.3, hair: 'curls' },
+    { name: 't', thigh: 13.5, shin: 13.5, sh: -15, t0: -8, t1: 8.5, headR: 6, leg: 6.2, upper: 8.6, fore: 8.2, arm: 2.8, hair: 'cap' }
   ];
   function buildMover(b) {
-    var g = el('g', { 'class': 'j-mover', style: 'display:none' }, moversG);
+    var g = el('g', { style: 'display:none' }, moversG);
     var m = { b: b, g: g };
-    var legAttrs = { fill: 'none', stroke: INK, 'stroke-width': b.leg, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
-    var bootAttrs = { fill: 'none', stroke: INK, 'stroke-width': 3.4, 'stroke-linecap': 'round' };
-    var armAttrs = { fill: 'none', stroke: SKIN, 'stroke-width': b.name === 'k' ? 2.3 : 2.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
-    m.legB = el('path', legAttrs, g); m.bootB = el('path', bootAttrs, g);
-    m.armB = el('path', armAttrs, g);
-    m.gloveB = el('circle', { r: 2.3, fill: ORANGE }, g);
-    el('path', { d: 'M' + b.t0 + ' -3H' + b.t1 + 'V3H' + b.t0 + 'Z', fill: INK }, g);
-    m.legF = el('path', legAttrs, g); m.bootF = el('path', bootAttrs, g);
-    el('path', { d: 'M' + b.t0 + ' 0L' + (b.t0 + .6) + ' ' + (b.sh + 2.5) + 'Q' + ((b.t0 + b.t1) / 2) + ' ' + (b.sh - 1.2) + ' ' + (b.t1 - .6) + ' ' + (b.sh + 2.5) + 'L' + b.t1 + ' 0Z', fill: NAVY }, g);
-    el('path', { d: 'M' + (b.t1 - 6) + ' ' + (b.sh + 9) + 'v-2.6a2.1 2.1 0 0 1 4.2 0v2.6', fill: 'none', stroke: ORANGE, 'stroke-width': .9, 'stroke-linecap': 'round' }, g);
+    var legA = { fill: 'none', stroke: INK, 'stroke-width': b.leg, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+    var bootA = { fill: INK };
+    var armA = { fill: 'none', stroke: SKIN, 'stroke-width': b.arm, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+    var sleeveA = { fill: 'none', stroke: NAVY, 'stroke-width': b.arm + 2.2, 'stroke-linecap': 'round' };
+    m.legB = el('path', legA, g); m.bootB = el('path', bootA, g);
+    m.up = el('g', {}, g);                                         // everything above the hips leans as one piece
+    m.armB = el('path', armA, m.up); m.sleeveB = el('path', sleeveA, m.up); m.gloveB = el('path', { fill: ORANGE }, m.up);
+    el('path', { d: 'M' + b.t0 + ' -3H' + b.t1 + 'V3.5H' + b.t0 + 'Z', fill: INK }, m.up);
+    m.legF = el('path', legA, g); m.bootF = el('path', bootA, g);
+    g.appendChild(m.up);                                           // upper body above the front leg
+    el('path', { d: 'M' + b.t0 + ' 0L' + (b.t0 + .6) + ' ' + (b.sh + 2.5) + 'Q' + ((b.t0 + b.t1) / 2) + ' ' + (b.sh - 1.2) + ' ' + (b.t1 - .6) + ' ' + (b.sh + 2.5) + 'L' + b.t1 + ' 0Z', fill: NAVY }, m.up);
+    el('path', { d: 'M' + (b.t0 - .2) + ' -1.2H' + (b.t1 + .2), stroke: INK, 'stroke-width': 1.6 }, m.up);
+    el('path', { d: 'M' + (b.t1 - 6) + ' ' + (b.sh + 9) + 'v-2.6a2.1 2.1 0 0 1 4.2 0v2.6', fill: 'none', stroke: ORANGE, 'stroke-width': .9, 'stroke-linecap': 'round' }, m.up);
     var hy = b.sh - 3 - b.headR;
-    m.headY = hy;
-    el('path', { d: 'M.2 ' + (b.sh - .5) + 'V' + (b.sh - 3.4), stroke: SKIN, 'stroke-width': 2.6, 'stroke-linecap': 'round' }, g);
-    el('circle', { cx: .8, cy: hy, r: b.headR, fill: '#F6D3BD', stroke: SKIN_LINE, 'stroke-width': .8 }, g);
-    el('circle', { cx: .8 + b.headR * .55, cy: hy - .6, r: .7, fill: INK }, g);
+    el('path', { d: 'M.2 ' + (b.sh - .5) + 'V' + (b.sh - 3.4), stroke: SKIN, 'stroke-width': 2.6, 'stroke-linecap': 'round' }, m.up);
+    el('circle', { cx: .8, cy: hy, r: b.headR, fill: '#F6D3BD', stroke: SKIN_LINE, 'stroke-width': .8 }, m.up);
+    el('circle', { cx: .8 + b.headR * .55, cy: hy - .6, r: .7, fill: INK }, m.up);
     if (b.hair === 'curls') {
       el('path', { d: 'M5.6 ' + (hy - 3.4) + 'C6.4 ' + (hy - 7.4) + ' 2.4 ' + (hy - 9.6) + ' -.4 ' + (hy - 8) + 'C-2.6 ' + (hy - 10.6) + ' -7.6 ' + (hy - 8.8) + ' -6.8 ' + (hy - 5) +
         'C-9.6 ' + (hy - 4) + ' -9.4 ' + (hy + .6) + ' -6.6 ' + (hy + 1.2) + 'C-7.8 ' + (hy + 4) + ' -4.6 ' + (hy + 5.4) + ' -3.6 ' + (hy + 3) +
-        'L-2.6 ' + (hy - 1.4) + 'C.2 ' + (hy - 2.8) + ' 3.4 ' + (hy - 2.6) + ' 5.6 ' + (hy - 3.4) + 'Z', fill: '#E46A33', stroke: '#B84A1E', 'stroke-width': .7, 'stroke-linejoin': 'round' }, g);
+        'L-2.6 ' + (hy - 1.4) + 'C.2 ' + (hy - 2.8) + ' 3.4 ' + (hy - 2.6) + ' 5.6 ' + (hy - 3.4) + 'Z', fill: '#E46A33', stroke: '#B84A1E', 'stroke-width': .7, 'stroke-linejoin': 'round' }, m.up);
     } else {
-      el('path', { d: 'M-5.6 ' + (hy - 1.2) + 'A6.2 6.4 0 0 1 6.6 ' + (hy - 1.6) + 'Z', fill: INK }, g);
-      el('path', { d: 'M5.6 ' + (hy - 1.6) + 'H11.4', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round' }, g);
-      // short beard along the jaw, joined to the sideburn under the cap
-      el('path', { d: 'M-4.4 ' + (hy - 1) + 'L-4.2 ' + (hy + 3) + 'Q.6 ' + (hy + 7.6) + ' 6.2 ' + (hy + 3.4) + 'L6.6 ' + (hy + 1.8) + 'Q3 ' + (hy + 3.4) + ' -1.4 ' + (hy + .6) + 'L-1.6 ' + (hy - 1) + 'Z', fill: INK }, g);
+      el('path', { d: 'M-5.6 ' + (hy - 1.2) + 'A6.2 6.4 0 0 1 6.6 ' + (hy - 1.6) + 'Z', fill: INK }, m.up);
+      el('path', { d: 'M5.6 ' + (hy - 1.6) + 'H11.4', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round' }, m.up);
+      el('path', { d: 'M-4.4 ' + (hy - 1) + 'L-4.2 ' + (hy + 3) + 'Q.6 ' + (hy + 7.6) + ' 6.2 ' + (hy + 3.4) + 'L6.6 ' + (hy + 1.8) + 'Q3 ' + (hy + 3.4) + ' -1.4 ' + (hy + .6) + 'L-1.6 ' + (hy - 1) + 'Z', fill: INK }, m.up);
     }
-    m.box = el('g', { style: 'display:none' }, g);
-    var by = b.sh + 4;
-    el('path', { d: 'M4 ' + by + 'h17v14H4Z', fill: PAPER, stroke: NAVY, 'stroke-width': 1.15, 'stroke-linejoin': 'round' }, m.box);
-    el('path', { d: 'M12.5 ' + by + 'v5', stroke: ORANGE, 'stroke-width': 1.7, 'stroke-linecap': 'round' }, m.box);
-    el('path', { d: 'M7 ' + (by + 10) + 'h5', stroke: NAVY, 'stroke-width': .8, 'stroke-linecap': 'round' }, m.box);
-    m.armF = el('path', armAttrs, g);
-    m.gloveF = el('circle', { r: 2.4, fill: ORANGE }, g);
+    m.box = el('g', { style: 'display:none' }, m.up);
+    m.by = b.sh + 3;
+    el('path', { d: 'M4 ' + m.by + 'h20v16H4Z', fill: PAPER, stroke: NAVY, 'stroke-width': 1.15, 'stroke-linejoin': 'round' }, m.box);
+    el('path', { d: 'M14 ' + m.by + 'v6', stroke: ORANGE, 'stroke-width': 1.8, 'stroke-linecap': 'round' }, m.box);
+    el('path', { d: 'M7 ' + (m.by + 11) + 'h6M7 ' + (m.by + 13.4) + 'h4', stroke: NAVY, 'stroke-width': .8, 'stroke-linecap': 'round' }, m.box);
+    m.armF = el('path', armA, m.up); m.sleeveF = el('path', sleeveA, m.up); m.gloveF = el('path', { fill: ORANGE }, m.up);
     return m;
   }
   var crew = BUILDS.map(buildMover);
 
-  // [p0, p1, x0, x1, dir, carry]; x is world x of the hip. Outside the clip region a mover is "inside" the building or truck.
+  // [p0, p1, x0, x1, dir, carry]: world x of the hip. Outside the clip window a mover is inside the building or the truck.
   var A = PICKUP_X - 40, RS = RIG_S.rear, RP = RIG_P.rear;
   var SEGS = [
     [ // Kareem leads the couch, then carries a box
-      [.050, .130, A, RS + 100, 1, 'lead'], [.130, .165, RS + 100, A, -1, ''], [.170, .235, A, RS + 35, 1, 'box'],
-      [.610, .690, RP + 20, DOOR - 120, -1, 'lead'], [.690, .725, DOOR - 120, RP + 25, 1, ''], [.728, .790, RP + 25, DOOR - 80, -1, 'box']
+      [.004, .070, A, RS + 100, 1, 'lead'], [.070, .095, RS + 100, A, -1, ''], [.097, .150, A, RS + 35, 1, 'box'],
+      [.425, .565, RP + 20, DOOR - 120, -1, 'lead'], [.565, .605, DOOR - 120, RP + 25, 1, ''], [.607, .690, RP + 25, DOOR - 80, -1, 'box']
     ],
     [ // teammate takes the back of the couch, then a box
-      [.050, .130, A - 80, RS + 20, 1, 'rear'], [.130, .165, RS + 20, A - 50, -1, ''], [.172, .235, A - 50, RS + 17, 1, 'box'],
-      [.610, .690, RP + 100, DOOR - 40, -1, 'rear'], [.690, .725, DOOR - 40, RP + 60, 1, ''], [.733, .790, RP + 60, DOOR - 44, -1, 'box']
+      [.004, .070, A - 80, RS + 20, 1, 'rear'], [.070, .095, RS + 20, A - 50, -1, ''], [.100, .155, A - 50, RS + 17, 1, 'box'],
+      [.425, .565, RP + 100, DOOR - 40, -1, 'rear'], [.565, .605, DOOR - 40, RP + 60, 1, ''], [.616, .700, RP + 60, DOOR - 44, -1, 'box']
     ]
   ];
   function crewState(k, p) {
     var segs = SEGS[k], s = segs[0];
-    if (p <= s[0]) return { x: s[2], dir: s[4], carry: s[5], walking: false };
+    if (p <= s[0]) return { x: s[2], dir: s[4], carry: s[5] };
     for (var j = 0; j < segs.length; j++) {
       s = segs[j];
-      if (p < s[0]) { var prev = segs[j - 1]; return { x: prev[3], dir: prev[4], carry: '', walking: false }; }
+      if (p < s[0]) {
+        var prev = segs[j - 1];
+        if (p > 0.3 && s[0] > 0.3 && prev[1] < 0.3) return { x: s[2], dir: s[4], carry: '' };   // waiting inside the parked truck
+        return { x: prev[3], dir: prev[4], carry: '' };
+      }
       if (p <= s[1]) {
         var u = (p - s[0]) / (s[1] - s[0]);
-        return { x: lerp(s[2], s[3], lerp(u, sine(u), .6)), dir: s[4], carry: s[5], walking: true };
+        return { x: lerp(s[2], s[3], lerp(u, sine(u), .6)), dir: s[4], carry: s[5] };
       }
     }
-    return { x: s[3], dir: s[4], carry: '', walking: false };
+    return { x: s[3], dir: s[4], carry: '' };
   }
   function walkY(x, r) {
     if (x >= r.rear) return r.deck;
     if (x > r.foot) return lerp(roadY(r.foot), r.deck, (x - r.foot) / (r.rear - r.foot));
     return roadY(x);
   }
-  var D2R = Math.PI / 180;
   function legPath(th, kn, b) {
     var kx = Math.sin(th) * b.thigh, ky = Math.cos(th) * b.thigh;
     var ax = kx + Math.sin(th - kn) * b.shin, ay = ky + Math.cos(th - kn) * b.shin;
-    return { d: 'M0 0L' + f1(kx) + ' ' + f1(ky) + 'L' + f1(ax) + ' ' + f1(ay), ax: ax, ay: ay };
+    return { d: 'M0 0L' + f1(kx) + ' ' + f1(ky) + 'L' + f1(ax) + ' ' + f1(ay), ax: ax, ay: ay, foot: th - kn * .5 };
   }
-  function armPath(sx, sy, hx, hy) {
-    var cx = sx + (hx - sx) * .25 - 2.4, cy = sy + (hy - sy) * .75 + 1;
-    return 'M' + f1(sx) + ' ' + f1(sy) + 'Q' + f1(cx) + ' ' + f1(cy) + ' ' + f1(hx) + ' ' + f1(hy);
+  function boot(ax, ay) {   // small work boot: heel under the ankle, toe forward
+    return 'M' + f1(ax - 2.2) + ' ' + f1(ay - 1.4) + 'H' + f1(ax + 1.6) + 'Q' + f1(ax + 5.8) + ' ' + f1(ay - 1) + ' ' + f1(ax + 6) + ' ' + f1(ay + 1.6) + 'H' + f1(ax - 2.2) + 'Z';
   }
-  function poseMover(m, st, r) {
+  // two-bone arm: shoulder -> elbow -> hand, elbow bends down and back like a real carry
+  function arm(m, sx, sy, hx, hy, which) {
+    var b = m.b, u = b.upper, f = b.fore;
+    var dx = hx - sx, dy = hy - sy, d = Math.min(Math.sqrt(dx * dx + dy * dy), u + f - 0.05);
+    var a = Math.atan2(dy, dx), c = clamp((u * u + d * d - f * f) / (2 * u * d), -1, 1), al = Math.acos(c);
+    var e1 = [sx + u * Math.cos(a + al), sy + u * Math.sin(a + al)], e2 = [sx + u * Math.cos(a - al), sy + u * Math.sin(a - al)];
+    var e = (e1[1] - e1[0] * .4) > (e2[1] - e2[0] * .4) ? e1 : e2;
+    var path = which === 'F' ? m.armF : m.armB, sleeve = which === 'F' ? m.sleeveF : m.sleeveB, glove = which === 'F' ? m.gloveF : m.gloveB;
+    path.setAttribute('d', 'M' + f1(sx) + ' ' + f1(sy) + 'L' + f1(e[0]) + ' ' + f1(e[1]) + 'L' + f1(hx) + ' ' + f1(hy));
+    sleeve.setAttribute('d', 'M' + f1(sx) + ' ' + f1(sy) + 'L' + f1(lerp(sx, e[0], .45)) + ' ' + f1(lerp(sy, e[1], .45)));
+    var ga = Math.atan2(hy - e[1], hx - e[0]) / D2R;
+    glove.setAttribute('d', 'M-1.6-2.1h2.6a2.1 2.1 0 0 1 0 4.2h-2.6Z');
+    glove.setAttribute('transform', 'translate(' + f1(hx) + ' ' + f1(hy) + ') rotate(' + ga.toFixed(1) + ')');
+  }
+  var LEAN = { lead: 4, rear: 2.5, box: 3, '': 2 };
+  function poseMover(m, st, r, psi, turn) {
     var b = m.b;
-    var psi = st.x * st.dir / 7.5;
-    var amp = st.carry === 'lead' || st.carry === 'rear' ? 20 : st.carry === 'box' ? 22 : 26;
-    var thA = Math.sin(psi) * amp * D2R, knA = Math.max(0, Math.cos(psi)) * 34 * D2R;
-    var thB = Math.sin(psi + Math.PI) * amp * D2R, knB = Math.max(0, Math.cos(psi + Math.PI)) * 34 * D2R;
+    var amp = st.carry ? 19 : 25;
+    var thA = Math.sin(psi) * amp * D2R, knA = Math.max(0, Math.cos(psi)) * 32 * D2R;
+    var thB = Math.sin(psi + Math.PI) * amp * D2R, knB = Math.max(0, Math.cos(psi + Math.PI)) * 32 * D2R;
     var lf = legPath(thA, knA, b), lb = legPath(thB, knB, b);
-    var reach = Math.max(lf.ay, lb.ay);                   // planted foot sets the hip height
-    var gy = walkY(st.x, r);
-    var hipY = gy - reach - 1.6;
+    var reach = Math.max(lf.ay, lb.ay);                     // the planted foot sets hip height: a small, natural rise and fall
+    var hipY = walkY(st.x, r) - reach - 2.6;
     m.legF.setAttribute('d', lf.d); m.legB.setAttribute('d', lb.d);
-    m.bootF.setAttribute('d', 'M' + f1(lf.ax - 1.2) + ' ' + f1(lf.ay + 1) + 'h5.6');
-    m.bootB.setAttribute('d', 'M' + f1(lb.ax - 1.2) + ' ' + f1(lb.ay + 1) + 'h5.6');
-    var sx = .6, sy = b.sh + 2.2, hB, hF;
-    if (st.carry === 'box') { hB = [6, b.sh + 16]; hF = [19, b.sh + 16.5]; }
-    else if (st.carry === 'lead') { hB = [-4, 3]; hF = [-5, 3.5]; }
-    else if (st.carry === 'rear') { hB = [8, 2.5]; hF = [9, 3]; }
-    else { var sw = Math.sin(psi) * 7; hB = [-sw, b.sh + 19]; hF = [sw, b.sh + 19]; }
-    m.armB.setAttribute('d', armPath(sx, sy, hB[0], hB[1]));
-    m.armF.setAttribute('d', armPath(sx, sy, hF[0], hF[1]));
-    m.gloveB.setAttribute('cx', hB[0]); m.gloveB.setAttribute('cy', hB[1]);
-    m.gloveF.setAttribute('cx', hF[0]); m.gloveF.setAttribute('cy', hF[1]);
+    m.bootF.setAttribute('d', boot(lf.ax, lf.ay)); m.bootB.setAttribute('d', boot(lb.ax, lb.ay));
+    var lean = (LEAN[st.carry] || 2) + Math.sin(psi * 2) * 0.6;   // weight shifts forward with each step
+    m.up.setAttribute('transform', 'rotate(' + lean.toFixed(2) + ' 0 0)');
+    var sx = .6, sy = b.sh + 2.4, hB, hF, swing = Math.sin(psi) * 6;
+    if (st.carry === 'box') { hB = [7, m.by + 14]; hF = [22, m.by + 14.6]; }
+    else if (st.carry === 'lead') { hB = [-4, 3]; hF = [-5.5, 3.6]; }
+    else if (st.carry === 'rear') { hB = [8, 2.8]; hF = [9.5, 3.2]; }
+    else { hB = [-swing, b.sh + 18.5]; hF = [swing, b.sh + 18.5]; }
+    arm(m, sx, sy, hB[0], hB[1], 'B'); arm(m, sx, sy, hF[0], hF[1], 'F');
     m.box.style.display = st.carry === 'box' ? '' : 'none';
-    m.g.setAttribute('transform', 'translate(' + f1(st.x) + ' ' + f1(hipY) + ') scale(' + st.dir + ' 1)');
-    return { x: st.x + st.dir * hF[0], y: hipY + hF[1] };   // world position of the front hand
+    m.g.setAttribute('transform', 'translate(' + f1(st.x) + ' ' + f1(hipY) + ') scale(' + (st.dir * turn).toFixed(3) + ' 1)');
+    // world position of the front hand, including the lean, for the couch
+    var cl = Math.cos(lean * D2R), sl = Math.sin(lean * D2R);
+    var wx = hF[0] * cl - hF[1] * sl, wy = hF[0] * sl + hF[1] * cl;
+    return { x: st.x + st.dir * turn * wx, y: hipY + wy };
   }
   function doorShape(cx, gy, d) {
     var top = gy - d.h + d.half;
     return 'M' + (cx - d.half) + ' ' + f1(gy + 40) + 'V' + f1(top) + 'A' + d.half + ' ' + d.half + ' 0 0 1 ' + (cx + d.half) + ' ' + f1(top) + 'V' + f1(gy + 40) + 'Z';
   }
-  // people and furniture show between the doorway and the truck's rear, plus through the open doorway
+  // the crew shows between the doorway and the truck's rear, and through the open doorway itself
   var CLIP_LOAD = 'M' + (PICKUP_X + APT_DOOR.half) + ' -600H' + f1(RIG_S.rear) + 'V1200H' + (PICKUP_X + APT_DOOR.half) + 'Z' + doorShape(PICKUP_X, APTY, APT_DOOR);
   var CLIP_UNLOAD = 'M' + (DOOR + HOUSE_DOOR.half) + ' -600H' + f1(RIG_P.rear) + 'V1200H' + (DOOR + HOUSE_DOOR.half) + 'Z' + doorShape(DOOR, DOORY, HOUSE_DOOR);
 
   function placeCrew(p) {
-    var active = p < 0.245 || p > 0.6;
+    var active = p < 0.168 || p > 0.405;
     moversG.style.display = active ? '' : 'none';
+    aptFront.style.display = p < 0.3 ? '' : 'none';
+    houseFront.style.display = p >= 0.3 ? '' : 'none';
     if (!active) return;
-    var loading = p < 0.45, r = loading ? RIG_S : RIG_P;
+    var loading = p < 0.3, r = loading ? RIG_S : RIG_P, doorX = loading ? PICKUP_X : DOOR;
     var clip = loading ? CLIP_LOAD : CLIP_UNLOAD;
     if (clip !== lastClip) { clipPath.setAttribute('d', clip); lastClip = clip; }
-    var hands = [], states = [];
-    crew.forEach(function (m, k) {
-      var st = crewState(k, p);
-      states.push(st);
+    var states = [crewState(0, p), crewState(1, p)];
+    var together = states[0].carry === 'lead' && states[1].carry === 'rear';
+    var shared = together ? ((states[0].x + states[1].x) / 2) * states[0].dir / 7.5 : 0;   // in step while sharing the couch
+    var hands = crew.map(function (m, k) {
+      var st = states[k];
+      var psi = together ? shared : st.x * st.dir / 7.5;
+      var inward = sine(clamp((doorX + 8 - st.x) / 32));                                    // 0 at the threshold, 1 at the far jamb
+      var turn = 1 - 0.14 * sine(clamp((doorX + 36 - st.x) / 50)) - 0.08 * inward;          // a slight turn and step inward through the doorway
       m.g.style.display = '';
-      hands.push(poseMover(m, st, r));
+      m.g.style.opacity = (1 - inward).toFixed(3);                                           // and into the shade of the interior
+      return poseMover(m, st, r, psi, turn);
     });
-    var c0 = states[0].carry, c1 = states[1].carry;
-    if (c0 === 'lead' && c1 === 'rear') {
+    if (together) {
       var a = hands[0], b = hands[1];
       if (a.x > b.x) { var t = a; a = b; b = t; }
       var cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2 + 4;
       var ang = Math.atan2(b.y - a.y, b.x - a.x) / D2R;
-      var turn = loading ? 1 : 1 - 0.26 * sine(clamp((DOOR + 70 - cx) / 70));   // eases through the doorway at a slight angle
+      var pivot = loading ? 0 : sine(clamp((doorX + 75 - cx) / 75));                         // guided through the doorway at an angle
       couch.style.display = '';
-      couch.setAttribute('transform', 'translate(' + f1(cx) + ' ' + f1(cy) + ') rotate(' + ang.toFixed(2) + ') scale(' + turn.toFixed(3) + ' 1)');
+      couch.style.opacity = (1 - sine(clamp((doorX - cx) / 30))).toFixed(3);
+      couch.setAttribute('transform', 'translate(' + f1(cx) + ' ' + f1(cy) + ') rotate(' + (ang - 3.5 * pivot).toFixed(2) + ') scale(' + (1 - 0.3 * pivot).toFixed(3) + ' ' + (1 + 0.03 * pivot).toFixed(3) + ')');
     } else {
       couch.style.display = 'none';
     }
@@ -976,73 +1026,76 @@ footer a{color:#E9E2D6}
     });
     steps.forEach(function (st, k) { st.li.classList.toggle('is-on', k === s); });
   }
-
   function leafTo(e, half, open) {
     e.setAttribute('transform', 'translate(' + (-half) + ' 0) scale(' + (1 - 0.84 * open).toFixed(3) + ' 1) translate(' + half + ' 0)');
   }
 
-  function render(p) {
-    // pickup + truck draw in
-    var f0 = ease(clamp(p / 0.035));
+  function render(p, entry) {
+    // the pickup and truck draw in while the section scrolls into view, so the first pinned frame is never empty
+    var f0 = ease(span(entry, 0, 0.75));
     setGroup(truckParts, f0, 0.07);
     truckFill.style.opacity = clamp((f0 - 0.5) / 0.5);
     brand.style.opacity = clamp((f0 - 0.7) / 0.3);
+    shadow.style.opacity = f0;
+    ramp.style.opacity = f0;
     rims.forEach(function (r) { r.style.opacity = clamp((f0 - 0.6) / 0.4); });
 
-    // ramp: down to load, up to drive, down again to unload
-    var rf = p < 0.15 ? ease(span(p, 0.035, 0.05)) : p < 0.45 ? 1 - ease(span(p, 0.237, 0.255)) : ease(span(p, 0.592, 0.607));
-    setDraw(ramp, rf);
-    leafTo(aptLeaf, APT_DOOR.half, p < 0.15 ? ease(span(p, 0.036, 0.05)) : 1 - ease(span(p, 0.236, 0.25)));
-    leafTo(houseLeaf, HOUSE_DOOR.half, ease(span(p, 0.595, 0.61)));
+    // ramp swings down from the rear door on its hinge
+    var arrive = ease(span(entry, 0.75, 1));
+    var deploy = p < 0.3 ? arrive * (1 - ease(span(p, 0.152, 0.166))) : ease(span(p, 0.404, 0.42));
+    ramp.setAttribute('transform', 'rotate(' + (RAMP_STOW * (1 - deploy)).toFixed(2) + ' 0 -23)');
+    leafTo(aptLeaf, APT_DOOR.half, p < 0.3 ? arrive * (1 - ease(span(p, 0.152, 0.166))) : 0);
+    leafTo(houseLeaf, HOUSE_DOOR.half, ease(span(p, 0.404, 0.42)));
 
-    // drive: ease in and out, so the truck accelerates and brakes naturally
-    var rr = span(p, 0.26, 0.58), m = sine(rr);
+    // drive: ease in and out, so the truck pulls away and brakes naturally, then settles on its springs
+    var rr = span(p, DRIVE[0], DRIVE[1]), m = sine(rr);
     var len = lerp(L0, total, m);
     var pt = road.getPointAtLength(len);
-    var a = road.getPointAtLength(Math.max(0, len - 24));
-    var b = road.getPointAtLength(Math.min(total, len + 24));
+    var a = road.getPointAtLength(Math.max(0, len - 30));
+    var b = road.getPointAtLength(Math.min(total, len + 30));
     var ang = Math.atan2(b.y - a.y, b.x - a.x) / D2R;
-    truck.setAttribute('transform', 'translate(' + f1(pt.x) + ' ' + f1(pt.y + 0.4) + ') rotate(' + ang.toFixed(2) + ') translate(-' + HALF + ' 0)');
+    truck.setAttribute('transform', 'translate(' + f1(pt.x) + ' ' + f1(pt.y) + ') rotate(' + ang.toFixed(2) + ') translate(-' + HALF + ' 0)');
     var speed = Math.sin(Math.PI * rr);
-    var pitch = -Math.sin(2 * Math.PI * rr) * 0.8;   // nose lifts pulling away, dips braking
-    var bob = Math.sin(len / 9) * 0.45 * speed;
-    body.setAttribute('transform', 'translate(0 ' + bob.toFixed(2) + ') rotate(' + pitch.toFixed(2) + ' ' + HALF + ' -20)');
+    var settle = span(p, DRIVE[1], DRIVE[1] + 0.03);
+    var pitch = -Math.sin(2 * Math.PI * rr) * 0.7 + Math.sin(settle * Math.PI * 3) * 0.5 * (1 - settle);
+    var bob = Math.sin(len / 9) * 0.35 * speed;
+    body.setAttribute('transform', 'translate(0 ' + bob.toFixed(2) + ') rotate(' + pitch.toFixed(2) + ' ' + HALF + ' -13)');
     var spin = (len / 13 / D2R).toFixed(1);
     rims[0].setAttribute('transform', 'rotate(' + spin + ' 38 -13)');
     rims[1].setAttribute('transform', 'rotate(' + spin + ' 140 -13)');
     puffs.forEach(function (c, k) {
       var ph = (len / 46 + k / 3) % 1;
       c.setAttribute('cx', f1(-2 - ph * 24));
-      c.setAttribute('cy', f1(-20 - ph * 7));
+      c.setAttribute('cy', f1(-16 - ph * 7));
       c.setAttribute('r', f1(2 + ph * 4));
-      c.style.opacity = (speed * (1 - ph) * 0.55).toFixed(2);
+      c.style.opacity = (speed * (1 - ph) * 0.5).toFixed(2);
     });
-    truck.style.opacity = 1 - span(p, 0.79, 0.84);
+    truck.style.opacity = 1 - span(p, 0.70, 0.75);
     setDraw(road, Math.max(f0 * L0 / total, len / total));
 
     details.forEach(function (d) {
-      var f = ease(span(p, d.s, d.e));
+      var f = d.pickup ? f0 : ease(clamp((pt.x - (d.x - 330)) / 210));
       setGroup(d.parts, f, 0.06);
       d.solids.forEach(function (s) { s.style.opacity = clamp((f - 0.6) / 0.4); });
     });
-    decor.style.opacity = 1 - span(p, 0.80, 0.87);
-    house.style.opacity = 1 - span(p, 0.82, 0.88);
+    decor.style.opacity = 1 - span(p, 0.71, 0.79);
+    house.style.opacity = 1 - span(p, 0.72, 0.80);
+    front.style.opacity = house.style.opacity;
 
     placeCrew(p);
 
-    // the line becomes Roomi's doorway
-    var s = span(p, 0.79, 0.91), se = ease(s);
+    // the line becomes Roomi's doorway. The door is already open from the delivery, and the delivered pieces are inside.
+    var s = span(p, 0.705, 0.82), se = ease(s);
     sym.setAttribute('transform', 'translate(' + DOOR + ' ' + f1(DOORY) + ') scale(' + lerp(0.3, 1, se).toFixed(4) + ')');
-    sym.style.opacity = clamp(s * 6);
+    sym.style.opacity = clamp(s * 5);
     setDraw(arch, se);
-    leaf.style.opacity = span(p, 0.86, 0.89);
-    leaf.setAttribute('transform', 'translate(-85 0) scale(' + (1 - 0.93 * ease(span(p, 0.89, 0.94))).toFixed(3) + ' 1) translate(85 0)');
+    leaf.style.opacity = s > 0 ? 1 : 0;
+    delivered.forEach(function (d, k) { d.style.opacity = span(p, 0.725 + k * 0.01, 0.765 + k * 0.01); });
     room.forEach(function (r) { setDraw(r.el, ease(span(p, r.s, r.e))); });
     fills.forEach(function (r) { r.el.style.opacity = span(p, r.s, r.e); });
-    roomBoxes.forEach(function (bx, k) { bx.style.opacity = span(p, 0.915 + k * 0.012, 0.95 + k * 0.012); });
 
     // camera: close on the pickup, follow the drive, frame the doorway and truck, then pull back to the Roomi doorway
-    var zt = ease(span(p, 0.78, 0.92));
+    var zt = ease(span(p, 0.70, 0.84));
     var vbH = lerp(VB_CLOSE, VB_FULL, zt);
     var vbW = clamp(vbH * aspect, vbH * 0.7, vbH * 2.05);
     var camUnload = (DOOR + RIG_P.rear) / 2 - vbW / 2;
@@ -1052,11 +1105,11 @@ footer a{color:#E9E2D6}
     var v = f1(cam) + ' ' + f1(VB_BOTTOM - vbH) + ' ' + f1(vbW) + ' ' + f1(vbH);
     if (v !== lastCam) { svg.setAttribute('viewBox', v); lastCam = v; }
     far.setAttribute('transform', 'translate(' + f1(cam * 0.45) + ' 0)');
-    far.style.opacity = span(p, 0.24, 0.30);
+    far.style.opacity = span(p, 0.17, 0.22);
 
-    setStage(p < 0.255 ? 0 : p < 0.6 ? 1 : p < 0.8 ? 2 : 3);
+    setStage(p < 0.17 ? 0 : p < 0.40 ? 1 : p < 0.705 ? 2 : 3);
     steps.forEach(function (st, k) { var g = STEP_RANGES[k]; st.b.style.transform = 'scaleX(' + span(p, g[0], g[1]).toFixed(4) + ')'; });
-    hint.style.opacity = p > 0.02 ? 0 : 1;
+    hint.style.opacity = p > 0.01 ? 0 : 1;
   }
 
   function measureView() {
@@ -1064,31 +1117,35 @@ footer a{color:#E9E2D6}
     if (r.width && r.height) aspect = r.width / r.height;
     if (bar) root.style.setProperty('--bar-h', bar.offsetHeight + 'px');
   }
+  function barH() { return bar ? bar.offsetHeight : 0; }
   function progress() {
     var r = root.getBoundingClientRect();
-    var barH = bar ? bar.offsetHeight : 0;
     var sp = root.offsetHeight - pin.offsetHeight;
-    return sp > 0 ? clamp((barH - r.top) / sp) : 0;
+    return sp > 0 ? clamp((barH() - r.top) / sp) : 0;
+  }
+  function entryProgress() {
+    var r = root.getBoundingClientRect(), vh = window.innerHeight;
+    return clamp((vh - r.top) / Math.max(1, vh - barH()));
   }
 
   if (reduce) {
     root.classList.add('is-static');
     measureView();
-    render(0.655);
+    render(0.5, 1);
     setStage(3);
-    window.addEventListener('resize', function () { measureView(); lastCam = null; render(0.655); });
+    window.addEventListener('resize', function () { measureView(); lastCam = null; render(0.5, 1); });
     return;
   }
 
   root.classList.add('is-live');
   measureView();
   var target = progress(), cur = target, raf = 0;
-  render(cur);
+  render(cur, entryProgress());
   function tick() {
     raf = 0;
     var d = target - cur;
     cur = Math.abs(d) < 0.0003 ? target : cur + d * 0.16;
-    render(cur);
+    render(cur, entryProgress());
     if (cur !== target) raf = requestAnimationFrame(tick);
   }
   function onScroll() {
@@ -1096,7 +1153,7 @@ footer a{color:#E9E2D6}
     if (!raf) raf = requestAnimationFrame(tick);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { measureView(); lastCam = null; target = progress(); cur = target; render(cur); });
+  window.addEventListener('resize', function () { measureView(); lastCam = null; target = progress(); cur = target; render(cur, entryProgress()); });
   window.addEventListener('load', function () { measureView(); onScroll(); });
 })();
 </script>
