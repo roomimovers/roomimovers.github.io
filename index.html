@@ -221,17 +221,18 @@ footer a{color:#E9E2D6}
 /* scroll journey: one orange line draws the truck, the route, the home and the room */
 .journey{--ink:#0B1C3D;--muted:#4A5672;--coral:#F7652F;--coral-ink:#B8441A;--line:#E4D6C2;--band:#F7EEE2;
   position:relative;background:#FBF7F0;color:var(--ink);border-bottom:1px solid var(--line)}
-.journey.is-live{height:1000vh;height:1000svh}
+.journey.is-live{height:450vh;height:450svh}
 .journey-pin{display:flex;flex-direction:column;gap:6px;padding-block:28px 20px;background:#FBF7F0}
 .journey.is-live .journey-pin{position:sticky;top:var(--bar-h,60px);height:calc(100vh - var(--bar-h,60px));height:calc(100svh - var(--bar-h,60px));overflow:hidden;padding-block:20px 14px}
 .journey-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 36px;width:100%}
-.j-copy{max-width:660px;display:grid;gap:8px}
+.j-copy{max-width:min(880px,100%);display:grid;gap:8px}
 .j-stack{display:grid}
 .j-stack>*{grid-area:1/1;opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
 .j-stack>.is-on{opacity:1;transform:none}
+.journey.is-gsap .j-stack>*{transition:none}
 .j-title{font-size:clamp(30px,4.4vw,52px);font-weight:900;letter-spacing:-.025em;color:var(--ink)}
 .j-sub{color:var(--muted);font-size:clamp(15px,1.5vw,18px);margin:0}
-.j-cta{display:flex;flex-wrap:wrap;gap:10px}
+.j-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
 .j-stage{position:relative;width:100%;height:clamp(300px,54vh,560px)}
 .journey.is-live .j-stage{height:auto;flex:1 1 0;min-height:0}
 .j-stage svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
@@ -374,10 +375,10 @@ footer a{color:#E9E2D6}
             <p data-stage="2">A two-hour arrival window, and we keep you posted on timing.</p>
             <p class="is-on" data-stage="3">Beds set back up, every piece in place, and the new place left clean.</p>
           </div>
-        </div>
-        <div class="j-cta">
-          <a class="btn btn-primary" href="#quote">Get a Free Estimate</a>
-          <a class="btn btn-ghost j-call ph" href="tel:+18134363216">Call (813) 436-3216</a>
+          <div class="j-cta" id="jCta">
+            <a class="btn btn-primary" href="#quote">Get a Free Estimate</a>
+            <a class="btn btn-ghost j-call ph" href="tel:+18134363216">Call (813) 436-3216</a>
+          </div>
         </div>
       </div>
 
@@ -387,7 +388,8 @@ footer a{color:#E9E2D6}
             <clipPath id="jOpen"><path d="M-85 0V-165A85 85 0 0 1 85-165V0Z"/></clipPath>
             <clipPath id="jMvClip" clipPathUnits="userSpaceOnUse"><path id="jMvClipPath" d="M0 0H1H0Z"/></clipPath>
             <linearGradient id="jDoorIn" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E9D2BA"/><stop offset=".55" stop-color="#F4E4D2"/><stop offset="1" stop-color="#EEDAC5"/></linearGradient>
-            <radialGradient id="jGlow"><stop offset="0" stop-color="#F7652F" stop-opacity=".34"/><stop offset="1" stop-color="#F7652F" stop-opacity="0"/></radialGradient>
+            <radialGradient id="jGlow"><stop offset="0" stop-color="#FFB45C" stop-opacity=".55"/><stop offset=".55" stop-color="#F7652F" stop-opacity=".16"/><stop offset="1" stop-color="#F7652F" stop-opacity="0"/></radialGradient>
+            <linearGradient id="jConeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD58A" stop-opacity=".55"/><stop offset="1" stop-color="#FFD58A" stop-opacity="0"/></linearGradient>
           </defs>
 
           <!-- faint route guide -->
@@ -454,8 +456,8 @@ footer a{color:#E9E2D6}
             <path class="j-doorfill" d="M-24 0V-70A24 24 0 0 1 24-70V0Z" fill="url(#jDoorIn)"/>
             <path id="jHouseLeaf" class="j-leaf" d="M-24 0V-70A24 24 0 0 1 24-70V0Z" fill="#F7652F"/>
             <path class="j-house j-draw" d="M-24 0V-70A24 24 0 0 1 24-70V0M-36-102L0-118L36-102"/>
-            <path class="j-ink j-draw" d="M-150 0V-50M-150-50C-172-50-178-74-164-84C-168-104-144-112-134-98C-116-102-108-80-120-70C-110-58-128-46-140-52"/>
-            <path class="j-ink j-draw" d="M136 0V-24M127-24H145V-32A9 6 0 0 0 127-32ZM145-30h5v-5"/>
+            <path class="j-ink j-draw j-wide" d="M-150 0V-50M-150-50C-172-50-178-74-164-84C-168-104-144-112-134-98C-116-102-108-80-120-70C-110-58-128-46-140-52"/>
+            <path class="j-ink j-draw j-wide" d="M136 0V-24M127-24H145V-32A9 6 0 0 0 127-32ZM145-30h5v-5"/>
           </g>
 
           <!-- the truck -->
@@ -493,7 +495,9 @@ footer a{color:#E9E2D6}
             <g clip-path="url(#jOpen)">
               <path d="M-85 0V-165A85 85 0 0 1 85-165V0Z" fill="#FFF4E8"/>
               <path d="M-85-20H85V0H-85Z" fill="#F4DDC6"/>
-              <circle cx="74" cy="-120" r="54" fill="url(#jGlow)"/>
+              <path id="jWarm" d="M-85 0V-165A85 85 0 0 1 85-165V0Z" fill="#FFC27A" opacity=".2"/>
+              <circle id="jLampGlow" cx="74" cy="-118" r="62" fill="url(#jGlow)"/>
+              <path id="jCone" d="M64-112H84L106-10H42Z" fill="url(#jConeG)"/>
               <path class="j-fill" data-s=".80" data-e=".86" d="M-50-100V-138A23 23 0 0 1-4-138V-100Z" fill="#FFE5BE"/>
               <path class="j-fill" data-s=".84" data-e=".90" d="M-34-6a46 6 0 1 0 92 0a46 6 0 1 0-92 0" fill="#F7652F" fill-opacity=".25"/>
               <path class="j-ink j-draw j-rl" data-s=".80" data-e=".88" d="M-85-20H85"/>
@@ -506,6 +510,7 @@ footer a{color:#E9E2D6}
                 <path d="M-31-12Q-35-12-35-8V0H-31M31-12Q35-12 35-8V0H31M0-16V-3M-28 0v3M28 0v3" fill="none" stroke="#12306B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M-24-24H-4" stroke="#F7652F" stroke-width="1.1" stroke-linecap="round" opacity=".7"/>
               </g>
+              <path id="jShade" d="M62-112H86L81-134H67Z" fill="#FFE2AE"/>
               <path class="j-ink j-draw j-rl" data-s=".88" data-e=".96" d="M74-10V-112M64-10H84M62-112H86L81-134H67Z"/>
             </g>
             <g id="jLeaf" style="opacity:0" transform="translate(-85 0) scale(.07 1) translate(85 0)">
@@ -514,6 +519,11 @@ footer a{color:#E9E2D6}
               <circle cx="60" cy="-80" r="4" fill="#FBF7F0"/>
             </g>
             <path id="jArch" class="j-or j-draw" style="stroke-width:2.6" d="M-85 0V-165A85 85 0 0 1 85-165V0H150V-218L0-352L-150-218V0H-85"/>
+            <path id="jLogo" class="j-or j-draw" style="stroke-width:3.6" d="M-42-258V-278L0-313L42-278V-258"/>
+            <g id="jMat">
+              <path d="M-46 16L-40 3H40L46 16Z" fill="#F1DAC0" stroke="#061A3C" stroke-width="1.4" stroke-linejoin="round"/>
+              <text x="0" y="12.4" text-anchor="middle" fill="#061A3C" style="font:800 6.2px Archivo,Arial,sans-serif;letter-spacing:1.5px">WELCOME HOME</text>
+            </g>
             <g class="j-delivered" transform="translate(-34 -8)" style="opacity:0"><path d="M-15 0h30v-24h-30Z" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.6" stroke-linejoin="round"/><path d="M0-24V-15" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/><path d="M-11-8h8M-11-4.5h6" stroke="#12306B" stroke-width="1.1" stroke-linecap="round"/></g>
             <g class="j-delivered" transform="translate(-36 -32) scale(.86)" style="opacity:0"><path d="M-15 0h30v-24h-30Z" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.6" stroke-linejoin="round"/><path d="M0-24V-15" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/><path d="M-11-8h8M-11-4.5h6" stroke="#12306B" stroke-width="1.1" stroke-linecap="round"/></g>
           </g>
@@ -713,31 +723,36 @@ footer a{color:#E9E2D6}
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-/* Scroll journey. Everything is a pure function of scroll, so scrolling back replays it exactly in reverse.
-   entry (section scrolling into view): pickup + truck draw, ramp and door open
-   0-.165 load: couch together, walk back, a box each · .17-.40 drive · .40-.43 truck settles, ramp + door open
-   .425-.70 unload: couch together (longest beat), walk back, a box each · .70-.82 line becomes the Roomi doorway
-   .76-.90 the room fills in around the delivered couch and boxes · .90-1 hold on the finished room */
+/* Scroll journey, driven by one scrubbed GSAP timeline. The scene itself is a pure function of progress p (render),
+   so scrolling back replays it exactly in reverse. Headlines and the finale are real GSAP tweens on the same timeline.
+   entry (section scrolling into view): pickup + truck draw, ramp down, apartment door open
+   0-.12 load: one trip, couch together with a box riding on it for each mover · .12-.33 drive · .33-.35 settle, ramp down
+   .35-.55 unload: one trip through the already-open front door · .55-.70 line becomes the Roomi doorway, room fills in
+   .72-.90 finale: lamp clicks on, room warms, doormat, roof logo draws, estimate button · .90-1 hold */
 (function () {
   var root = document.getElementById('journey');
   if (!root) return;
   var svg = document.getElementById('jSvg');
   var pin = root.querySelector('.journey-pin');
   var bar = document.querySelector('.bar');
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var NS = 'http://www.w3.org/2000/svg';
 
-  var DOOR = 1230, START_X = 380, PICKUP_X = 150, VB_FULL = 470, VB_CLOSE = 360, VB_BOTTOM = 530;
-  var HALF = 85, DECK = 22, RAMP = 68, RAMP_STOW = 107.9;
+  var DOOR = 1230, START_X = 380, PICKUP_X = 150, VB_FULL = 470, VB_CLOSE = 360;
+  var HALF = 85, DECK = 22, RAMP = 68, RAMP_STOW = 107.9, TRUCK_LEN = 170;
   var APT_DOOR = { half: 20, h: 70 }, HOUSE_DOOR = { half: 24, h: 94 };
-  var DRIVE = [0.17, 0.40];
+  var DRIVE = [0.12, 0.33], MID = (DRIVE[0] + DRIVE[1]) / 2;
+  var LOAD_WALK = [0.006, 0.095], UNLOAD_WALK = [0.355, 0.53];
+  var STAGE_AT = [DRIVE[0], 0.345, 0.55];
+  var STEP_RANGES = [[0, STAGE_AT[0]], [STAGE_AT[0], STAGE_AT[1]], [STAGE_AT[1], STAGE_AT[2]], [STAGE_AT[2], 0.90]];
   function clamp(v, a, b) { a = a === undefined ? 0 : a; b = b === undefined ? 1 : b; return v < a ? a : v > b ? b : v; }
   function lerp(a, b, t) { return a + (b - a) * t; }
   function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
   function sine(t) { return (1 - Math.cos(Math.PI * t)) / 2; }
   function span(p, a, b) { return clamp((p - a) / (b - a)); }
-  function mapRoom(x) { return .76 + (x - .80) * .875; }
+  function mapRoom(x) { return .58 + (x - .80) * .75; }
   function f1(n) { return n.toFixed(1); }
   function el(tag, attrs, parent) {
     var e = document.createElementNS(NS, tag);
@@ -755,17 +770,26 @@ footer a{color:#E9E2D6}
   var L0 = START_X - 40;
   var N = 600, xs = [], ys = [];
   for (var i = 0; i <= N; i++) { var q = road.getPointAtLength(total * i / N); xs.push(q.x); ys.push(q.y); }
+  function roadIdx(x) {
+    var lo = 0, hi = N;
+    while (hi - lo > 1) { var m = (lo + hi) >> 1; if (xs[m] <= x) lo = m; else hi = m; }
+    return [lo, hi, (x - xs[lo]) / (xs[hi] - xs[lo])];
+  }
   function roadY(x) {
     if (x <= xs[0]) return ys[0];
     if (x >= xs[N]) return ys[N];
-    var lo = 0, hi = N;
-    while (hi - lo > 1) { var m = (lo + hi) >> 1; if (xs[m] <= x) lo = m; else hi = m; }
-    return lerp(ys[lo], ys[hi], (x - xs[lo]) / (xs[hi] - xs[lo]));
+    var r = roadIdx(x);
+    return lerp(ys[r[0]], ys[r[1]], r[2]);
+  }
+  function lenAtX(x) {
+    if (x >= xs[N]) return total;
+    var r = roadIdx(x);
+    return total * lerp(r[0], r[1], r[2]) / N;
   }
   var DOORY = roadY(DOOR), APTY = roadY(PICKUP_X);
-  var startPt = road.getPointAtLength(L0), parkPt = road.getPointAtLength(total);
+  var startPt = road.getPointAtLength(L0);
   function rig(pt) { var rear = pt.x - HALF; return { rear: rear, deck: pt.y - DECK, foot: rear - RAMP }; }
-  var RIG_S = rig(startPt), RIG_P = rig(parkPt);
+  var RIG_S = rig(startPt), RIG_P, parkLen;
 
   function setDraw(e, f) {
     if (f <= 0.002) { e.style.opacity = 0; return; }
@@ -781,20 +805,21 @@ footer a{color:#E9E2D6}
   }
 
   // scenery: the pickup draws as the section arrives; everything else draws just ahead of the truck
+  var house = document.getElementById('jHouse');
   var details = [].slice.call(root.querySelectorAll('.j-detail')).map(function (g) {
     var x = parseFloat(g.getAttribute('data-x'));
     if (!g.hasAttribute('data-abs') && !isNaN(x)) {
-      var gy = g.id === 'jHouse' ? DOORY : roadY(x);
+      var gy = g === house ? DOORY : roadY(x);
       g.setAttribute('transform', 'translate(' + x + ' ' + f1(gy) + ')');
     }
     return {
-      x: parseFloat(g.getAttribute('data-rx') || x), pickup: g.hasAttribute('data-pickup'),
+      g: g, x: parseFloat(g.getAttribute('data-rx') || x), pickup: g.hasAttribute('data-pickup'),
       parts: [].slice.call(g.querySelectorAll('.j-draw')),
       solids: [].slice.call(g.querySelectorAll('.j-doorfill, .j-leaf'))
     };
   });
   var decor = document.getElementById('jDecor');
-  var house = document.getElementById('jHouse');
+  var wideOnly = [].slice.call(house.querySelectorAll('.j-wide'));
   var truck = document.getElementById('jTruck');
   var body = document.getElementById('jBody');
   var truckFill = document.getElementById('jTruckFill');
@@ -818,9 +843,8 @@ footer a{color:#E9E2D6}
   var caps = [].slice.call(root.querySelectorAll('.j-stack > *'));
   var hint = document.getElementById('jHint');
   var steps = [].slice.call(root.querySelectorAll('.j-steps li')).map(function (li) { return { li: li, b: li.querySelector('b') }; });
-  var STEP_RANGES = [[0, .17], [.17, .40], [.40, .705], [.705, .90]];
   var far = document.getElementById('jFar');
-  var stage = -1, aspect = 1.6, lastCam = null, lastClip = null;
+  var stage = -1, aspect = 1.6, narrow = false, lastCam = null, lastClip = null;
 
   /* ---------- the crew ---------- */
   var moversG = document.getElementById('jMovers');
@@ -837,7 +861,7 @@ footer a{color:#E9E2D6}
   var aptFront = frontFrame(PICKUP_X, APTY, APT_DOOR);
   var houseFront = frontFrame(DOOR, DOORY, HOUSE_DOOR);
 
-  // the couch: the same drawing appears in the finished room
+  // the couch, with a box for each mover riding on the seat: one trip carries everything. Same pieces appear in the finished room.
   var COUCH = [
     ['M-26-16V-25Q-26-29-22-29H22Q26-29 26-25V-16Z', PAPER],
     ['M-31 0V-12Q-31-16-27-16H27Q31-16 31-12V0Z', PAPER],
@@ -846,6 +870,12 @@ footer a{color:#E9E2D6}
   var couch = el('g', { style: 'display:none' }, moversG);
   COUCH.forEach(function (c) { el('path', { d: c[0], fill: c[1], stroke: NAVY, 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, couch); });
   el('path', { d: 'M-24-24H-4', fill: 'none', stroke: ORANGE, 'stroke-width': 1.1, 'stroke-linecap': 'round', opacity: .7 }, couch);
+  [[-25, 18, 15], [5, 17, 13]].forEach(function (b) {
+    var x = b[0], w = b[1], h = b[2], top = -16 - h;
+    el('path', { d: 'M' + x + ' -16V' + top + 'H' + (x + w) + 'V-16Z', fill: PAPER, stroke: NAVY, 'stroke-width': 1.15, 'stroke-linejoin': 'round' }, couch);
+    el('path', { d: 'M' + (x + w / 2) + ' ' + top + 'v5.5', stroke: ORANGE, 'stroke-width': 1.7, 'stroke-linecap': 'round' }, couch);
+    el('path', { d: 'M' + (x + 3) + ' ' + (top + h - 5) + 'h5M' + (x + 3) + ' ' + (top + h - 2.8) + 'h3.4', stroke: NAVY, 'stroke-width': .8, 'stroke-linecap': 'round' }, couch);
+  });
 
   // Kareem: tall and lean with auburn curls. His teammate: shorter, broader, cap and short beard. Same uniform.
   var BUILDS = [
@@ -881,28 +911,14 @@ footer a{color:#E9E2D6}
       el('path', { d: 'M5.6 ' + (hy - 1.6) + 'H11.4', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round' }, m.up);
       el('path', { d: 'M-4.4 ' + (hy - 1) + 'L-4.2 ' + (hy + 3) + 'Q.6 ' + (hy + 7.6) + ' 6.2 ' + (hy + 3.4) + 'L6.6 ' + (hy + 1.8) + 'Q3 ' + (hy + 3.4) + ' -1.4 ' + (hy + .6) + 'L-1.6 ' + (hy - 1) + 'Z', fill: INK }, m.up);
     }
-    m.box = el('g', { style: 'display:none' }, m.up);
-    m.by = b.sh + 3;
-    el('path', { d: 'M4 ' + m.by + 'h20v16H4Z', fill: PAPER, stroke: NAVY, 'stroke-width': 1.15, 'stroke-linejoin': 'round' }, m.box);
-    el('path', { d: 'M14 ' + m.by + 'v6', stroke: ORANGE, 'stroke-width': 1.8, 'stroke-linecap': 'round' }, m.box);
-    el('path', { d: 'M7 ' + (m.by + 11) + 'h6M7 ' + (m.by + 13.4) + 'h4', stroke: NAVY, 'stroke-width': .8, 'stroke-linecap': 'round' }, m.box);
     m.armF = el('path', armA, m.up); m.sleeveF = el('path', sleeveA, m.up); m.gloveF = el('path', { fill: ORANGE }, m.up);
     return m;
   }
   var crew = BUILDS.map(buildMover);
 
   // [p0, p1, x0, x1, dir, carry]: world x of the hip. Outside the clip window a mover is inside the building or the truck.
-  var A = PICKUP_X - 40, RS = RIG_S.rear, RP = RIG_P.rear;
-  var SEGS = [
-    [ // Kareem leads the couch, then carries a box
-      [.004, .070, A, RS + 100, 1, 'lead'], [.070, .095, RS + 100, A, -1, ''], [.097, .150, A, RS + 35, 1, 'box'],
-      [.425, .565, RP + 20, DOOR - 120, -1, 'lead'], [.565, .605, DOOR - 120, RP + 25, 1, ''], [.607, .690, RP + 25, DOOR - 80, -1, 'box']
-    ],
-    [ // teammate takes the back of the couch, then a box
-      [.004, .070, A - 80, RS + 20, 1, 'rear'], [.070, .095, RS + 20, A - 50, -1, ''], [.100, .155, A - 50, RS + 17, 1, 'box'],
-      [.425, .565, RP + 100, DOOR - 40, -1, 'rear'], [.565, .605, DOOR - 40, RP + 60, 1, ''], [.616, .700, RP + 60, DOOR - 44, -1, 'box']
-    ]
-  ];
+  // One trip each way: Kareem leads the couch, his teammate takes the back. Rebuilt on layout, since phones park closer.
+  var A = PICKUP_X - 40, SEGS, CLIP_LOAD, CLIP_UNLOAD;
   function crewState(k, p) {
     var segs = SEGS[k], s = segs[0];
     if (p <= s[0]) return { x: s[2], dir: s[4], carry: s[5] };
@@ -910,15 +926,15 @@ footer a{color:#E9E2D6}
       s = segs[j];
       if (p < s[0]) {
         var prev = segs[j - 1];
-        if (p > 0.3 && s[0] > 0.3 && prev[1] < 0.3) return { x: s[2], dir: s[4], carry: '' };   // waiting inside the parked truck
-        return { x: prev[3], dir: prev[4], carry: '' };
+        if (p > MID) return { x: s[2], dir: s[4], carry: s[5] };   // waiting inside the parked truck
+        return { x: prev[3], dir: prev[4], carry: prev[5] };
       }
       if (p <= s[1]) {
         var u = (p - s[0]) / (s[1] - s[0]);
         return { x: lerp(s[2], s[3], lerp(u, sine(u), .6)), dir: s[4], carry: s[5] };
       }
     }
-    return { x: s[3], dir: s[4], carry: '' };
+    return { x: s[3], dir: s[4], carry: s[5] };
   }
   function walkY(x, r) {
     if (x >= r.rear) return r.deck;
@@ -947,7 +963,7 @@ footer a{color:#E9E2D6}
     glove.setAttribute('d', 'M-1.6-2.1h2.6a2.1 2.1 0 0 1 0 4.2h-2.6Z');
     glove.setAttribute('transform', 'translate(' + f1(hx) + ' ' + f1(hy) + ') rotate(' + ga.toFixed(1) + ')');
   }
-  var LEAN = { lead: 4, rear: 2.5, box: 3, '': 2 };
+  var LEAN = { lead: 4, rear: 2.5, '': 2 };
   function poseMover(m, st, r, psi, turn) {
     var b = m.b;
     var amp = st.carry ? 19 : 25;
@@ -961,12 +977,10 @@ footer a{color:#E9E2D6}
     var lean = (LEAN[st.carry] || 2) + Math.sin(psi * 2) * 0.6;   // weight shifts forward with each step
     m.up.setAttribute('transform', 'rotate(' + lean.toFixed(2) + ' 0 0)');
     var sx = .6, sy = b.sh + 2.4, hB, hF, swing = Math.sin(psi) * 6;
-    if (st.carry === 'box') { hB = [7, m.by + 14]; hF = [22, m.by + 14.6]; }
-    else if (st.carry === 'lead') { hB = [-4, 3]; hF = [-5.5, 3.6]; }
+    if (st.carry === 'lead') { hB = [-4, 3]; hF = [-5.5, 3.6]; }
     else if (st.carry === 'rear') { hB = [8, 2.8]; hF = [9.5, 3.2]; }
     else { hB = [-swing, b.sh + 18.5]; hF = [swing, b.sh + 18.5]; }
     arm(m, sx, sy, hB[0], hB[1], 'B'); arm(m, sx, sy, hF[0], hF[1], 'F');
-    m.box.style.display = st.carry === 'box' ? '' : 'none';
     m.g.setAttribute('transform', 'translate(' + f1(st.x) + ' ' + f1(hipY) + ') scale(' + (st.dir * turn).toFixed(3) + ' 1)');
     // world position of the front hand, including the lean, for the couch
     var cl = Math.cos(lean * D2R), sl = Math.sin(lean * D2R);
@@ -977,58 +991,64 @@ footer a{color:#E9E2D6}
     var top = gy - d.h + d.half;
     return 'M' + (cx - d.half) + ' ' + f1(gy + 40) + 'V' + f1(top) + 'A' + d.half + ' ' + d.half + ' 0 0 1 ' + (cx + d.half) + ' ' + f1(top) + 'V' + f1(gy + 40) + 'Z';
   }
-  // the crew shows between the doorway and the truck's rear, and through the open doorway itself
-  var CLIP_LOAD = 'M' + (PICKUP_X + APT_DOOR.half) + ' -600H' + f1(RIG_S.rear) + 'V1200H' + (PICKUP_X + APT_DOOR.half) + 'Z' + doorShape(PICKUP_X, APTY, APT_DOOR);
-  var CLIP_UNLOAD = 'M' + (DOOR + HOUSE_DOOR.half) + ' -600H' + f1(RIG_P.rear) + 'V1200H' + (DOOR + HOUSE_DOOR.half) + 'Z' + doorShape(DOOR, DOORY, HOUSE_DOOR);
+
+  // phones park the truck closer to the door, so the house, crew and truck all fit across a narrow screen
+  function layout() {
+    narrow = aspect < 1.3;
+    parkLen = lenAtX(DOOR + (narrow ? 118 : 245) + HALF);
+    RIG_P = rig(road.getPointAtLength(parkLen));
+    var RS = RIG_S.rear, RP = RIG_P.rear;
+    SEGS = [
+      [[LOAD_WALK[0], LOAD_WALK[1], A, RS + 100, 1, 'lead'], [UNLOAD_WALK[0], UNLOAD_WALK[1], RP + 20, DOOR - 120, -1, 'lead']],
+      [[LOAD_WALK[0], LOAD_WALK[1], A - 80, RS + 20, 1, 'rear'], [UNLOAD_WALK[0], UNLOAD_WALK[1], RP + 100, DOOR - 40, -1, 'rear']]
+    ];
+    // the crew shows between the doorway and the truck's rear, and through the open doorway itself
+    CLIP_LOAD = 'M' + (PICKUP_X + APT_DOOR.half) + ' -600H' + f1(RS) + 'V1200H' + (PICKUP_X + APT_DOOR.half) + 'Z' + doorShape(PICKUP_X, APTY, APT_DOOR);
+    CLIP_UNLOAD = 'M' + (DOOR + HOUSE_DOOR.half) + ' -600H' + f1(RP) + 'V1200H' + (DOOR + HOUSE_DOOR.half) + 'Z' + doorShape(DOOR, DOORY, HOUSE_DOOR);
+    lastClip = null; lastCam = null;
+    wideOnly.forEach(function (e) { e.style.display = narrow ? 'none' : ''; });
+  }
 
   function placeCrew(p) {
-    var active = p < 0.168 || p > 0.405;
+    var active = p < DRIVE[0] - 0.002 || p > DRIVE[1] + 0.005;
     moversG.style.display = active ? '' : 'none';
-    aptFront.style.display = p < 0.3 ? '' : 'none';
-    houseFront.style.display = p >= 0.3 ? '' : 'none';
     if (!active) return;
-    var loading = p < 0.3, r = loading ? RIG_S : RIG_P, doorX = loading ? PICKUP_X : DOOR;
+    var loading = p < MID, r = loading ? RIG_S : RIG_P, doorX = loading ? PICKUP_X : DOOR;
     var clip = loading ? CLIP_LOAD : CLIP_UNLOAD;
     if (clip !== lastClip) { clipPath.setAttribute('d', clip); lastClip = clip; }
     var states = [crewState(0, p), crewState(1, p)];
-    var together = states[0].carry === 'lead' && states[1].carry === 'rear';
-    var shared = together ? ((states[0].x + states[1].x) / 2) * states[0].dir / 7.5 : 0;   // in step while sharing the couch
+    var shared = ((states[0].x + states[1].x) / 2) * states[0].dir / 7.5;   // in step while sharing the couch
     var hands = crew.map(function (m, k) {
       var st = states[k];
-      var psi = together ? shared : st.x * st.dir / 7.5;
       var inward = sine(clamp((doorX + 8 - st.x) / 32));                                    // 0 at the threshold, 1 at the far jamb
       var turn = 1 - 0.14 * sine(clamp((doorX + 36 - st.x) / 50)) - 0.08 * inward;          // a slight turn and step inward through the doorway
       m.g.style.display = '';
       m.g.style.opacity = (1 - inward).toFixed(3);                                           // and into the shade of the interior
-      return poseMover(m, st, r, psi, turn);
+      return poseMover(m, st, r, shared, turn);
     });
-    if (together) {
-      var a = hands[0], b = hands[1];
-      if (a.x > b.x) { var t = a; a = b; b = t; }
-      var cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2 + 4;
-      var ang = Math.atan2(b.y - a.y, b.x - a.x) / D2R;
-      var pivot = loading ? 0 : sine(clamp((doorX + 75 - cx) / 75));                         // guided through the doorway at an angle
-      couch.style.display = '';
-      couch.style.opacity = (1 - sine(clamp((doorX - cx) / 30))).toFixed(3);
-      couch.setAttribute('transform', 'translate(' + f1(cx) + ' ' + f1(cy) + ') rotate(' + (ang - 3.5 * pivot).toFixed(2) + ') scale(' + (1 - 0.3 * pivot).toFixed(3) + ' ' + (1 + 0.03 * pivot).toFixed(3) + ')');
-    } else {
-      couch.style.display = 'none';
-    }
+    var a = hands[0], b = hands[1];
+    if (a.x > b.x) { var t = a; a = b; b = t; }
+    var cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2 + 4;
+    var ang = Math.atan2(b.y - a.y, b.x - a.x) / D2R;
+    var pivot = loading ? 0 : sine(clamp((doorX + 75 - cx) / 75));                           // guided through the doorway at an angle
+    couch.style.display = '';
+    couch.style.opacity = (1 - sine(clamp((doorX - cx) / 30))).toFixed(3);
+    couch.setAttribute('transform', 'translate(' + f1(cx) + ' ' + f1(cy) + ') rotate(' + (ang - 3.5 * pivot).toFixed(2) + ') scale(' + (1 - 0.3 * pivot).toFixed(3) + ' ' + (1 + 0.03 * pivot).toFixed(3) + ')');
   }
 
   function setStage(s) {
     if (s === stage) return;
     stage = s;
-    caps.forEach(function (c) {
-      var on = +c.getAttribute('data-stage') === s;
-      c.classList.toggle('is-on', on);
-      c.setAttribute('aria-hidden', on ? 'false' : 'true');
-    });
+    caps.forEach(function (c) { c.setAttribute('aria-hidden', +c.getAttribute('data-stage') === s ? 'false' : 'true'); });
     steps.forEach(function (st, k) { st.li.classList.toggle('is-on', k === s); });
   }
   function leafTo(e, half, open) {
     e.setAttribute('transform', 'translate(' + (-half) + ' 0) scale(' + (1 - 0.84 * open).toFixed(3) + ' 1) translate(' + half + ' 0)');
   }
+
+  // camera helpers: the smallest view (by height) that fits a world span across the screen
+  function fitH(w) { return Math.max(VB_CLOSE, w / clamp(aspect, 0.7, 2.05)); }
+  function widthFor(h) { return clamp(h * aspect, h * 0.7, h * 2.05); }
 
   function render(p, entry) {
     // the pickup and truck draw in while the section scrolls into view, so the first pinned frame is never empty
@@ -1040,23 +1060,24 @@ footer a{color:#E9E2D6}
     ramp.style.opacity = f0;
     rims.forEach(function (r) { r.style.opacity = clamp((f0 - 0.6) / 0.4); });
 
-    // ramp swings down from the rear door on its hinge
+    // ramp swings down from the rear door on its hinge. The pickup door closes behind the crew; the new home's door is open and waiting.
     var arrive = ease(span(entry, 0.75, 1));
-    var deploy = p < 0.3 ? arrive * (1 - ease(span(p, 0.152, 0.166))) : ease(span(p, 0.404, 0.42));
+    var stow = ease(span(p, LOAD_WALK[1], LOAD_WALK[1] + 0.016));
+    var deploy = p < MID ? arrive * (1 - stow) : ease(span(p, DRIVE[1] + 0.005, DRIVE[1] + 0.022));
     ramp.setAttribute('transform', 'rotate(' + (RAMP_STOW * (1 - deploy)).toFixed(2) + ' 0 -23)');
-    leafTo(aptLeaf, APT_DOOR.half, p < 0.3 ? arrive * (1 - ease(span(p, 0.152, 0.166))) : 0);
-    leafTo(houseLeaf, HOUSE_DOOR.half, ease(span(p, 0.404, 0.42)));
+    leafTo(aptLeaf, APT_DOOR.half, arrive * (1 - stow));
+    leafTo(houseLeaf, HOUSE_DOOR.half, 1);
 
     // drive: ease in and out, so the truck pulls away and brakes naturally, then settles on its springs
     var rr = span(p, DRIVE[0], DRIVE[1]), m = sine(rr);
-    var len = lerp(L0, total, m);
+    var len = lerp(L0, parkLen, m);
     var pt = road.getPointAtLength(len);
     var a = road.getPointAtLength(Math.max(0, len - 30));
     var b = road.getPointAtLength(Math.min(total, len + 30));
     var ang = Math.atan2(b.y - a.y, b.x - a.x) / D2R;
     truck.setAttribute('transform', 'translate(' + f1(pt.x) + ' ' + f1(pt.y) + ') rotate(' + ang.toFixed(2) + ') translate(-' + HALF + ' 0)');
     var speed = Math.sin(Math.PI * rr);
-    var settle = span(p, DRIVE[1], DRIVE[1] + 0.03);
+    var settle = span(p, DRIVE[1], DRIVE[1] + 0.025);
     var pitch = -Math.sin(2 * Math.PI * rr) * 0.7 + Math.sin(settle * Math.PI * 3) * 0.5 * (1 - settle);
     var bob = Math.sin(len / 9) * 0.35 * speed;
     body.setAttribute('transform', 'translate(0 ' + bob.toFixed(2) + ') rotate(' + pitch.toFixed(2) + ' ' + HALF + ' -13)');
@@ -1070,44 +1091,52 @@ footer a{color:#E9E2D6}
       c.setAttribute('r', f1(2 + ph * 4));
       c.style.opacity = (speed * (1 - ph) * 0.5).toFixed(2);
     });
-    truck.style.opacity = 1 - span(p, 0.70, 0.75);
+    truck.style.opacity = 1 - span(p, 0.54, 0.58);
     setDraw(road, Math.max(f0 * L0 / total, len / total));
 
+    var houseSolid = 0;
     details.forEach(function (d) {
       var f = d.pickup ? f0 : ease(clamp((pt.x - (d.x - 330)) / 210));
       setGroup(d.parts, f, 0.06);
-      d.solids.forEach(function (s) { s.style.opacity = clamp((f - 0.6) / 0.4); });
+      var solid = clamp((f - 0.6) / 0.4);
+      d.solids.forEach(function (s) { s.style.opacity = solid; });
+      if (d.g === house) houseSolid = solid;
     });
-    decor.style.opacity = 1 - span(p, 0.71, 0.79);
-    house.style.opacity = 1 - span(p, 0.72, 0.80);
-    front.style.opacity = house.style.opacity;
+    aptFront.style.opacity = p < MID ? clamp((f0 - 0.6) / 0.4) : 0;
+    decor.style.opacity = 1 - span(p, 0.55, 0.62);
+    house.style.opacity = 1 - span(p, 0.56, 0.63);
+    houseFront.style.opacity = p >= MID ? houseSolid * +house.style.opacity : 0;
 
     placeCrew(p);
 
     // the line becomes Roomi's doorway. The door is already open from the delivery, and the delivered pieces are inside.
-    var s = span(p, 0.705, 0.82), se = ease(s);
+    var s = span(p, 0.55, 0.65), se = ease(s);
     sym.setAttribute('transform', 'translate(' + DOOR + ' ' + f1(DOORY) + ') scale(' + lerp(0.3, 1, se).toFixed(4) + ')');
     sym.style.opacity = clamp(s * 5);
     setDraw(arch, se);
     leaf.style.opacity = s > 0 ? 1 : 0;
-    delivered.forEach(function (d, k) { d.style.opacity = span(p, 0.725 + k * 0.01, 0.765 + k * 0.01); });
+    delivered.forEach(function (d, k) { d.style.opacity = span(p, 0.565 + k * 0.01, 0.60 + k * 0.01); });
     room.forEach(function (r) { setDraw(r.el, ease(span(p, r.s, r.e))); });
     fills.forEach(function (r) { r.el.style.opacity = span(p, r.s, r.e); });
 
-    // camera: close on the pickup, follow the drive, frame the doorway and truck, then pull back to the Roomi doorway
-    var zt = ease(span(p, 0.70, 0.84));
-    var vbH = lerp(VB_CLOSE, VB_FULL, zt);
-    var vbW = clamp(vbH * aspect, vbH * 0.7, vbH * 2.05);
-    var camUnload = (DOOR + RIG_P.rear) / 2 - vbW / 2;
-    var lead = lerp(0.7, 0.38, ease(clamp((pt.x - START_X) / 250)));
-    var follow = clamp(pt.x - vbW * lead, 0, camUnload);
-    var cam = lerp(follow, DOOR - vbW / 2, zt);
-    var v = f1(cam) + ' ' + f1(VB_BOTTOM - vbH) + ' ' + f1(vbW) + ' ' + f1(vbH);
+    // camera: frame the pickup, follow the drive, frame the door and truck, then pull back to the Roomi doorway
+    var bottom = narrow ? 505 : 530;
+    var hL = fitH(RIG_S.rear + TRUCK_LEN + 8 - (PICKUP_X - 88)), wL = widthFor(hL);
+    var camL = Math.max(0, (PICKUP_X - 88 + RIG_S.rear + TRUCK_LEN + 8) / 2 - wL / 2);
+    var uL = DOOR - (narrow ? 125 : 185), uR = RIG_P.rear + TRUCK_LEN + 8;
+    var hU = fitH(uR - uL), wU = widthFor(hU), camU = (uL + uR) / 2 - wU / 2;
+    var tr = clamp((pt.x - startPt.x) / (RIG_P.rear + HALF - startPt.x)), tc = 1 - Math.pow(1 - tr, 1.6);   // camera leads the truck a little
+    var zt = ease(span(p, 0.54, 0.66));
+    var hEnd = Math.max(VB_FULL, 340 / clamp(aspect, 0.7, 2.05));
+    var vbH = lerp(lerp(hL, hU, tc), hEnd, zt);
+    var vbW = widthFor(vbH);
+    var cam = lerp(lerp(camL, camU, tc), DOOR - vbW / 2, zt);
+    var v = f1(cam) + ' ' + f1(bottom - vbH) + ' ' + f1(vbW) + ' ' + f1(vbH);
     if (v !== lastCam) { svg.setAttribute('viewBox', v); lastCam = v; }
     far.setAttribute('transform', 'translate(' + f1(cam * 0.45) + ' 0)');
-    far.style.opacity = span(p, 0.17, 0.22);
+    far.style.opacity = span(p, DRIVE[0], DRIVE[0] + 0.05);
 
-    setStage(p < 0.17 ? 0 : p < 0.40 ? 1 : p < 0.705 ? 2 : 3);
+    setStage(p < STAGE_AT[0] ? 0 : p < STAGE_AT[1] ? 1 : p < STAGE_AT[2] ? 2 : 3);
     steps.forEach(function (st, k) { var g = STEP_RANGES[k]; st.b.style.transform = 'scaleX(' + span(p, g[0], g[1]).toFixed(4) + ')'; });
     hint.style.opacity = p > 0.01 ? 0 : 1;
   }
@@ -1116,45 +1145,81 @@ footer a{color:#E9E2D6}
     var r = svg.getBoundingClientRect();
     if (r.width && r.height) aspect = r.width / r.height;
     if (bar) root.style.setProperty('--bar-h', bar.offsetHeight + 'px');
+    layout();
   }
   function barH() { return bar ? bar.offsetHeight : 0; }
-  function progress() {
-    var r = root.getBoundingClientRect();
-    var sp = root.offsetHeight - pin.offsetHeight;
-    return sp > 0 ? clamp((barH() - r.top) / sp) : 0;
-  }
-  function entryProgress() {
-    var r = root.getBoundingClientRect(), vh = window.innerHeight;
-    return clamp((vh - r.top) / Math.max(1, vh - barH()));
-  }
 
-  if (reduce) {
+  // without GSAP (blocked CDN) or with reduced motion: a still frame of the delivery, the closing copy and the estimate button
+  function still() {
     root.classList.add('is-static');
     measureView();
-    render(0.5, 1);
+    render(0.45, 1);
+    caps.forEach(function (c) { var on = c.getAttribute('data-stage') === '3'; c.classList.toggle('is-on', on); c.setAttribute('aria-hidden', on ? 'false' : 'true'); });
     setStage(3);
-    window.addEventListener('resize', function () { measureView(); lastCam = null; render(0.5, 1); });
+  }
+  if (!window.gsap || !window.ScrollTrigger) {
+    still();
+    window.addEventListener('resize', function () { measureView(); render(0.45, 1); });
     return;
   }
+  gsap.registerPlugin(ScrollTrigger);
 
-  root.classList.add('is-live');
-  measureView();
-  var target = progress(), cur = target, raf = 0;
-  render(cur, entryProgress());
-  function tick() {
-    raf = 0;
-    var d = target - cur;
-    cur = Math.abs(d) < 0.0003 ? target : cur + d * 0.16;
-    render(cur, entryProgress());
-    if (cur !== target) raf = requestAnimationFrame(tick);
-  }
-  function onScroll() {
-    target = progress();
-    if (!raf) raf = requestAnimationFrame(tick);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { measureView(); lastCam = null; target = progress(); cur = target; render(cur, entryProgress()); });
-  window.addEventListener('load', function () { measureView(); onScroll(); });
+  var mm = gsap.matchMedia();
+  mm.add('(prefers-reduced-motion: reduce)', function () {
+    still();
+    var onResize = function () { measureView(); render(0.45, 1); };
+    window.addEventListener('resize', onResize);
+    return function () { window.removeEventListener('resize', onResize); root.classList.remove('is-static'); };
+  });
+
+  mm.add('(prefers-reduced-motion: no-preference)', function () {
+    root.classList.add('is-live', 'is-gsap');
+    measureView();
+    var state = { p: 0, entry: 0 }, dirty = true;
+    function draw() { dirty = true; }
+    function tick() { if (dirty) { dirty = false; render(state.p, state.entry); } }
+    gsap.ticker.add(tick);
+
+    // the truck and pickup draw in as the section scrolls into view
+    gsap.fromTo(state, { entry: 0 }, { entry: 1, ease: 'none', onUpdate: draw,
+      scrollTrigger: { trigger: root, start: 'top bottom', end: function () { return 'top ' + barH() + 'px'; }, scrub: 0.4 } });
+
+    // the pinned journey: CSS sticky holds the stage; this timeline maps the section's scroll onto one 0-1 timeline
+    var tl = gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: root, start: function () { return 'top ' + barH() + 'px'; }, end: 'bottom bottom', scrub: 0.6 } });
+    tl.fromTo(state, { p: 0 }, { p: 1, duration: 1, onUpdate: draw }, 0);
+
+    // headlines: the old one is fully gone before the next one starts
+    var titles = [], subs = [];
+    caps.forEach(function (c) { (c.parentNode.classList.contains('j-title') ? titles : subs)[+c.getAttribute('data-stage')] = c; });
+    gsap.set(caps, { autoAlpha: 0, y: 12 });
+    gsap.set([titles[0], subs[0]], { autoAlpha: 1, y: 0 });
+    STAGE_AT.forEach(function (t, k) {
+      tl.to([titles[k], subs[k]], { autoAlpha: 0, y: -10, duration: 0.016, ease: 'power1.in' }, t - 0.02)
+        .fromTo([titles[k + 1], subs[k + 1]], { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.02, ease: 'power2.out', immediateRender: false }, t);
+    });
+
+    // the finale: the lamp clicks on, the room warms, a doormat at the door, the roof logo draws itself, then the estimate button
+    var lamp = ['#jShade', '#jLampGlow', '#jCone'];
+    tl.fromTo(lamp, { opacity: 0 }, { opacity: 1, duration: 0.004 }, 0.72)
+      .to(lamp, { opacity: 0.4, duration: 0.003 })
+      .to(lamp, { opacity: 1, duration: 0.005 })
+      .fromTo('#jLampGlow', { scale: 0.75, transformOrigin: '50% 50%' }, { scale: 1, duration: 0.05, ease: 'power2.out' }, 0.731)
+      .fromTo('#jWarm', { opacity: 0 }, { opacity: 0.2, duration: 0.05, ease: 'power1.inOut' }, 0.73)
+      .fromTo('#jMat', { opacity: 0, y: 5 }, { opacity: 1, y: 0, duration: 0.035, ease: 'power2.out' }, 0.765)
+      .fromTo('#jLogo', { opacity: 0 }, { opacity: 1, duration: 0.003 }, 0.79)
+      .fromTo('#jLogo', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.06, ease: 'power2.inOut' }, 0.79)
+      .fromTo('#jCta', { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.035, ease: 'power2.out' }, 0.86)
+      .to({}, { duration: 0.1 }, 0.9);   // hold on the finished room
+
+    var onRefresh = function () { measureView(); draw(); };
+    ScrollTrigger.addEventListener('refresh', onRefresh);
+    return function () {
+      gsap.ticker.remove(tick);
+      ScrollTrigger.removeEventListener('refresh', onRefresh);
+      root.classList.remove('is-live', 'is-gsap');
+    };
+  });
 })();
 </script>
 
