@@ -235,10 +235,18 @@ footer a{color:#E9E2D6}
 .j-stage{position:relative;width:100%;height:clamp(300px,54vh,560px)}
 .journey.is-live .j-stage{height:auto;flex:1 1 0;min-height:0}
 .j-stage svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
-.j-progress{position:relative;height:2px;background:var(--line);border-radius:2px;margin-top:2px;display:none}
-.journey.is-live .j-progress{display:block}
-.j-progress i{position:absolute;inset:0;background:var(--coral);transform-origin:left;transform:scaleX(0)}
-.j-hint{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:opacity .4s;display:none}
+.j-steps{list-style:none;margin:4px 0 0;padding:0;display:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.journey.is-live .j-steps{display:grid}
+.j-steps li{display:grid;gap:7px}
+.j-steps i{display:block;height:3px;border-radius:3px;background:var(--line);overflow:hidden}
+.j-steps b{display:block;height:100%;background:var(--coral);transform-origin:left;transform:scaleX(0)}
+.j-steps span{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .3s}
+.j-steps li.is-on span{color:var(--ink)}
+@media (max-width:440px){.j-steps{gap:8px}.j-steps span{font-size:10.5px;letter-spacing:.06em;white-space:nowrap}}
+.journey svg .j-far{fill:none;stroke:#12306B;stroke-opacity:.22;stroke-width:1;stroke-linejoin:round}
+.journey svg .j-puff{fill:none;stroke:#12306B;stroke-width:.9;opacity:0}
+.journey svg .j-fillbg{fill:#FBF7F0}
+.j-hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:opacity .4s;display:none}
 .journey.is-live .j-hint{display:block}
 .j-skip{position:absolute;left:12px;top:-60px;z-index:5;background:#061A3C;color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none}
 .j-skip:focus{top:8px}
@@ -351,18 +359,18 @@ footer a{color:#E9E2D6}
     <div class="journey-pin">
       <div class="wrap journey-top">
         <div class="j-copy">
-          <p class="eyebrow">Roomi Movers · Tampa Bay</p>
+          <p class="eyebrow">How a Roomi move works</p>
           <h2 class="j-title j-stack" id="j-title">
-            <span data-stage="0">We load it with care.</span>
-            <span data-stage="1">Across Tampa, door to door.</span>
-            <span data-stage="2">Right to your door.</span>
+            <span data-stage="0">Packed tight, so nothing shifts.</span>
+            <span data-stage="1">No surprise fees on the way.</span>
+            <span data-stage="2">No waiting around all day.</span>
             <span class="is-on" data-stage="3">We make room.</span>
           </h2>
           <div class="j-sub j-stack">
-            <p data-stage="0">On full-service moves, the truck and equipment are included.</p>
-            <p data-stage="1">Serving Tampa, Wesley Chapel, Lutz and Carrollwood.</p>
-            <p data-stage="2">A two-hour arrival window, every time.</p>
-            <p class="is-on" data-stage="3">Every box carried in, every piece set in place.</p>
+            <p data-stage="0">We treat your home like our own: every piece wrapped, floors and door frames covered.</p>
+            <p data-stage="1">One clear price before moving day, from the person who shows up at your door.</p>
+            <p data-stage="2">A two-hour arrival window, and we keep you posted on timing.</p>
+            <p class="is-on" data-stage="3">Beds set back up, every piece in place, and the new place left clean.</p>
           </div>
         </div>
         <div class="j-cta">
@@ -383,10 +391,17 @@ footer a{color:#E9E2D6}
 
           <!-- pickup + Tampa details -->
           <g id="jDecor">
+            <g id="jFar">
+              <path class="j-far" d="M0 0V-60H22V-88H40V-60H52V-120H74V-60H86V-150Q97-164 108-150V-60H122V-104H140V-60H150V-176H172V-60H184V-96H206V-60H220V-136A14 14 0 0 1 248-136V-60H262V-84H280V-60H292V-112H316V-60H330V-72H360V0" transform="translate(520 446)"/>
+              <path class="j-far" d="M0 0V-50H18V-96H36V-50H54V-130A12 12 0 0 1 78-130V-50H96V-80H120V-50H140V-110H160V-50H180V0" transform="translate(900 446)"/>
+              <path class="j-far" d="M0 0h46a10 10 0 0 0-8-16a12 12 0 0 0-22-6a9 9 0 0 0-16 22Z" transform="translate(430 214)"/>
+              <path class="j-far" d="M0 0h56a11 11 0 0 0-9-18a14 14 0 0 0-26-7a10 10 0 0 0-21 25Z" transform="translate(1010 200)"/>
+            </g>
             <g class="j-detail" data-x="150" data-s="0" data-e=".06" transform="translate(150 452)">
-              <path class="j-house j-draw" d="M-74 0V-132H74V0M-82-132H82"/>
-              <path class="j-house j-draw" d="M-56-108h22v20h-22ZM34-108h22v20h-22ZM-56-70h22v20h-22ZM34-70h22v20h-22Z"/>
-              <path class="j-house j-draw" d="M-18 0V-46A18 18 0 0 1 18-46V0"/>
+              <path class="j-house j-draw" d="M-74 0V-150H74V0M-80-150H80V-158H-80Z"/>
+              <path class="j-house j-draw" d="M-55-134h18v20h-18ZM-9-134h18v20h-18ZM37-134h18v20h-18ZM-55-96h18v20h-18ZM-9-96h18v20h-18ZM37-96h18v20h-18ZM-55-58h18v20h-18ZM37-58h18v20h-18Z"/>
+              <path class="j-ink j-draw" d="M-59-112h26v6h-26ZM-13-112h26v6h-26ZM33-112h26v6h-26ZM-59-74h26v6h-26ZM-13-74h26v6h-26ZM33-74h26v6h-26Z"/>
+              <path class="j-house j-draw" d="M-24-50H24L20-57H-20ZM-16 0V-30A16 16 0 0 1 16-30V0"/>
             </g>
             <g class="j-detail" data-abs="1" data-s=".27" data-e=".37" transform="translate(-140 95)">
               <path class="j-ink j-draw" d="M670 140a30 30 0 1 0 60 0a30 30 0 1 0-60 0"/>
@@ -426,24 +441,31 @@ footer a{color:#E9E2D6}
 
           <!-- the destination home -->
           <g id="jHouse" class="j-detail" data-x="1230" data-s=".38" data-e=".46" transform="translate(1230 446)">
-            <path class="j-house j-draw" d="M-112 0V-98L0-196L112-98V0"/>
+            <path class="j-house j-draw j-fillbg" d="M-112 0V-98L0-196L112-98V0Z"/>
             <path class="j-house j-draw" d="M64-142V-176H84V-124"/>
             <path class="j-house j-draw" d="M-86-62h28v28h-28ZM-72-62v28M-86-48h28"/>
             <path class="j-house j-draw" d="M58-62h28v28h-28ZM72-62v28M58-48h28"/>
-            <path class="j-house j-draw" d="M-24 0V-70A24 24 0 0 1 24-70V0"/>
+            <path class="j-house j-draw" d="M-24 0V-70A24 24 0 0 1 24-70V0M-36-102L0-118L36-102"/>
+            <path class="j-ink j-draw" d="M-150 0V-50M-150-50C-172-50-178-74-164-84C-168-104-144-112-134-98C-116-102-108-80-120-70C-110-58-128-46-140-52"/>
+            <path class="j-ink j-draw" d="M136 0V-24M127-24H145V-32A9 6 0 0 0 127-32ZM145-30h5v-5"/>
           </g>
 
           <!-- the truck -->
           <g id="jTruck" transform="translate(380 452) scale(1.2) translate(-60 0)">
-            <path id="jTruckFill" d="M0-10L0-54Q0-60 6-60L74-60Q80-60 80-54L80-40L100-40Q104-40 107-36L118-22Q120-19 120-15L120-12Q120-10 118-10Z" fill="#FBF7F0"/>
-            <path class="j-or j-draw" d="M0-10L0-54Q0-60 6-60L74-60Q80-60 80-54L80-40L100-40Q104-40 107-36L118-22Q120-19 120-15L120-12Q120-10 118-10L0-10M80-10L80-40"/>
-            <path class="j-or j-draw" d="M86-36L100-36L110-24L86-24Z"/>
-            <path class="j-or j-draw" d="M27-14V-34A13 13 0 0 1 53-34V-14"/>
+            <circle class="j-puff" r="3" cx="-6" cy="-14"/>
+            <circle class="j-puff" r="3" cx="-6" cy="-14"/>
+            <circle class="j-puff" r="3" cx="-6" cy="-14"/>
+            <g id="jBody">
+              <path id="jTruckFill" d="M0-10L0-54Q0-60 6-60L74-60Q80-60 80-54L80-40L100-40Q104-40 107-36L118-22Q120-19 120-15L120-12Q120-10 118-10Z" fill="#FBF7F0"/>
+              <path class="j-or j-draw" d="M0-10L0-54Q0-60 6-60L74-60Q80-60 80-54L80-40L100-40Q104-40 107-36L118-22Q120-19 120-15L120-12Q120-10 118-10L0-10M80-10L80-40"/>
+              <path class="j-or j-draw" d="M86-36L100-36L110-24L86-24Z"/>
+              <path class="j-or j-draw" d="M27-14V-34A13 13 0 0 1 53-34V-14"/>
+              <path class="j-or j-draw j-ramp" d="M0-11L-70 0M0-6L-64 0"/>
+            </g>
             <path class="j-or j-draw j-wheel" d="M12-10a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/>
             <path class="j-or j-draw j-wheel" d="M86-10a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/>
             <path class="j-or j-spoke" id="jSpoke1" d="M22-10V-17"/>
             <path class="j-or j-spoke" id="jSpoke2" d="M96-10V-17"/>
-            <path class="j-or j-draw j-ramp" d="M0-11L-70 0M0-6L-64 0"/>
           </g>
 
           <!-- Kareem and a teammate -->
@@ -498,7 +520,12 @@ footer a{color:#E9E2D6}
         </svg>
         <span class="j-hint" id="jHint" aria-hidden="true">Scroll</span>
       </div>
-      <div class="j-progress" aria-hidden="true"><i id="jBar"></i></div>
+      <div class="wrap"><ol class="j-steps" aria-hidden="true">
+        <li><i><b></b></i><span>Load</span></li>
+        <li><i><b></b></i><span>Drive</span></li>
+        <li><i><b></b></i><span>Arrive</span></li>
+        <li><i><b></b></i><span>Settle in</span></li>
+      </ol></div>
     </div>
   </section>
 
@@ -770,7 +797,10 @@ footer a{color:#E9E2D6}
   });
   var caps = [].slice.call(root.querySelectorAll('.j-stack > *'));
   var hint = document.getElementById('jHint');
-  var barFill = document.getElementById('jBar');
+  var steps = [].slice.call(root.querySelectorAll('.j-steps li')).map(function (li) { return { li: li, b: li.querySelector('b') }; });
+  var STEP_RANGES = [[0, .24], [.24, .60], [.60, .76], [.76, 1]];
+  var far = document.getElementById('jFar'), body = document.getElementById('jBody');
+  var puffs = [].slice.call(truck.querySelectorAll('.j-puff'));
   var stage = -1, aspect = 1.6, lastCam = null;
 
   function setStage(s) {
@@ -781,6 +811,7 @@ footer a{color:#E9E2D6}
       c.classList.toggle('is-on', on);
       c.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
+    steps.forEach(function (st, k) { st.li.classList.toggle('is-on', k === s); });
   }
 
   // ground height for a walker at world x, given where the truck is parked
@@ -839,6 +870,15 @@ footer a{color:#E9E2D6}
     var spin = (len / 12 * 57.2958).toFixed(1);
     spokes[0].setAttribute('transform', 'rotate(' + spin + ' 22 -10)');
     spokes[1].setAttribute('transform', 'rotate(' + spin + ' 96 -10)');
+    var moving = m > 0.002 && m < 0.998;
+    body.setAttribute('transform', 'translate(0 ' + (moving ? Math.sin(len / 7) * 0.6 : 0).toFixed(2) + ')');
+    puffs.forEach(function (c, k) {
+      var ph = (len / 46 + k / 3) % 1;
+      c.setAttribute('cx', (-6 - ph * 24).toFixed(1));
+      c.setAttribute('cy', (-14 - ph * 7).toFixed(1));
+      c.setAttribute('r', (2 + ph * 4).toFixed(1));
+      c.style.opacity = moving ? ((1 - ph) * 0.55).toFixed(2) : 0;
+    });
     truck.style.opacity = 1 - clamp((p - 0.74) / 0.06);
     setDraw(road, Math.max(f0 * L0 / total, len / total));
 
@@ -884,8 +924,10 @@ footer a{color:#E9E2D6}
     var cam = lerp(follow, fin, zt);
     var v = cam.toFixed(1) + ' ' + (VB_BOTTOM - vbH).toFixed(1) + ' ' + vbW.toFixed(1) + ' ' + vbH.toFixed(1);
     if (v !== lastCam) { svg.setAttribute('viewBox', v); lastCam = v; }
-    setStage(p < 0.22 ? 0 : p < 0.6 ? 1 : p < 0.76 ? 2 : 3);
-    barFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+    far.setAttribute('transform', 'translate(' + (cam * 0.45).toFixed(1) + ' 0)');
+    far.style.opacity = clamp((p - 0.2) / 0.1);
+    setStage(p < 0.24 ? 0 : p < 0.6 ? 1 : p < 0.76 ? 2 : 3);
+    steps.forEach(function (st, k) { var r = STEP_RANGES[k]; st.b.style.transform = 'scaleX(' + clamp((p - r[0]) / (r[1] - r[0])).toFixed(4) + ')'; });
     hint.style.opacity = p > 0.02 ? 0 : 1;
   }
 
