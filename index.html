@@ -23,12 +23,14 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --blue:#9DB4EA; --blue-deep:#061A3C; --coral:#FF7A45; --coral-ink:#FF9A6E;
-  --ink:#F7EEE2; --muted:#B4BED3; --bg:#04122B; --band:#0A1C3D; --line:#1E3360; --card:#0D2247; --field:#081936;
+  --ink:#F7EEE2; --muted:#B4BED3; --bg:#031228; --band:#031228; --line:#1C3463; --card:#0A1F45; --field:#06173A;
   --on-blue:#FFFFFF; --on-blue-soft:#CBD3E3; color-scheme:dark}}
 :root[data-theme="dark"]{
   --blue:#9DB4EA; --blue-deep:#061A3C; --coral:#FF7A45; --coral-ink:#FF9A6E;
-  --ink:#F7EEE2; --muted:#B4BED3; --bg:#04122B; --band:#0A1C3D; --line:#1E3360; --card:#0D2247; --field:#081936;
+  --ink:#F7EEE2; --muted:#B4BED3; --bg:#031228; --band:#031228; --line:#1C3463; --card:#0A1F45; --field:#06173A;
   --on-blue:#FFFFFF; --on-blue-soft:#CBD3E3; color-scheme:dark}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tier.premium{background:#0F2A57;border-color:var(--line)}}
+:root[data-theme="dark"] .tier.premium{background:#0F2A57;border-color:var(--line)}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
 a{color:var(--blue)}
@@ -455,7 +457,7 @@ footer a{color:#E9E2D6}
   </section>
 
   <section class="closer">
-    <img class="closer-banner" src="images/brand-banner.jpg" alt="Roomi Movers logo: We make room." width="1920" height="800">
+    <img class="closer-banner" src="images/brand-banner.jpg" alt="Roomi Movers logo: We make room." width="1920" height="800" loading="lazy">
     <div class="wrap">
       <h2>Ready to move?</h2>
       <p>Book your free quote, or call or text and talk to us directly.</p>
@@ -472,7 +474,7 @@ footer a{color:#E9E2D6}
   <div class="wrap">
     <div class="fcols">
       <div>
-        <a class="brand" href="#top" aria-label="Roomi Movers home"><img class="flogo" src="images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600"></a>
+        <a class="brand" href="#top" aria-label="Roomi Movers home"><img class="flogo" src="images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
         <p style="margin-top:8px"><a class="ph" href="tel:+18134363216">(813) 436-3216</a><br><a href="mailto:makeroom@roomimovers.com">makeroom@roomimovers.com</a></p>
       </div>
       <div><h4>Quick links</h4><ul><li><a href="#services">Services</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#about">About</a></li><li><a href="#faq">FAQ</a></li><li><a href="#quote">Free Quote</a></li></ul></div>
