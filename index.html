@@ -1480,8 +1480,8 @@ footer a{color:#E9E2D6}
 /* Quote requests. Both forms post to FormSubmit, which emails each request to Roomi Movers.
    The thank-you only shows after FormSubmit confirms it accepted the request; anything else shows an error with the phone number. */
 (function () {
-  var ENDPOINT = 'https://formsubmit.co/ajax/makeroom@roomimovers.com';
-  var FALLBACK = 'Check your connection and try again, or call or text <a href="tel:+18134363216">(813) 436-3216</a>.';
+  var ENDPOINT = 'https://formsubmit.co/ajax/aboroomiamir@gmail.com';
+  var CALL = '<a href="tel:+18134363216">(813) 436-3216</a>';
   function wire(form, cfg) {
     if (!form) return;
     var btn = form.querySelector('button[type="submit"]'), label = btn.textContent, msg = document.getElementById(cfg.msg);
@@ -1524,16 +1524,19 @@ footer a{color:#E9E2D6}
         signal: ctrl ? ctrl.signal : undefined
       }).then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (j) {
-          if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || 'HTTP ' + r.status);
+          if (!r.ok || String(j.success) !== 'true') { var err = new Error(j.message || 'HTTP ' + r.status); err.server = true; throw err; }
         });
       }).then(function () {
         sent = true;
         btn.textContent = 'Request sent';
         [].forEach.call(form.querySelectorAll('input, select, textarea'), function (el) { el.readOnly = true; });
         say('is-ok', 'Thanks, ' + first + '. Your request is in, and Kareem will call you at ' + phone.value.trim() + ' with your estimate. Most estimates are back the same day.');
-      }).catch(function () {
+      }).catch(function (err) {
         btn.disabled = false; btn.textContent = label;
-        say('is-error', '', 'Your request didn\u2019t send. ' + FALLBACK);
+        // a refusal from the form service is on our side, not the visitor's connection
+        say('is-error', '', err && err.server
+          ? 'Online requests aren\u2019t going through right now. Call or text ' + CALL + ' and Kareem will get you an estimate.'
+          : 'Your request didn\u2019t send. Check your connection and try again, or call or text ' + CALL + '.');
       }).then(function () {
         clearTimeout(timer);
         busy = false;
