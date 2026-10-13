@@ -165,6 +165,97 @@ AREA_TIPS = [
     'Measure large furniture against tight doorways and stairwells.',
 ]
 
+
+# ---------- the other 16 areas on the Google Business Profile ----------
+# Facts below were checked against each area's Wikipedia page on 2026-10-12. The planning tips are general moving advice, not claims about past jobs.
+TIP = {
+    'park': ('Parking and the walk to the door', 'Tell us where the truck can park and how far it is to the door. Long carries can add time, and we include them in your estimate.'),
+    'gate': ('Gates and community rules', 'If your community has a gate or rules for moving trucks, check them ahead and have access codes ready for both addresses.'),
+    'floor': ('Apartments and condos', 'Tell us the floor at both addresses and whether there is an elevator that needs a reservation.'),
+    'between': ('Moving between areas', 'A move between cities includes the drive in your estimate, so send us both full addresses.'),
+    'heavy': ('Large and heavy items', 'Gun safes, appliances and oversized furniture need the right equipment. Tell us the size and where it is going.'),
+    'book': ('Choosing your day', 'Weekends and the last days of the month book first. One to two weeks ahead is ideal.'),
+}
+# (name, slug, county, zips, routes, landmarks, about sentence, tips)
+EXTRA_AREAS = [
+    ('Zephyrhills', 'zephyrhills', 'Pasco', '33541, 33542', 'US 301, SR 39 and SR 54',
+     'Zephyrhills Downtown Historic District, Zephyrhills Depot Museum and Zephyrhills Municipal Airport',
+     'Zephyrhills began as Abbott in 1888 and was renamed in 1910. US 301 is its main north-south road, and its downtown historic district is on the National Register of Historic Places.',
+     ['park', 'between']),
+    ('Brandon', 'brandon', 'Hillsborough', '33508, 33509, 33510, 33511', 'I-75, SR 60 (Brandon Boulevard) and US 301',
+     'Hillsborough County Fairgrounds and Brandon Regional Library',
+     'Brandon is an unincorporated community east of Tampa. I-75 passes through its western part with exits at the Selmon Expressway (SR 618) and SR 60, and SR 60 runs through the middle.',
+     ['floor', 'park']),
+    ('Riverview', 'riverview', 'Hillsborough', '33568, 33569, 33578, 33579', 'I-75 and US 301',
+     'Alafia River and Bell Creek Nature Preserve',
+     'Riverview is an unincorporated community founded in 1885 on the north shore of the Alafia River. Downtown Tampa is about 12 miles northwest via US 301 and the Selmon Expressway.',
+     ['gate', 'between']),
+    ('Temple Terrace', 'temple-terrace', 'Hillsborough', '33617, 33637', 'I-75 nearby',
+     'Hillsborough River, Temple Terrace Golf and Country Club and Florida College',
+     'Temple Terrace is a city in northeastern Hillsborough County next to Tampa, incorporated in 1925. The Hillsborough River flows through its eastern and southern parts.',
+     ['floor', 'book']),
+    ("Town 'n' Country", 'town-n-country', 'Hillsborough', '33615', 'Memorial Highway, Hillsborough Avenue and Waters Avenue',
+     "Bay Crest Park, Rocky Creek and Sweetwater Creek",
+     "Town 'n' Country is a community in western Hillsborough County, developed from 1958 to 1978 on a former dairy farm. It sits close to Tampa International Airport.",
+     ['park', 'floor']),
+    ('Westchase', 'westchase', 'Hillsborough', '33626', 'Neighborhood streets of the Westchase community',
+     'Westchase Golf Course, West Park Village and Tampa Bay Downs',
+     'Westchase is a planned community established in 1991, with a community association that governs the largest deed-restricted part of the area.',
+     ['gate', 'park']),
+    ('Citrus Park', 'citrus-park', 'Hillsborough', '33625', 'SR 589 (Veterans Expressway) and Gunn Highway',
+     'Westfield Citrus Park and Big Cat Rescue',
+     'Citrus Park is in northwestern Hillsborough County, about 15 miles northwest of Tampa, with the Veterans Expressway running north to south through it.',
+     ['gate', 'between']),
+    ('Valrico', 'valrico', 'Hillsborough', '33594, 33595, 33596', 'SR 60',
+     'James McCabe Theater (the former Valrico Civic Center)',
+     'Valrico lies on SR 60, about 14 miles east of Tampa. Its name is said to mean "rich valley", and the railway built through the area in 1890 brought new settlers.',
+     ['park', 'heavy']),
+    ('Seffner', 'seffner', 'Hillsborough', '33583, 33584', 'I-4 and SR 574 (Dr. Martin Luther King Jr. Boulevard)',
+     'Lake Weeks and the Seffner-Mango Branch Library',
+     'Seffner is about 13 miles east of downtown Tampa, with I-4 along its northern edge. Its post office opened in 1884 and was named for its first postmaster.',
+     ['book', 'floor']),
+    ('Gibsonton', 'gibsonton', 'Hillsborough', '33534', 'US 41 and I-75',
+     "International Independent Showmen's Museum",
+     'Gibsonton was founded in 1884 by James Gibson Sr. and became a wintering town for carnival and circus workers.',
+     ['heavy', 'park']),
+    ('Oldsmar', 'oldsmar', 'Pinellas', '34677', 'Streets around the northern tip of Tampa Bay',
+     'Oldsmar Public Library and Tampa Bay Downs',
+     'Oldsmar is a city on the northern tip of Tampa Bay, named for automobile pioneer Ransom E. Olds, who began the planned community in 1916.',
+     ['between', 'floor']),
+    ('Thonotosassa', 'thonotosassa', 'Hillsborough', '33592', 'I-4, I-75 and US 301',
+     'Hillsborough River, Lake Thonotosassa and the Thonotosassa Branch Library',
+     'Thonotosassa is in northeastern Hillsborough County, with I-4 along its southern edge and I-75 along its western edge. Its name is said to come from Seminole-Creek words for "flint".',
+     ['park', 'heavy']),
+    ('Egypt Lake-Leto', 'egypt-lake-leto', 'Hillsborough', '33614', 'Streets just north of Tampa International Airport',
+     'Egypt Lake, Leto and West Park Estates',
+     'Egypt Lake-Leto is about 7 miles northwest of downtown Tampa and takes in the communities of Egypt Lake, Leto and West Park Estates.',
+     ['floor', 'park']),
+    ("Land O' Lakes", 'land-o-lakes', 'Pasco', '33599, 34637, 34638, 34639', 'US 41, SR 52, SR 54 and the Suncoast Parkway (SR 589)',
+     "Conner Preserve, Cypress Creek Preserve and the Land O' Lakes Branch Library",
+     "Land O' Lakes was renamed in 1950. US 41 is its main north-south road, and the Suncoast Parkway runs along its western edge.",
+     ['gate', 'book']),
+    ('Dade City', 'dade-city', 'Pasco', '33523, 33525, 33526', 'US 98, US 301 and SR 52',
+     'Pioneer Florida Museum, Hugh Embry Library and AdventHealth Dade City',
+     'Dade City is the county seat of Pasco County, named for Major Francis L. Dade. It hosts an annual Kumquat Festival.',
+     ['between', 'book']),
+    ('San Antonio', 'san-antonio', 'Pasco', '33576', 'Streets in the city of San Antonio',
+     'San Antonio City Hall, St. Anthony of Padua Catholic Church and Lake Jovita',
+     'San Antonio is a small city in Pasco County, incorporated as a town in 1891, with the motto "Gem of the Highlands". Saint Leo University is nearby.',
+     ['park', 'heavy']),
+]
+for _n, _s, _c, _z, _r, _l, _about, _tips in EXTRA_AREAS:
+    AREAS.append({
+        'slug': _s, 'name': _n, 'extra': True,
+        'title': 'Movers in %s, FL | Roomi Movers' % _n,
+        'desc': 'Roomi Movers serves %s in %s County (ZIP %s). Hourly rate, two-hour minimum, free estimate before you book.' % (_n, _c, _z),
+        'h1': 'Movers in %s, FL' % _n,
+        'lede': 'Moving in or out of %s? Roomi Movers brings the truck, wraps and pads your furniture, and sets beds back up at your new place.' % _n,
+        'facts': [('County', _c), ('ZIP codes', _z), ('Main routes', _r), ('Landmarks', _l)],
+        'about': [_about, 'We move people within %s and between %s and Tampa, Carrollwood, Wesley Chapel and Lutz.' % (_n, _n)],
+        'plan': [TIP[k] for k in _tips],
+    })
+
+
 PAGE_CSS = '''
 /* inner pages */
 .page-hero{background:var(--band);padding-block:44px 56px}
@@ -196,7 +287,7 @@ PAGE_CSS = '''
 .card h2 a{color:inherit;text-decoration:none}
 .card h2 a:hover{color:var(--coral-ink);text-decoration:underline;text-underline-offset:3px}
 .cols .card h2{font-size:clamp(22px,2.2vw,28px)}
-#faq .head,#quote .quote-side>.eyebrow,#quote .quote-side>h2{display:none}
+.is-faq #faq .head,.is-contact #quote .quote-side>.eyebrow,.is-contact #quote .quote-side>h2{display:none}
 #faq{padding-top:48px}
 .area-intro{display:grid;grid-template-columns:1.2fr 1fr;gap:32px 48px;align-items:start}
 .facts{display:grid;gap:14px;margin:16px 0 0}
@@ -359,7 +450,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 
 def footer():
     svc = ''.join('<li><a href="/services/%s/">%s</a></li>' % (s['slug'], esc(s['short'])) for s in SERVICES)
-    areas = ''.join('<li><a href="/areas/%s/">%s</a></li>' % (a['slug'], esc(a['name'])) for a in AREAS)
+    areas = ''.join('<li><a href="/areas/%s/">%s</a></li>' % (a['slug'], esc(a['name'])) for a in AREAS if not a.get('extra')) + '<li><a href="/areas/">All service areas</a></li>'
     return '''<footer>
   <div class="wrap">
     <div class="fcols">
@@ -478,7 +569,13 @@ def area_page(a):
         {'@type': 'WebPage', 'name': a['title'], 'url': SITE + path, 'description': a['desc'], 'about': biz},
         breadcrumbs_ld([('Home', '/'), ('Service areas', '/areas/'), (a['name'], path)]),
     ]
-    return path, page(path, a['title'], a['desc'], [('Home', '/'), ('Service areas', '/areas/'), (a['name'], None)], a['h1'], a['lede'], body, ld)
+    quote = home_section('quote').replace('name="from">', 'name="from" value="%s, FL">' % esc(a['name']))
+    quote = quote.replace('<h2 style="margin-top:12px">Tell us about your move</h2>', '<h2 style="margin-top:12px">Get a free estimate for your %s move</h2>' % esc(a['name']))
+    body = body + '\n' + quote
+    html = page(path, a['title'], a['desc'], [('Home', '/'), ('Service areas', '/areas/'), (a['name'], None)], a['h1'], a['lede'], body, ld)
+    html = html.replace('href="/contact/">Get a Free Estimate</a>', 'href="#quote">Get a Free Estimate</a>', 1)
+    m = re.search(r'<script>\n/\* Quote requests\..*?</script>', HOME, re.S)
+    return path, html.replace('</body>', m.group(0) + '\n</body>')
 
 
 # ---------- top-level pages for each header tab (built from the home page's own sections) ----------
@@ -540,10 +637,10 @@ def all_area_chips():
 def areas_hub():
     cards = ''.join(
         '<article class="card"><h2><a href="/areas/%s/">%s</a></h2><p>%s</p>%s<p style="margin-top:16px"><a class="btn btn-ghost" href="/areas/%s/">Movers in %s</a></p></article>'
-        % (a['slug'], esc(a['name']), esc(a['lede']), facts_html(a['facts'][:2]), a['slug'], esc(a['name'])) for a in AREAS)
+        % (a['slug'], esc(a['name']), esc(a['lede']), facts_html(a['facts'][:2]), a['slug'], esc(a['name'])) for a in AREAS if not a.get('extra'))
     body = ('  <section class="band">\n    <div class="wrap">\n      <div class="cols">' + cards + '</div>\n'
             '      <h2 style="margin-top:44px;font-size:clamp(24px,2.6vw,30px)">All the areas we serve</h2>'
-            '<p class="after" style="margin-bottom:14px">The four in bold above have their own planning notes.</p>' + all_area_chips() +
+            '<p class="after" style="margin-bottom:14px">Choose your area for local details and to request an estimate there.</p>' + all_area_chips() +
             '      <p class="after" style="margin-top:28px">Outside these areas? Call us anyway at <a class="ph" href="tel:+18134363216">(813) 436-3216</a>.</p>\n    </div>\n  </section>')
     return hub_page('/areas/', 'Service Areas: Tampa, Wesley Chapel, Lutz & Carrollwood | Roomi Movers',
                     'Roomi Movers is based in Tampa and moves homes and apartments in Tampa, Wesley Chapel, Lutz and Carrollwood, FL. Hourly rate, free estimate.',
@@ -564,10 +661,11 @@ def faq_page():
     qa = re.findall(r'<summary>(.*?)</summary><p>(.*?)</p>', sec, re.S)
     ld = [{'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': re.sub('<[^>]+>', '', q),
            'acceptedAnswer': {'@type': 'Answer', 'text': re.sub('<[^>]+>', '', a)}} for q, a in qa]}]
-    return hub_page('/faq/', 'Moving FAQ: Pricing, Trucks, Booking | Roomi Movers',
+    path_, html_ = hub_page('/faq/', 'Moving FAQ: Pricing, Trucks, Booking | Roomi Movers',
                     'Answers to common questions about Roomi Movers: hourly pricing, the truck, heavy items, how far ahead to book and the areas we serve.',
                     'FAQ', 'Your questions, answered',
                     'Hourly pricing, what is included, and how to book. Do not see your question? Call or text us.', sec, ld)
+    return path_, html_.replace('<main id="main"', '<main id="main" class="is-faq"', 1)
 
 
 def contact_page():
@@ -578,7 +676,7 @@ def contact_page():
                           home_section('quote'))
     m = re.search(r'<script>\n/\* Quote requests\..*?</script>', HOME, re.S)
     assert m
-    return path, html.replace('</body>', m.group(0) + '\n</body>')
+    return path, html.replace('<main id="main"', '<main id="main" class="is-contact"', 1).replace('</body>', m.group(0) + '\n</body>')
 
 
 def main():
