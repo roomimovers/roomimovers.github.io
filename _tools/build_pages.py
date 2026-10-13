@@ -23,7 +23,7 @@ WHITE_GLOVE = ['Floor runners and door-frame guards', 'TVs, art and mirrors boxe
 
 SERVICES = [
     {
-        'slug': 'home-moves', 'name': 'Home Moves', 'short': 'Home moves',
+        'slug': 'home-moves', 'card': 'Houses and townhomes, with the box truck, wrapping and bed setup included.', 'name': 'Home Moves', 'short': 'Home moves',
         'title': 'Home Movers in Tampa Bay | Roomi Movers',
         'desc': 'House and townhome moves in Tampa, Wesley Chapel, Lutz and Carrollwood. Box truck included, furniture wrapped and padded, beds set back up. Hourly rate, free estimate.',
         'h1': 'Home moves, handled like our own',
@@ -39,7 +39,7 @@ SERVICES = [
         ],
     },
     {
-        'slug': 'apartment-condo-moves', 'name': 'Apartment & Condo Moves', 'short': 'Apartment & condo moves',
+        'slug': 'apartment-condo-moves', 'card': 'Studios to 3 bedrooms, walk-ups and elevator buildings, on your move-out timeline.', 'name': 'Apartment & Condo Moves', 'short': 'Apartment & condo moves',
         'title': 'Apartment & Condo Movers in Tampa Bay | Roomi Movers',
         'desc': 'Apartment and condo moves from studios to 3 bedrooms in Tampa, Wesley Chapel, Lutz and Carrollwood. Walk-ups and elevators, move-out deadlines met. Free estimate.',
         'h1': 'Apartment and condo moves, on your schedule',
@@ -55,7 +55,7 @@ SERVICES = [
         ],
     },
     {
-        'slug': 'loading-unloading', 'name': 'Loading & Unloading', 'short': 'Loading & unloading',
+        'slug': 'loading-unloading', 'card': 'Two movers for your rental truck, moving container or storage unit.', 'name': 'Loading & Unloading', 'short': 'Loading & unloading',
         'title': 'Moving Labor: Loading & Unloading in Tampa Bay | Roomi Movers',
         'desc': 'Labor-only moving help in Tampa Bay. Two movers load or unload your rental truck, moving container or storage unit, packed tight so nothing shifts. Free estimate.',
         'h1': 'Loading and unloading help, packed tight',
@@ -71,7 +71,7 @@ SERVICES = [
         ],
     },
     {
-        'slug': 'heavy-specialty-items', 'name': 'Heavy & Specialty Items', 'short': 'Heavy & specialty items',
+        'slug': 'heavy-specialty-items', 'card': 'Gun safes, appliances, treadmills and oversized furniture.', 'name': 'Heavy & Specialty Items', 'short': 'Heavy & specialty items',
         'title': 'Gun Safe, Appliance & Heavy Item Movers in Tampa | Roomi Movers',
         'desc': 'Moving gun safes, washers, dryers, fridges, treadmills and oversized furniture in Tampa Bay. Tell us the size and where it is going and we bring the right equipment.',
         'h1': 'Heavy and specialty items, moved safely',
@@ -88,49 +88,73 @@ SERVICES = [
     },
 ]
 
+# Local facts below were checked against Wikipedia on 2026-10-12 (county, ZIP codes, main roads, landmarks).
+# Keep them factual: no claims about past jobs, reviews or anything we have not confirmed.
 AREAS = [
     {
         'slug': 'tampa', 'name': 'Tampa',
         'title': 'Movers in Tampa, FL | Roomi Movers',
-        'desc': 'Local, family-run movers based in Tampa. Home and apartment moves, loading help and heavy items. Hourly rate, two-hour minimum, free estimate before you book.',
+        'desc': 'Family-run movers based in Tampa: condos downtown and in Channelside, homes in Seminole Heights, Hyde Park and New Tampa. Hourly rate, two-hour minimum, free estimate.',
         'h1': 'Tampa movers, based right here',
         'lede': 'Roomi Movers is a family-run moving company based in Tampa. When you call, you talk to the person who shows up at your door.',
+        'facts': [('County', 'Hillsborough (Tampa is the county seat)'), ('Main routes', 'I-275 and I-4'),
+                  ('Neighborhoods', 'Downtown, Channelside, Hyde Park, Seminole Heights, Westshore and New Tampa')],
         'about': [
-            'We move homes, apartments and condos across Tampa, and between Tampa and Wesley Chapel, Lutz and Carrollwood.',
-            'Every move is billed by the hour with a two-hour minimum, and you get a free estimate with your rate and expected time before you book.',
+            'Tampa homes range from high-rise condos downtown and in Channelside to houses in Seminole Heights, Hyde Park and New Tampa. Each plans a little differently, so your estimate starts with a few questions about the building, the stairs and the parking.',
+            'We also move people between Tampa and Wesley Chapel, Lutz and Carrollwood.',
+        ],
+        'plan': [
+            ('Condo and apartment towers', 'Downtown, Channelside and Westshore buildings often have move-in rules. Ask your building manager about elevator reservations, loading areas and move hours, and tell us what they need.'),
+            ('Houses with street parking', 'If the truck has to park on the street or away from the door, tell us how far the walk is. Long carries can add time, and we include them in your estimate.'),
         ],
     },
     {
         'slug': 'wesley-chapel', 'name': 'Wesley Chapel',
         'title': 'Movers in Wesley Chapel, FL | Roomi Movers',
-        'desc': 'Wesley Chapel movers for homes, townhomes and apartments, plus loading help and heavy items. Family-run, hourly rate, free estimate before you book.',
+        'desc': 'Wesley Chapel movers for homes, townhomes and apartments in ZIP codes 33543, 33544 and 33545. Family-run, hourly rate, free estimate before you book.',
         'h1': 'Wesley Chapel movers you can reach directly',
         'lede': 'Moving in or out of Wesley Chapel? We bring the truck, wrap and pad your furniture, and set beds back up at your new place.',
+        'facts': [('County', 'Pasco'), ('ZIP codes', '33543, 33544, 33545'), ('Main routes', 'I-75, SR 56 and Bruce B. Downs Boulevard'),
+                  ('Landmarks', 'Shops at Wiregrass, Tampa Premium Outlets and Cypress Creek Town Center')],
         'about': [
-            'We serve Wesley Chapel in Pasco County, along with moves to and from Tampa, Lutz and Carrollwood.',
-            'Every move is billed by the hour with a two-hour minimum, and you get a free estimate with your rate and expected time before you book.',
+            'Wesley Chapel sits in Pasco County, north of Tampa along I-75. Moving between Wesley Chapel and Tampa, Lutz or Carrollwood? We plan the drive and the timing as part of your estimate.',
+        ],
+        'plan': [
+            ('Community and HOA rules', 'If your neighborhood has an HOA or gated entry, check its rules for moving trucks and parking, and have gate codes ready for both addresses.'),
+            ('Moving day timing', 'Tell us your closing or lease times. A two-hour arrival window, and updates on timing, help you plan around key handoffs.'),
         ],
     },
     {
         'slug': 'lutz', 'name': 'Lutz',
         'title': 'Movers in Lutz, FL | Roomi Movers',
-        'desc': 'Lutz movers for homes, apartments and condos, plus labor-only loading and heavy items. Family-run, hourly rate, free estimate before you book.',
+        'desc': 'Lutz movers for homes, apartments and condos in ZIP codes 33548, 33549, 33558 and 33559, on both the Hillsborough and Pasco sides. Hourly rate, free estimate.',
         'h1': 'Lutz movers, just up the road',
         'lede': 'From north Tampa to Lutz and back, our crew handles homes, apartments, loading help and the heavy pieces.',
+        'facts': [('County', 'Hillsborough and Pasco (Lutz spans both)'), ('ZIP codes', '33548, 33549, 33558, 33559'),
+                  ('Main routes', 'US 41, I-275, State Road 597 and State Road 54')],
         'about': [
-            'We serve Lutz, just north of Tampa, along with moves to and from Tampa, Wesley Chapel and Carrollwood.',
-            'Every move is billed by the hour with a two-hour minimum, and you get a free estimate with your rate and expected time before you book.',
+            'Lutz sits just north of Tampa and stretches across the Hillsborough and Pasco county line, with US 41 running through the middle. We move people within Lutz and between Lutz and Tampa, Wesley Chapel and Carrollwood.',
+        ],
+        'plan': [
+            ('Send us the exact address', 'Because Lutz spans two counties and four ZIP codes, the full address helps us plan the route and timing for your estimate.'),
+            ('Long driveways and big yards', 'If the truck can\'t get close to the door, tell us how far the walk is. Long carries can add time, and we include them in your estimate.'),
         ],
     },
     {
         'slug': 'carrollwood', 'name': 'Carrollwood',
         'title': 'Movers in Carrollwood, FL | Roomi Movers',
-        'desc': 'Carrollwood movers for homes, apartments and condos, plus loading help and heavy items. Family-run, hourly rate, free estimate before you book.',
+        'desc': 'Carrollwood movers for homes, apartments and condos in ZIP codes 33618 and 33624, near Dale Mabry Highway and Lake Carroll. Hourly rate, free estimate.',
         'h1': 'Carrollwood movers who keep you posted',
         'lede': 'Home, apartment and condo moves in Carrollwood, with a two-hour arrival window and updates on timing.',
+        'facts': [('County', 'Hillsborough'), ('ZIP codes', '33618, 33624'), ('Main routes', 'Dale Mabry Highway, Busch Boulevard, Bearss Avenue and Fletcher Avenue'),
+                  ('Landmarks', 'Lake Carroll and Carrollwood Village')],
         'about': [
-            'We serve Carrollwood in north Tampa, along with moves to and from Tampa, Wesley Chapel and Lutz.',
-            'Every move is billed by the hour with a two-hour minimum, and you get a free estimate with your rate and expected time before you book.',
+            'Carrollwood is in north Tampa, built out around Lake Carroll starting in 1959. Many of its homes date from those early decades, alongside newer apartments and condos near Dale Mabry Highway.',
+            'We move people within Carrollwood and between Carrollwood and Tampa, Wesley Chapel and Lutz.',
+        ],
+        'plan': [
+            ('Older homes, tighter spaces', 'Homes from the 1960s and 70s can have narrower halls and doorways. Measure your largest pieces, or text us photos, and we will plan how they come out.'),
+            ('Apartments and condos', 'Ask your building about elevator access and move hours, and tell us which floor you are on at both addresses.'),
         ],
     },
 ]
@@ -169,8 +193,16 @@ PAGE_CSS = '''
 .chips a{display:block;padding:10px 18px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:800}
 .chips a:hover{border-color:var(--coral)}
 .prose{max-width:46em}
+.area-intro{display:grid;grid-template-columns:1.2fr 1fr;gap:32px 48px;align-items:start}
+.facts{display:grid;gap:14px;margin:16px 0 0}
+.facts div{display:grid;gap:2px;padding-top:14px;border-top:1px solid var(--line)}
+.facts div:first-child{border-top:0;padding-top:0}
+.facts dt{font-family:var(--display);font-weight:800;font-size:14px;color:var(--coral-ink)}
+.facts dd{margin:0;color:var(--ink)}
+.services .card h3{font-size:20px}
+.services .card p{font-size:15.5px}
 .prose p{color:var(--muted);margin-top:12px}
-@media (max-width:860px){.page-hero .wrap,.cols,.notes{grid-template-columns:1fr}.page-photo{max-width:520px}}
+@media (max-width:860px){.page-hero .wrap,.cols,.notes,.area-intro{grid-template-columns:1fr}.page-photo{max-width:520px}}
 '''
 
 
@@ -231,6 +263,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 </script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 <div class="util">
   <div class="wrap">
     <span>Local movers serving Tampa, Wesley Chapel, Lutz &amp; Carrollwood</span>
@@ -244,7 +277,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
       <img src="/images/logo-mark.png" alt="" width="56" height="40">
       <span class="brand-word"><b>roomi</b><span>MOVERS</span></span>
     </a>
-    <nav class="links" aria-label="Main">
+    <nav class="links" id="site-nav" aria-label="Main">
       <a href="/#services">Services</a>
       <a href="/#pricing">Pricing</a>
       <a href="/#areas">Service Areas</a>
@@ -254,12 +287,13 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
     </nav>
     <div class="bar-ctas">
       <a class="call ph" href="tel:{tel}">{phone}</a>
-      <a class="btn btn-primary" href="/#quote">Free Quote</a>
+      <a class="btn btn-primary bar-cta" href="/#quote">Free Estimate</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</button>
     </div>
   </div>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
   <section class="page-hero">
     <div class="wrap">
       <div>
@@ -298,8 +332,19 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 <nav class="actionbar" aria-label="Quick actions">
   <a href="tel:{tel}">Call</a>
   <a href="sms:{tel}">Text</a>
-  <a class="main" href="/#quote">Free Quote</a>
+  <a class="main" href="/#quote">Free Estimate</a>
 </nav>
+<script>
+(function () {{
+  var btn = document.querySelector('.menu-btn'), nav = document.getElementById('site-nav');
+  if (!btn || !nav) return;
+  function set(open) {{ nav.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }}
+  btn.addEventListener('click', function () {{ set(btn.getAttribute('aria-expanded') !== 'true'); }});
+  nav.addEventListener('click', function (e) {{ if (e.target.closest('a')) set(false); }});
+  document.addEventListener('keydown', function (e) {{ if (e.key === 'Escape' && nav.classList.contains('is-open')) {{ set(false); btn.focus(); }} }});
+  document.addEventListener('click', function (e) {{ if (!e.target.closest('.bar')) set(false); }});
+}})();
+</script>
 </body>
 </html>
 '''.format(title=esc(title), desc=esc(desc), url=url, site=SITE, ld=json.dumps(graph, indent=1, ensure_ascii=False),
@@ -317,9 +362,9 @@ def footer():
         <a class="brand" href="/" aria-label="Roomi Movers home"><img class="flogo" src="/images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
         <p style="margin-top:8px"><a class="ph" href="tel:{tel}">{phone}</a><br><a href="mailto:{email}">{email}</a></p>
       </div>
-      <div><h4>Quick links</h4><ul><li><a href="/#services">Services</a></li><li><a href="/#pricing">Pricing</a></li><li><a href="/#about">About</a></li><li><a href="/#faq">FAQ</a></li><li><a href="/#quote">Free Quote</a></li></ul></div>
-      <div><h4>Services</h4><ul>{svc}</ul></div>
-      <div><h4>Service areas</h4><ul>{areas}</ul></div>
+      <div><h2>Quick links</h2><ul><li><a href="/#services">Services</a></li><li><a href="/#pricing">Pricing</a></li><li><a href="/#about">About</a></li><li><a href="/#faq">FAQ</a></li><li><a href="/#quote">Free Estimate</a></li></ul></div>
+      <div><h2>Services</h2><ul>{svc}</ul></div>
+      <div><h2>Service areas</h2><ul>{areas}</ul></div>
     </div>
     <p class="legal">© 2026 Roomi Movers LLC · Tampa, Florida</p>
   </div>
@@ -381,17 +426,30 @@ def service_page(s):
     return path, page(path, s['title'], s['desc'], [('Home', '/'), ('Services', '/#services'), (s['name'], None)], s['h1'], s['lede'], body, ld)
 
 
+def facts_html(facts):
+    return '<dl class="facts">' + ''.join('<div><dt>%s</dt><dd>%s</dd></div>' % (esc(k), esc(v)) for k, v in facts) + '</dl>'
+
+
 def area_page(a):
     others = [(o['name'], '/areas/%s/' % o['slug']) for o in AREAS if o is not a]
+    plan = ''.join('<div><h3>%s</h3><p>%s</p></div>' % (esc(h), esc(p)) for h, p in a['plan'])
     svc = ''.join('<div class="card"><h3><a href="/services/{slug}/">{name}</a></h3><p>{lede}</p></div>'.format(
-        slug=s['slug'], name=esc(s['name']), lede=esc(s['lede'])) for s in SERVICES)
+        slug=s['slug'], name=esc(s['name']), lede=esc(s['card'])) for s in SERVICES)
     body = '''  <section class="band">
     <div class="wrap">
-      <div class="prose">
-        <h2>Moving in {name}</h2>
-        {about}
+      <div class="area-intro">
+        <div class="prose">
+          <h2>Moving in {name}</h2>
+          {about}
+        </div>
+        <div class="card facts-card">
+          <h2>Know before you go</h2>
+          {facts}
+        </div>
       </div>
-      <div class="services" style="margin-top:32px">{svc}</div>
+      <div class="notes">{plan}</div>
+      <h2 style="margin-top:48px;font-size:clamp(24px,2.6vw,30px)">Services in {name}</h2>
+      <div class="services" style="margin-top:18px">{svc}</div>
     </div>
   </section>
   <section class="band alt">
@@ -400,7 +458,7 @@ def area_page(a):
 {pricing}
         <div class="card">
           <h2>Before moving day</h2>
-          <p>A few things that make any move in {name} go faster:</p>
+          <p>A few things that make any move go faster:</p>
           {tips}
         </div>
       </div>
@@ -408,9 +466,9 @@ def area_page(a):
       {others}
     </div>
   </section>'''.format(name=esc(a['name']), about=''.join('<p>%s</p>' % esc(p) for p in a['about']), svc=svc,
-                       pricing=pricing_card(), tips=ticks(AREA_TIPS), others=chips(others))
+                       pricing=pricing_card(), tips=ticks(AREA_TIPS), others=chips(others), facts=facts_html(a['facts']), plan=plan)
     path = '/areas/%s/' % a['slug']
-    biz = dict(BUSINESS_REF, areaServed={'@type': 'City', 'name': a['name'] + ', FL'}, address={'@type': 'PostalAddress', 'addressLocality': 'Tampa', 'addressRegion': 'FL', 'addressCountry': 'US'})
+    biz = dict(BUSINESS_REF, areaServed={'@type': 'Place', 'name': a['name'] + ', FL'}, address={'@type': 'PostalAddress', 'addressLocality': 'Tampa', 'addressRegion': 'FL', 'addressCountry': 'US'})
     ld = [
         {'@type': 'WebPage', 'name': a['title'], 'url': SITE + path, 'description': a['desc'], 'about': biz},
         breadcrumbs_ld([('Home', '/'), ('Service areas', '/#areas'), (a['name'], path)]),
