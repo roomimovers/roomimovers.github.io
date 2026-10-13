@@ -527,11 +527,23 @@ def pricing_page():
                     'Every package is billed by the hour with a two-hour minimum. Your free estimate shows the rate and the time we expect, so there are no surprises on moving day.', body)
 
 
+ALL_AREAS = ["Tampa", "Carrollwood", "Wesley Chapel", "Zephyrhills", "Brandon", "Riverview", "Temple Terrace", "Town 'n' Country", "Westchase",
+             "Citrus Park", "Valrico", "Seffner", "Gibsonton", "Oldsmar", "Thonotosassa", "Egypt Lake-Leto", "Lutz", "Land O' Lakes", "Dade City", "San Antonio"]
+
+
+def all_area_chips():
+    pages = {a['name']: a['slug'] for a in AREAS}
+    return '<ul class="cities all">' + ''.join(
+        ('<li><a href="/areas/%s/">%s</a></li>' % (pages[n], esc(n))) if n in pages else '<li><span>%s</span></li>' % esc(n) for n in ALL_AREAS) + '</ul>'
+
+
 def areas_hub():
     cards = ''.join(
         '<article class="card"><h2><a href="/areas/%s/">%s</a></h2><p>%s</p>%s<p style="margin-top:16px"><a class="btn btn-ghost" href="/areas/%s/">Movers in %s</a></p></article>'
         % (a['slug'], esc(a['name']), esc(a['lede']), facts_html(a['facts'][:2]), a['slug'], esc(a['name'])) for a in AREAS)
     body = ('  <section class="band">\n    <div class="wrap">\n      <div class="cols">' + cards + '</div>\n'
+            '      <h2 style="margin-top:44px;font-size:clamp(24px,2.6vw,30px)">All the areas we serve</h2>'
+            '<p class="after" style="margin-bottom:14px">The four in bold above have their own planning notes.</p>' + all_area_chips() +
             '      <p class="after" style="margin-top:28px">Outside these areas? Call us anyway at <a class="ph" href="tel:+18134363216">(813) 436-3216</a>.</p>\n    </div>\n  </section>')
     return hub_page('/areas/', 'Service Areas: Tampa, Wesley Chapel, Lutz & Carrollwood | Roomi Movers',
                     'Roomi Movers is based in Tampa and moves homes and apartments in Tampa, Wesley Chapel, Lutz and Carrollwood, FL. Hourly rate, free estimate.',
