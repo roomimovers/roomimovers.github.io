@@ -193,6 +193,11 @@ PAGE_CSS = '''
 .chips a{display:block;padding:10px 18px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:800}
 .chips a:hover{border-color:var(--coral)}
 .prose{max-width:46em}
+.card h2 a{color:inherit;text-decoration:none}
+.card h2 a:hover{color:var(--coral-ink);text-decoration:underline;text-underline-offset:3px}
+.cols .card h2{font-size:clamp(22px,2.2vw,28px)}
+#faq .head,#quote .quote-side>.eyebrow,#quote .quote-side>h2{display:none}
+#faq{padding-top:48px}
 .area-intro{display:grid;grid-template-columns:1.2fr 1fr;gap:32px 48px;align-items:start}
 .facts{display:grid;gap:14px;margin:16px 0 0}
 .facts div{display:grid;gap:2px;padding-top:14px;border-top:1px solid var(--line)}
@@ -278,16 +283,16 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
       <span class="brand-word"><b>roomi</b><span>MOVERS</span></span>
     </a>
     <nav class="links" id="site-nav" aria-label="Main">
-      <a href="/#services">Services</a>
-      <a href="/#pricing">Pricing</a>
-      <a href="/#areas">Service Areas</a>
-      <a href="/#about">About</a>
-      <a href="/#faq">FAQ</a>
-      <a href="/#quote">Contact</a>
+      <a href="/services/">Services</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/areas/">Service Areas</a>
+      <a href="/about/">About</a>
+      <a href="/faq/">FAQ</a>
+      <a href="/contact/">Contact</a>
     </nav>
     <div class="bar-ctas">
       <a class="call ph" href="tel:{tel}">{phone}</a>
-      <a class="btn btn-primary bar-cta" href="/#quote">Free Estimate</a>
+      <a class="btn btn-primary bar-cta" href="/contact/">Free Estimate</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</button>
     </div>
   </div>
@@ -302,7 +307,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
         <h1>{h1}</h1>
         <p class="lede">{lede}</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="/#quote">Get a Free Estimate</a>
+          <a class="btn btn-primary" href="/contact/">Get a Free Estimate</a>
           <a class="btn btn-ghost" href="tel:{tel}">Call {phone}</a>
         </div>
         <p class="offer">{offer}</p>
@@ -321,7 +326,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
       <h2>Ready to move?</h2>
       <p>Get your free estimate, or call or text and talk to us directly. Most estimates are back the same day.</p>
       <div class="ctas">
-        <a class="btn btn-primary" href="/#quote">Get a Free Estimate</a>
+        <a class="btn btn-primary" href="/contact/">Get a Free Estimate</a>
         <a class="btn btn-ghost" href="tel:{tel}">Call</a>
         <a class="btn btn-ghost" href="sms:{tel}">Text</a>
       </div>
@@ -332,7 +337,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 <nav class="actionbar" aria-label="Quick actions">
   <a href="tel:{tel}">Call</a>
   <a href="sms:{tel}">Text</a>
-  <a class="main" href="/#quote">Free Estimate</a>
+  <a class="main" href="/contact/">Free Estimate</a>
 </nav>
 <script>
 (function () {{
@@ -362,7 +367,7 @@ def footer():
         <a class="brand" href="/" aria-label="Roomi Movers home"><img class="flogo" src="/images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
         <p style="margin-top:8px"><a class="ph" href="tel:{tel}">{phone}</a><br><a href="mailto:{email}">{email}</a></p>
       </div>
-      <div><h2>Quick links</h2><ul><li><a href="/#services">Services</a></li><li><a href="/#pricing">Pricing</a></li><li><a href="/#about">About</a></li><li><a href="/#faq">FAQ</a></li><li><a href="/#quote">Free Estimate</a></li></ul></div>
+      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
       <div><h2>Services</h2><ul>{svc}</ul></div>
       <div><h2>Service areas</h2><ul>{areas}</ul></div>
     </div>
@@ -421,9 +426,9 @@ def service_page(s):
     ld = [
         {'@type': 'Service', 'name': s['name'], 'serviceType': s['name'], 'url': SITE + path, 'description': s['desc'], 'provider': BUSINESS_REF,
          'areaServed': [{'@type': 'City', 'name': a['name'] + ', FL'} for a in AREAS]},
-        breadcrumbs_ld([('Home', '/'), ('Services', '/#services'), (s['name'], path)]),
+        breadcrumbs_ld([('Home', '/'), ('Services', '/services/'), (s['name'], path)]),
     ]
-    return path, page(path, s['title'], s['desc'], [('Home', '/'), ('Services', '/#services'), (s['name'], None)], s['h1'], s['lede'], body, ld)
+    return path, page(path, s['title'], s['desc'], [('Home', '/'), ('Services', '/services/'), (s['name'], None)], s['h1'], s['lede'], body, ld)
 
 
 def facts_html(facts):
@@ -471,14 +476,108 @@ def area_page(a):
     biz = dict(BUSINESS_REF, areaServed={'@type': 'Place', 'name': a['name'] + ', FL'}, address={'@type': 'PostalAddress', 'addressLocality': 'Tampa', 'addressRegion': 'FL', 'addressCountry': 'US'})
     ld = [
         {'@type': 'WebPage', 'name': a['title'], 'url': SITE + path, 'description': a['desc'], 'about': biz},
-        breadcrumbs_ld([('Home', '/'), ('Service areas', '/#areas'), (a['name'], path)]),
+        breadcrumbs_ld([('Home', '/'), ('Service areas', '/areas/'), (a['name'], path)]),
     ]
-    return path, page(path, a['title'], a['desc'], [('Home', '/'), ('Service areas', '/#areas'), (a['name'], None)], a['h1'], a['lede'], body, ld)
+    return path, page(path, a['title'], a['desc'], [('Home', '/'), ('Service areas', '/areas/'), (a['name'], None)], a['h1'], a['lede'], body, ld)
+
+
+# ---------- top-level pages for each header tab (built from the home page's own sections) ----------
+HOME = (ROOT / 'index.html').read_text(encoding='utf-8')
+
+
+def home_section(sid):
+    m = re.search(r'<section class="[^"]*" id="%s"[^>]*>.*?</section>' % sid, HOME, re.S)
+    assert m, sid
+    s = m.group(0)
+    s = s.replace('src="images/', 'src="/images/').replace('srcset="images/', 'srcset="/images/').replace(', images/', ', /images/')
+    s = s.replace('href="#quote"', 'href="/contact/"').replace('href="#services"', 'href="/services/"').replace('href="#areas"', 'href="/areas/"')
+    return s
+
+
+def hub_page(path, title, desc, crumb, h1, lede, body, extra_ld=None):
+    ld = [{'@type': 'WebPage', 'name': title, 'url': SITE + path, 'description': desc, 'about': BUSINESS_REF},
+          breadcrumbs_ld([('Home', '/'), (crumb, path)])] + (extra_ld or [])
+    return path, page(path, title, desc, [('Home', '/'), (crumb, None)], h1, lede, body, ld)
+
+
+def pricing_strip():
+    return ('  <section class="band alt">\n    <div class="wrap">\n      <div class="cols">\n' + pricing_card() +
+            '\n        <div class="card"><h2>Ready for your price?</h2><p>Your free estimate shows your hourly rate and how long we expect the move to take.</p>'
+            '<p style="margin-top:16px"><a class="btn btn-primary" href="/contact/">Get a Free Estimate</a></p></div>\n      </div>\n    </div>\n  </section>')
+
+
+def services_hub():
+    cards = ''.join(
+        '<article class="card"><h2><a href="/services/%s/">%s</a></h2><p>%s</p>%s<p style="margin-top:16px"><a class="btn btn-ghost" href="/services/%s/">See %s</a></p></article>'
+        % (s['slug'], esc(s['name']), esc(s['lede']), ticks(s['included'][:4]), s['slug'], esc(s['short'].lower())) for s in SERVICES)
+    body = ('  <section class="band">\n    <div class="wrap">\n      <div class="cols">' + cards + '</div>\n'
+            '      <p class="after" style="margin-top:28px"><b>Not sure what it will take?</b> Text a photo of your big items to '
+            '<a class="ph" href="sms:+18134363216">(813) 436-3216</a> and we will tell you.</p>\n    </div>\n  </section>\n' + pricing_strip())
+    return hub_page('/services/', 'Moving Services in Tampa Bay | Roomi Movers',
+                    'Home moves, apartment and condo moves, loading and unloading, and heavy or specialty items across Tampa, Wesley Chapel, Lutz and Carrollwood. Hourly rate, free estimate.',
+                    'Services', 'Moving services for every kind of move',
+                    'Four services, one hourly rate. Pick the one that fits, or tell us about your move and we will recommend it.', body)
+
+
+def pricing_page():
+    body = home_section('pricing') + '\n' + home_section('how')
+    return hub_page('/pricing/', 'Pricing: Hourly Rate, Two-Hour Minimum | Roomi Movers',
+                    'Roomi Movers bills by the hour with a two-hour minimum. Labor-only, full-service and white-glove packages, with a free estimate before you book.',
+                    'Pricing', 'One hourly rate, explained up front',
+                    'Every package is billed by the hour with a two-hour minimum. Your free estimate shows the rate and the time we expect, so there are no surprises on moving day.', body)
+
+
+def areas_hub():
+    cards = ''.join(
+        '<article class="card"><h2><a href="/areas/%s/">%s</a></h2><p>%s</p>%s<p style="margin-top:16px"><a class="btn btn-ghost" href="/areas/%s/">Movers in %s</a></p></article>'
+        % (a['slug'], esc(a['name']), esc(a['lede']), facts_html(a['facts'][:2]), a['slug'], esc(a['name'])) for a in AREAS)
+    body = ('  <section class="band">\n    <div class="wrap">\n      <div class="cols">' + cards + '</div>\n'
+            '      <p class="after" style="margin-top:28px">Outside these areas? Call us anyway at <a class="ph" href="tel:+18134363216">(813) 436-3216</a>.</p>\n    </div>\n  </section>')
+    return hub_page('/areas/', 'Service Areas: Tampa, Wesley Chapel, Lutz & Carrollwood | Roomi Movers',
+                    'Roomi Movers is based in Tampa and moves homes and apartments in Tampa, Wesley Chapel, Lutz and Carrollwood, FL. Hourly rate, free estimate.',
+                    'Service areas', 'Proudly moving North Tampa',
+                    'Based in Tampa and serving the neighborhoods around it. Choose your area for local planning notes and what to know before moving day.', body)
+
+
+def about_page():
+    body = home_section('about') + '\n' + home_section('reviews')
+    return hub_page('/about/', 'About Roomi Movers | Family-Run Movers in Tampa',
+                    'Roomi Movers is run by Kareem Aboroomi and his family in Tampa. Meet the team behind the truck and learn how we treat your home like our own.',
+                    'About', 'A local, family-run moving company',
+                    'Roomi Movers is run by Kareem Aboroomi and his family, right here in Tampa. When you call, you talk to the person who shows up at your door.', body)
+
+
+def faq_page():
+    sec = home_section('faq')
+    qa = re.findall(r'<summary>(.*?)</summary><p>(.*?)</p>', sec, re.S)
+    ld = [{'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': re.sub('<[^>]+>', '', q),
+           'acceptedAnswer': {'@type': 'Answer', 'text': re.sub('<[^>]+>', '', a)}} for q, a in qa]}]
+    return hub_page('/faq/', 'Moving FAQ: Pricing, Trucks, Booking | Roomi Movers',
+                    'Answers to common questions about Roomi Movers: hourly pricing, the truck, heavy items, how far ahead to book and the areas we serve.',
+                    'FAQ', 'Your questions, answered',
+                    'Hourly pricing, what is included, and how to book. Do not see your question? Call or text us.', sec, ld)
+
+
+def contact_page():
+    path, html = hub_page('/contact/', 'Contact & Free Estimate | Roomi Movers',
+                          'Request a free moving estimate from Roomi Movers, or call or text (813) 436-3216. Most estimates are back the same day.',
+                          'Contact', 'Get your free estimate',
+                          'Tell us about your move and Kareem will get back to you with your hourly rate and an estimate. Most estimates are back the same day.',
+                          home_section('quote'))
+    m = re.search(r'<script>\n/\* Quote requests\..*?</script>', HOME, re.S)
+    assert m
+    return path, html.replace('</body>', m.group(0) + '\n</body>')
 
 
 def main():
     build_css()
     paths = ['/']
+    for fn in (services_hub, pricing_page, areas_hub, about_page, faq_page, contact_page):
+        path, html = fn()
+        out = ROOT / path.strip('/') / 'index.html'
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(html, encoding='utf-8', newline='\n')
+        paths.append(path)
     for builder, items in ((service_page, SERVICES), (area_page, AREAS)):
         for item in items:
             path, html = builder(item)
