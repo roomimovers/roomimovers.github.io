@@ -409,6 +409,8 @@ footer a{color:#E9E2D6}
 .journey svg .j-or2{fill:none;stroke:#F7652F;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .journey svg .j-rim circle,.journey svg .j-rim path{fill:none;stroke:#F7652F;stroke-width:1.2;stroke-linecap:round}
 .journey svg .j-rim .hub{fill:#F7652F;stroke:none}
+.journey #jSym .j-ink{stroke-width:1.5}
+.journey #jSym .j-delivered path[fill="#FFFDF9"]{stroke-width:1.5}
 .journey svg .j-route{fill:none;stroke:#12306B;stroke-opacity:.2;stroke-width:1.2;stroke-dasharray:1 8;stroke-linecap:round}
 .journey.is-js svg .j-draw{stroke-dasharray:1;stroke-dashoffset:0}
 .journey:not(.is-js) .final{display:none}
@@ -547,6 +549,7 @@ footer a{color:#E9E2D6}
             <linearGradient id="jDoorIn" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E9D2BA"/><stop offset=".55" stop-color="#F4E4D2"/><stop offset="1" stop-color="#EEDAC5"/></linearGradient>
             <radialGradient id="jGlow"><stop offset="0" stop-color="#FFB45C" stop-opacity=".55"/><stop offset=".55" stop-color="#F7652F" stop-opacity=".16"/><stop offset="1" stop-color="#F7652F" stop-opacity="0"/></radialGradient>
             <radialGradient id="jHaloG"><stop offset="0" stop-color="#FFB45C" stop-opacity=".30"/><stop offset=".5" stop-color="#F7652F" stop-opacity=".10"/><stop offset="1" stop-color="#F7652F" stop-opacity="0"/></radialGradient>
+            <linearGradient id="jSpillG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC27A" stop-opacity=".55"/><stop offset="1" stop-color="#FFC27A" stop-opacity="0"/></linearGradient>
             <linearGradient id="jGroundG" gradientUnits="userSpaceOnUse" x1="1060" y1="0" x2="1400" y2="0"><stop offset="0" stop-color="#F7652F" stop-opacity="0"/><stop offset=".22" stop-color="#F7652F"/><stop offset=".78" stop-color="#F7652F"/><stop offset="1" stop-color="#F7652F" stop-opacity="0"/></linearGradient>
             <linearGradient id="jConeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD58A" stop-opacity=".55"/><stop offset="1" stop-color="#FFD58A" stop-opacity="0"/></linearGradient>
           </defs>
@@ -677,10 +680,12 @@ footer a{color:#E9E2D6}
                 <path id="jShade" d="M62-112H86L81-134H67Z" fill="#FFE2AE"/>
                 <path class="j-ink j-draw j-rl" data-s=".88" data-e=".96" d="M74-10V-112M64-10H84M62-112H86L81-134H67Z"/>
                 <path id="jLeaf" fill="#F7652F" d="M-85 3V-250L-61-236V3Z"/>
+                <path id="jLeafEdge" fill="#C94E1F" d="M-61 3V-236L-56-238V3Z"/>
+                <circle id="jKnob" cx="-66" cy="-92" r="2.6" fill="#FFF4E8"/>
               </g>
               <g class="j-delivered" transform="translate(-34 -8)"><path d="M-15 0h30v-24h-30Z" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.6" stroke-linejoin="round"/><path d="M0-24V-15" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/><path d="M-11-8h8M-11-4.5h6" stroke="#12306B" stroke-width="1.1" stroke-linecap="round"/></g>
               <g class="j-delivered" transform="translate(-36 -32) scale(.86)"><path d="M-15 0h30v-24h-30Z" fill="#FFFDF9" stroke="#061A3C" stroke-width="1.6" stroke-linejoin="round"/><path d="M0-24V-15" stroke="#F7652F" stroke-width="2.4" stroke-linecap="round"/><path d="M-11-8h8M-11-4.5h6" stroke="#12306B" stroke-width="1.1" stroke-linecap="round"/></g>
-              <path id="jLogo" class="j-or j-draw" style="stroke-width:3.6" d="M-42-258V-278L0-313L42-278V-258"/>
+              <path id="jSpill" fill="url(#jSpillG)" opacity="0" d="M-85 0H85L128 34H-128Z"/>
               <g id="jMat">
                 <path d="M-46 16L-40 3H40L46 16Z" fill="#F1DAC0" stroke="#061A3C" stroke-width="1.4" stroke-linejoin="round"/>
                 <text x="0" y="12.4" text-anchor="middle" fill="#061A3C" style="font:800 6.2px Archivo,Arial,sans-serif;letter-spacing:1.5px">WELCOME HOME</text>
@@ -1018,7 +1023,7 @@ footer a{color:#E9E2D6}
   var sym = document.getElementById('jSym');
   var openPath = document.getElementById('jOpenPath');
   var leaf = document.getElementById('jLeaf');
-  var logo = document.getElementById('jLogo');
+  var leafEdge = document.getElementById('jLeafEdge'), knob = document.getElementById('jKnob'), spill = document.getElementById('jSpill');
   var mat = document.getElementById('jMat');
   var lampLight = ['jShade', 'jLampGlow', 'jCone'].map(function (id) { return document.getElementById(id); });
   var glow = document.getElementById('jLampGlow'), warm = document.getElementById('jWarm');
@@ -1325,10 +1330,15 @@ footer a{color:#E9E2D6}
     ground.style.opacity = away;
     // the room and everything at the doorway live in the doorway's own frame, so they stay grounded at the threshold
     sym.setAttribute('transform', 'translate(' + DOOR + ' ' + f1(DOORY) + ') scale(' + sc.toFixed(4) + ')');
-    var hl = hs / sc, lw = lerp(0.32 * 85, 26, g), top = hl + 85;
+    var hl = hs / sc, lw = lerp(0.32 * 85, 19, g), top = hl + 85;
     openPath.setAttribute('d', 'M-85 0V-' + f1(hl) + 'A85 85 0 0 1 85 -' + f1(hl) + 'V0Z');
     // the open orange door, swung in against the left jamb and masked by the doorway like the rest of the room
-    leaf.setAttribute('d', 'M-85 3V-' + f1(top) + 'L' + f1(lw - 85) + ' -' + f1(top - 16) + 'V3Z');
+    // the door, swung in against the left jamb: a slim panel, its edge catching the shadow, and a small knob
+    var lx = lw - 85, ew = lerp(2.5, 5, g);
+    leaf.setAttribute('d', 'M-85 3V-' + f1(top) + 'L' + f1(lx) + ' -' + f1(top - 16) + 'V3Z');
+    leafEdge.setAttribute('d', 'M' + f1(lx) + ' 3V-' + f1(top - 16) + 'L' + f1(lx + ew) + ' -' + f1(top - 18) + 'V3Z');
+    knob.setAttribute('cx', f1(lx - 6)); knob.setAttribute('cy', f1(-hl * 0.56));
+    knob.style.opacity = span(g, 0.5, 0.9);
     var mt = ease(span(p, GROW[0] + 0.005, GROW[0] + 0.035));          // the Welcome home mat: fades in and settles onto the threshold
     mat.style.opacity = mt;
     mat.setAttribute('transform', 'translate(0 ' + f1(5 * (1 - mt)) + ')');
@@ -1344,8 +1354,8 @@ footer a{color:#E9E2D6}
     var wm = ease(span(p, LAMP + 0.004, LAMP + 0.065));
     warm.style.opacity = (0.2 * wm).toFixed(3);
     halo.setAttribute('cy', f1(DOORY - 150));
-    halo.style.opacity = wm.toFixed(3);                              // the warmth spills out past the doorway
-    setDraw(logo, ease(span(p, 0.72, 0.78)));
+    halo.style.opacity = wm.toFixed(3);
+    spill.style.opacity = wm.toFixed(3);                              // the warmth spills out past the doorway
 
     // camera: frame the pickup, follow the drive, frame the door and truck, then pull back to the Roomi doorway
     var bottom = narrow ? 505 : 530;
