@@ -169,8 +169,8 @@
 <style>
 /* Layout: utility bar + sticky nav, keyword hero with CTAs, badge row, service cards, pricing tiers, 3 steps, areas, team, FAQ, quote form, closer, 4-col footer, mobile action bar */
 :root{
-  --blue:#12306B; --blue-deep:#061A3C; --coral:#F7652F; --coral-ink:#B8441A;
-  --ink:#0B1C3D; --muted:#4A5672; --bg:#FFFFFF; --band:#F7EEE2; --line:#E4D6C2; --card:#FFFFFF; --field:#FFFFFF;
+  --blue:#12306B; --blue-deep:#061A3C; --coral:#F7652F; --coral-ink:#A33711;
+  --ink:#0B1C3D; --muted:#3B4663; --bg:#FFFFFF; --band:#F7EEE2; --line:#E4D6C2; --card:#FFFFFF; --field:#FFFFFF;
   --on-blue:#FFFFFF; --on-blue-soft:#CBD3E3;
   --display:"Archivo","Helvetica Neue",Arial,sans-serif;
   --body:"Figtree","Segoe UI",system-ui,sans-serif;
@@ -420,7 +420,7 @@ footer a{color:#E9E2D6}
 .photo-cap span{font-size:14px;color:#CBD3E3}
 
 /* scroll journey: one orange line draws the truck, the route, the home and the room */
-.journey{--ink:#0B1C3D;--muted:#4A5672;--coral:#F7652F;--coral-ink:#B8441A;--line:#E4D6C2;--band:#F7EEE2;
+.journey{--ink:#0B1C3D;--muted:#3B4663;--coral:#F7652F;--coral-ink:#A33711;--line:#E4D6C2;--band:#F7EEE2;
   position:relative;background:#FBF7F0;color:var(--ink);border-bottom:1px solid var(--line)}
 .journey.is-live{height:450vh;height:450svh}
 .journey-pin{display:flex;flex-direction:column;gap:6px;padding-block:28px 20px;background:#FBF7F0}
@@ -563,6 +563,69 @@ footer a{color:#E9E2D6}
 /* the owner photo: one steady compositing layer, so it is never re-rasterised at a different quality mid-scroll */
 .photo-band img,.page-photo img,.owner img{transform:translateZ(0);backface-visibility:hidden;image-rendering:auto}
 .photo-band{contain:paint}
+
+/* readability for every age: larger supporting text, darker grey, visible form borders */
+:root{--field-line:#7C869C}
+body{font-size:18px}
+input,select,textarea{border:2px solid var(--field-line);font-size:17px}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(18,48,107,.18);outline:0}
+label{font-size:16px;font-weight:700}
+.svc ul,.tier p,.tier ul,.price-notes,.gcard span:last-child,.tier .who+.price+p{font-size:17px}
+.tier ul,.svc ul{line-height:1.55}
+.eyebrow,.card-kicker,.gtag,.tier .tag{font-size:14px}
+.card-fine{font-size:15px}
+.j-sub{font-size:clamp(17px,1.6vw,20px)}
+.j-steps span{font-size:13px}
+.j-hint{font-size:14px}
+footer,.fcols a,.legal{font-size:16px}
+.tier-plain{font-family:var(--display);font-weight:800;font-size:19px!important;color:var(--ink)!important;line-height:1.25}
+.tier.premium .tier-plain{color:#fff!important}
+.price-sub{display:block;font-size:15px;color:var(--muted);margin-top:-4px}
+.tier.premium .price-sub{color:#CBD3E3}
+@media (max-width:440px){.j-steps span{font-size:11.5px}}
+@media (max-width:560px){.badges ul{grid-template-columns:1fr}.badges li,.badges li+li{border-left:0}.badges li+li{border-top:1px solid var(--line)}.badges li{padding:16px 6px;font-size:18px}}
+
+/* animation: a clear skip button, a balanced layout and a shorter scroll on phones */
+.journey.is-live .j-skip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:2px solid var(--field-line);border-radius:999px;background:#fff;color:var(--ink);font:800 15px var(--body);text-decoration:none}
+.journey.is-live .j-skip::after{content:"\2193"}
+.journey.is-live .j-skip:hover{border-color:var(--coral)}
+@media (max-width:560px){
+  .journey.is-live{height:400vh;height:400svh}
+  .journey.is-live .journey-pin{justify-content:center;gap:12px}
+  .journey.is-live .j-stage{flex:0 0 auto;height:min(64vw,310px)}
+  .journey.is-live .j-foot{margin-top:4px}
+}
+
+/* trust section */
+.trust-band{background:linear-gradient(180deg,#F7EEE2,#FBF7F0)}
+.trust-head{display:flex;gap:18px;align-items:center;margin-bottom:26px}
+.trust-shield{flex:none;width:64px;height:64px;border-radius:18px;background:#061A3C;color:#FF8A5B;display:grid;place-items:center}
+.trust-head h2{font-size:clamp(26px,3.4vw,40px);margin-top:6px}
+.trust-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.tcard{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:24px}
+.tcard h3{font-size:21px;margin:10px 0 8px}
+.tcard p{font-size:17px;color:var(--muted)}
+.tcard .tnum{display:inline-block;font-family:var(--display);font-weight:900;font-size:13px;letter-spacing:.14em;color:var(--coral-ink)}
+.trust-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.trust-chips span{border:2px solid #061A3C;border-radius:999px;padding:9px 16px;font-weight:800;background:#fff}
+.trust-fine{margin-top:16px;color:var(--muted);font-size:15px}
+@media (max-width:860px){.trust-cards{grid-template-columns:1fr}.trust-head{align-items:flex-start}.trust-shield{width:52px;height:52px}}
+
+/* reviews wall: scrolls through on its own, pauses when you touch it */
+.reviews-wall .stars-glow,.rstars{color:#FFB400;letter-spacing:3px;text-shadow:0 0 8px rgba(255,180,0,.75),0 0 18px rgba(255,150,0,.5)}
+.reviews-wall .score{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;font-weight:700;font-size:18px;margin-top:8px}
+.reviews-wall .score .stars-glow{font-size:26px}
+.marquee{overflow:hidden;margin-top:28px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.marquee-track{display:flex;gap:18px;width:max-content;list-style:none;margin:0;padding:6px 0;animation:roomi-scroll var(--dur,60s) linear infinite}
+.marquee:hover .marquee-track,.marquee:focus-within .marquee-track,.marquee:active .marquee-track{animation-play-state:paused}
+.rcard{width:min(360px,82vw);flex:none;border:1px solid var(--line);border-radius:18px;background:var(--card);padding:24px;box-shadow:0 10px 30px -22px rgba(6,26,60,.5)}
+.rstars{font-size:24px}
+.rcard blockquote{margin:12px 0 14px;font-size:18px;line-height:1.5;color:var(--ink)}
+.rwho{color:var(--muted);font-size:16px}
+.rwho b{color:var(--ink)}
+.rwho .rsrc{display:inline-block;margin-left:8px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-ink)}
+@keyframes roomi-scroll{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.marquee-track{animation:none}}
 </style>
 </head>
 <body>
@@ -649,7 +712,7 @@ footer a{color:#E9E2D6}
   <section class="badges" aria-label="Why Roomi">
     <div class="wrap">
       <ul>
-        <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg></span>Locally Owned in Tampa</li>
+        <!--slot:badge-lic--><li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span>Licensed &amp; insured before every move</li><!--/slot:badge-lic-->
         <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5M15 14.6c2.8-.3 5.2 1.4 5.8 4.4"/></svg></span>Family Owned &amp; Operated</li>
         <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="14" height="10"/><path d="M15 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>Truck &amp; Equipment Provided</li>
         <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Free, Upfront Estimates</li>
@@ -850,6 +913,10 @@ footer a{color:#E9E2D6}
     </div>
   </section>
 
+<!--slot:trust--><section class="band trust-band" id="trust" aria-labelledby="trust-title">
+    <div class="wrap"><div class="trust-head"><span class="trust-shield"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span><div><p class="eyebrow">Licensed and insured</p><h2 id="trust-title">Licensed and insured. Before your move, not after.</h2></div></div><div class="trust-cards"><div class="tcard"><span class="tnum">1</span><h3>Registered with the State of Florida</h3><p>Florida requires household movers to register with the Florida Department of Agriculture and Consumer Services (FDACS). Roomi Movers registers before moving a single customer.</p></div><div class="tcard"><span class="tnum">2</span><h3>Insured for your protection</h3><p>We put the insurance Florida requires of movers in place before your first move, so your belongings are protected from the first box to the last.</p></div><div class="tcard"><span class="tnum">3</span><h3>Check us yourself</h3><p>You can confirm any Florida mover with FDACS at <a href="https://www.fdacs.gov/Consumer-Resources">fdacs.gov/Consumer-Resources</a> or by calling 1-800-HELP-FLA (435-7352).</p></div></div><p class="trust-fine">Our registration number and coverage details are listed here as soon as they are issued, so you can check us yourself.</p></div>
+  </section>
+<!--/slot:trust-->
   <section class="band" id="services">
     <div class="wrap">
       <div class="head">
@@ -892,21 +959,21 @@ footer a{color:#E9E2D6}
       <div class="tiers">
         <div class="tier">
           <span class="who">Labor Only</span>
-          <span class="price" style="font-size:30px">Billed hourly</span>
-          <p>Two movers load or unload your rental truck, container or storage unit.</p>
+          <!--slot:price:Labor Only--><span class="price" style="font-size:30px">From $99/hour</span><span class="price-sub">Crew size and total confirmed in your free estimate</span><!--/slot:price:Labor Only-->
+          <p class="tier-plain">You have the truck. We do the lifting.</p><p>Two movers load or unload your rental truck, container or storage unit.</p>
           <ul><li>Pads, straps and dollies</li><li>Packed tight so nothing shifts</li></ul>
         </div>
         <div class="tier pop">
           <span class="tag">Most booked</span>
           <span class="who">Full-Service Move</span>
-          <span class="price" style="font-size:30px">Billed hourly</span>
-          <p>Truck plus crew for apartments and homes across Tampa Bay.</p>
+          <!--slot:price:Full-Service Move--><span class="price" style="font-size:30px">From $149/hour</span><span class="price-sub">Crew size and total confirmed in your free estimate</span><!--/slot:price:Full-Service Move-->
+          <p class="tier-plain">We bring the truck and handle the whole move.</p><p>Truck plus crew for apartments and homes across Tampa Bay.</p>
           <ul><li>Box truck included</li><li>Furniture wrapped and padded</li><li>Beds taken apart and set up</li></ul>
         </div>
         <div class="tier premium">
           <span class="who">White-Glove Move</span>
-          <span class="price" style="font-size:30px">Billed hourly</span>
-          <p>For larger homes and the pieces you care most about.</p>
+          <!--slot:price:White-Glove Move--><span class="price" style="font-size:30px">From $229/hour</span><span class="price-sub">Crew size and total confirmed in your free estimate</span><!--/slot:price:White-Glove Move-->
+          <p class="tier-plain">The whole move, with extra care for floors, TVs and art.</p><p>For larger homes and the pieces you care most about.</p>
           <ul><li>Floor runners and door-frame guards</li><li>TVs, art and mirrors boxed</li><li>Furniture placed room by room</li><li>Extra crew member for faster moves</li></ul>
         </div>
       </div>
@@ -952,7 +1019,7 @@ footer a{color:#E9E2D6}
     </div>
   </section>
 
-  <section class="band alt reviews-band" id="reviews" aria-labelledby="reviews-title">
+<!--slot:reviews-->  <section class="band alt reviews-band" id="reviews" aria-labelledby="reviews-title">
     <div class="wrap reviews">
       <div>
         <p class="eyebrow">Reviews</p>
@@ -965,6 +1032,7 @@ footer a{color:#E9E2D6}
       </div>
     </div>
   </section>
+<!--/slot:reviews-->
   <section class="band" id="guides">
     <div class="wrap">
       <div class="head">

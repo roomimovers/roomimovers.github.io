@@ -601,6 +601,124 @@ def area_page(a):
 
 
 # ---------- top-level pages for each header tab (built from the home page's own sections) ----------
+# ======================= trust section, review wall and price slots (rendered into index.html from business.json) =======================
+def _biz():
+    return json.loads((ROOT / '_tools' / 'business.json').read_text(encoding='utf-8'))
+
+
+SHIELD = ('<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" '
+          'stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg>')
+FDACS_URL = 'https://www.fdacs.gov/Consumer-Resources'
+
+
+def license_state():
+    lic = _biz().get('license') or {}
+    return 'active' if (lic.get('status') == 'active' and lic.get('registration_number')) else 'pending'
+
+
+def badge_text():
+    b = _biz(); lic = b.get('license') or {}
+    if license_state() == 'active':
+        return 'Licensed &amp; Insured &middot; FDACS #%s' % esc(str(lic['registration_number']))
+    return 'Licensed &amp; insured before every move'
+
+
+def trust_inner():
+    b = _biz(); lic = b.get('license') or {}
+    if license_state() == 'active':
+        head = 'Licensed and insured.'
+        chips = '<div class="trust-chips"><span>Florida registered mover &middot; FDACS #%s</span>' % esc(str(lic['registration_number']))
+        if lic.get('insurance_summary'):
+            chips += '<span>%s</span>' % esc(lic['insurance_summary'])
+        chips += '</div>'
+        c1 = ('Registered with the State of Florida', 'Roomi Movers is registered with the Florida Department of Agriculture and Consumer Services (FDACS) as a household mover.')
+        c2 = ('Insured for your protection', 'We carry the insurance Florida requires of movers, so your belongings are protected from the first box to the last.')
+        fine = 'Registration number and coverage shown above. You can confirm any mover at FDACS.'
+    else:
+        head = 'Licensed and insured. Before your move, not after.'
+        chips = ''
+        c1 = ('Registered with the State of Florida', 'Florida requires household movers to register with the Florida Department of Agriculture and Consumer Services (FDACS). Roomi Movers registers before moving a single customer.')
+        c2 = ('Insured for your protection', 'We put the insurance Florida requires of movers in place before your first move, so your belongings are protected from the first box to the last.')
+        fine = 'Our registration number and coverage details are listed here as soon as they are issued, so you can check us yourself.'
+    c3 = ('Check us yourself', 'You can confirm any Florida mover with FDACS at <a href="%s">fdacs.gov/Consumer-Resources</a> or by calling 1-800-HELP-FLA (435-7352).' % FDACS_URL)
+    cards = ''.join('<div class="tcard"><span class="tnum">%s</span><h3>%s</h3><p>%s</p></div>' % (n, esc(t), body)
+                    for n, (t, body) in zip(['1', '2', '3'], [c1, c2, c3]))
+    return ('<div class="trust-head"><span class="trust-shield">%s</span><div><p class="eyebrow">Licensed and insured</p><h2 id="trust-title">%s</h2></div></div>'
+            '<div class="trust-cards">%s</div>%s<p class="trust-fine">%s</p>') % (SHIELD, head, cards, chips, fine)
+
+
+def review_card(r, demo=False, hidden=False):
+    stars = '&#9733;' * int(r.get('rating', 5))
+    src = esc(r.get('source') or 'Google')
+    who = '<b>%s</b>%s<span class="rsrc">%s</span>' % (esc(r['name']), (' &middot; ' + esc(r['area'])) if r.get('area') else '', src)
+    return ('<li class="rcard"%s><p class="rstars" aria-label="%d out of 5 stars">%s</p><blockquote>&ldquo;%s&rdquo;</blockquote><p class="rwho">%s</p></li>'
+            % (' aria-hidden="true"' if hidden else '', int(r.get('rating', 5)), stars, esc(r['text']), who))
+
+
+def reviews_wall(reviews, g_url=None, g_link=None, demo=False):
+    n = len(reviews)
+    avg = sum(int(r.get('rating', 5)) for r in reviews) / float(n)
+    cards = ''.join(review_card(r) for r in reviews)
+    dup = ''.join(review_card(r, hidden=True) for r in reviews)
+    dur = max(40, n * 9)
+    ctas = ''
+    if g_url: ctas += '<a class="btn btn-ghost" href="%s" rel="noopener">Read all our reviews on Google</a>' % esc(g_url)
+    if g_link: ctas += '<a class="btn btn-primary" href="%s" rel="noopener">Leave a review</a>' % esc(g_link)
+    ctas = ('<div class="ctas" style="justify-content:center">%s</div>' % ctas) if ctas else ''
+    tag = '<p class="ph-tag" style="text-align:center;margin-bottom:10px">Sample layout: not real reviews. Never shown on the live site.</p>' if demo else ''
+    return ('  <section class="band alt reviews-wall" id="reviews" aria-labelledby="reviews-title">\n    <div class="wrap">\n      %s<div class="head center"><p class="eyebrow">Reviews</p>'
+            '<h2 id="reviews-title">What our customers say</h2><p class="score"><span class="stars-glow" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>'
+            '<span>%.1f out of 5 from %d review%s</span></p></div>\n    </div>\n    <div class="marquee" role="region" aria-label="Customer reviews"><ul class="marquee-track" style="--dur:%ds">%s%s</ul></div>\n'
+            '    <div class="wrap" style="margin-top:22px">%s</div>\n  </section>') % (tag, avg, n, '' if n == 1 else 's', dur, cards, dup, ctas)
+
+
+def reviews_empty(g_link=None):
+    star = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true">'
+            '<path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.4l-5.7 3 1.1-6.4L2.8 9.5l6.4-.9z"/></svg>')
+    btn = ('<a class="btn btn-primary" href="%s" rel="noopener">Be our first review</a>' % esc(g_link)) if g_link else ''
+    return ('  <section class="band alt reviews-band" id="reviews" aria-labelledby="reviews-title">\n    <div class="wrap reviews">\n      <div>\n        <p class="eyebrow">Reviews</p>\n'
+            '        <h2 id="reviews-title">Our first reviews are on the way</h2>\n        <p class="reviews-note">We\'re new and family-run, so this space is saved for real reviews from the people we move.</p>\n      </div>\n'
+            '      <div>\n        <p class="stars-sm">' + star * 5 + '<span>No reviews yet</span></p>\n        <div class="ctas">' + btn +
+            '<a class="btn btn-ghost" href="sms:+18134363216">Text us a review</a><a class="btn btn-ghost" href="mailto:makeroom@roomimovers.com?subject=My%20Roomi%20Movers%20review">Email a review</a></div>\n'
+            '      </div>\n    </div>\n  </section>')
+
+
+def render_slots():
+    b = _biz()
+    p = ROOT / 'index.html'
+    s = p.read_text(encoding='utf-8')
+    badge = ('<li><span class="i">' + SHIELD.replace('width="30" height="30"', 'width="22" height="22"') + '</span>' + badge_text() + '</li>')
+    trust = ('<section class="band trust-band" id="trust" aria-labelledby="trust-title">\n    <div class="wrap">' + trust_inner() + '</div>\n  </section>\n')
+    revs = b.get('reviews') or []
+    reviews = reviews_wall(revs, b.get('google_reviews_url'), b.get('google_review_link')) if revs else reviews_empty(b.get('google_review_link'))
+    fills = {'badge-lic': badge, 'trust': trust, 'reviews': reviews + '\n'}
+    for name, html in fills.items():
+        s = re.sub(r'<!--slot:%s-->.*?<!--/slot:%s-->' % (re.escape(name), re.escape(name)),
+                   lambda m, n=name, h=html: '<!--slot:%s-->%s<!--/slot:%s-->' % (n, h, n), s, flags=re.S)
+    for pkg, rate in (b.get('rates') or {}).items():
+        inner = ('<span class="price" style="font-size:30px">%s</span><span class="price-sub">Crew size and total confirmed in your free estimate</span>' % esc(rate)) if rate else \
+                '<span class="price" style="font-size:30px">Billed hourly</span><span class="price-sub">Exact rate with your free estimate</span>'
+        s = re.sub(r'<!--slot:price:%s-->.*?<!--/slot:price:%s-->' % (re.escape(pkg), re.escape(pkg)),
+                   lambda m, n=pkg, h=inner: '<!--slot:price:%s-->%s<!--/slot:price:%s-->' % (n, h, n), s, flags=re.S)
+    p.write_text(s, encoding='utf-8', newline='\n')
+
+
+DEMO_REVIEWS = [
+    {'name': 'Sample reviewer', 'area': 'Tampa', 'rating': 5, 'text': 'The crew showed up on time and wrapped everything. Nothing was scratched.', 'source': 'Google'},
+    {'name': 'Sample reviewer', 'area': 'Lutz', 'rating': 5, 'text': 'They kept us posted all morning and left the new place spotless.', 'source': 'Google'},
+    {'name': 'Sample reviewer', 'area': 'Brandon', 'rating': 5, 'text': 'Clear hourly rate up front and no surprises on the day.', 'source': 'Google'},
+    {'name': 'Sample reviewer', 'area': 'Wesley Chapel', 'rating': 5, 'text': 'Careful with our gun safe and the piano. I would hire them again.', 'source': 'Google'},
+    {'name': 'Sample reviewer', 'area': 'Carrollwood', 'rating': 5, 'text': 'Friendly, fast, and the owner called me himself.', 'source': 'Google'},
+    {'name': 'Sample reviewer', 'area': 'Riverview', 'rating': 5, 'text': 'Best moving experience we have had.', 'source': 'Google'},
+]
+
+
+def sample_wall():
+    return reviews_wall(DEMO_REVIEWS, None, None, demo=True)
+
+
+render_slots()
+
 HOME = (ROOT / 'index.html').read_text(encoding='utf-8')
 
 
@@ -754,7 +872,7 @@ def with_form(html, cls=''):
     return html
 
 
-def faq_items():
+def _faq_items_v1():
     return [
         ('How much does a move cost?', 'We charge by the hour with a two-hour minimum. Your total depends on home size, stairs, distance and heavy items. Get a free estimate and we will give you your hourly rate, the time we expect it to take, and any extra charges before you book.'),
         ('What does the two-hour minimum mean?', 'Every move is billed for at least two hours. The clock starts when we arrive and stops when the last item is placed.'),
@@ -1248,7 +1366,7 @@ def preview_page():
         '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % tuple(esc(x) for x in r) for r in rows) + '</tbody></table>'
     b = sec('<p class="after">This private board shows exactly where each missing piece will appear. Customers do not see any of these placeholders on the live pages: they only appear once real information replaces them.</p>')
     b += '\n' + sec('<h2 class="ph-h">1. Hourly rates</h2><div class="cols cols3">' + tiers + '</div>', alt=True)
-    b += '\n' + sec('<h2 class="ph-h">2. Real reviews</h2><div class="cols cols3">' + reviews + '</div>')
+    b += '\n' + sec('<h2 class="ph-h">2. Real reviews: the scrolling wall (sample layout only)</h2>' + sample_wall() + '<h3 style="margin:28px 0 12px">Where your real reviews will go</h3><div class="cols cols3">' + reviews + '</div>')
     b += '\n' + sec('<h2 class="ph-h">3. License and insurance</h2>' + phbox('Trust card on the About page and footer',
         '<p><b>Florida registered mover</b> &middot; FDACS registration #__________</p><p><b>Insured</b> &middot; General liability $_______ &middot; Cargo or bond $_______ &middot; Workers\' compensation</p>',
         'Only shown once you have the real number and policy details.'), alt=True)
@@ -1259,6 +1377,54 @@ def preview_page():
                        'Site setup board', 'Where each piece of missing information will appear. Private: not linked from the site.', b)
     html = html.replace('<meta name="viewport"', '<meta name="robots" content="noindex,nofollow">\n<meta name="viewport"', 1)
     return p, nophoto(html)
+
+
+# ---------- trust section on the pages where people decide ----------
+def trust_block():
+    return '  <section class="band trust-band" aria-labelledby="trust-title">\n    <div class="wrap">' + trust_inner() + '</div>\n  </section>'
+
+
+def insert_after_section_containing(html, marker, block):
+    i = html.index('</section>', html.index(marker)) + len('</section>')
+    return html[:i] + '\n' + block + html[i:]
+
+
+_pricing_v4 = pricing_page
+
+
+def pricing_page():
+    p, html = _pricing_v4()
+    return p, insert_after_section_containing(html, 'data-finder', trust_block())
+
+
+_about_v4 = about_page
+
+
+def about_page():
+    p, html = _about_v4()
+    return p, insert_after_section_containing(html, 'class="glance"', trust_block())
+
+
+_contact_v4 = contact_page
+
+
+def contact_page():
+    p, html = _contact_v4()
+    return p, insert_after_section_containing(html, 'id="quote"', trust_block())
+
+
+def faq_items():
+    items = _faq_items_v1()
+    r = {k: v for k, v in (_biz().get('rates') or {}).items() if v}
+    if r:
+        q, a = items[0]
+        a += (' Our rates start at %s for Labor Only, %s for a full-service move with the truck, and %s for White-Glove. '
+              'Larger crews and heavier jobs are quoted in your estimate.') % (
+                  r.get('Labor Only', '').replace('From ', '').lower() if r.get('Labor Only') else '',
+                  r.get('Full-Service Move', '').replace('From ', '').lower() if r.get('Full-Service Move') else '',
+                  r.get('White-Glove Move', '').replace('From ', '').lower() if r.get('White-Glove Move') else '')
+        items[0] = (q, a)
+    return items
 
 
 def main():

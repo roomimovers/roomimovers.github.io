@@ -3,12 +3,13 @@
   "hours": "7:00 AM to 8:00 PM",
   "hours_days": null,
   "rates": {
-    "Labor Only": null,
-    "Full-Service Move": null,
-    "White-Glove Move": null
+    "Labor Only": "From $99/hour",
+    "Full-Service Move": "From $149/hour",
+    "White-Glove Move": "From $229/hour"
   },
   "reviews": [],
   "license": {
+    "status": "pending",
     "registration_number": null,
     "insurance_summary": null
   },
@@ -20,5 +21,7 @@
     "youtube": null,
     "nextdoor": null,
     "yelp": null
-  }
+  },
+  "google_reviews_url": null,
+  "google_review_link": null
 }
