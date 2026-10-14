@@ -497,6 +497,10 @@ footer,.fcols a,.legal{font-size:16px}
   .j-block .j-owner{display:flex}
   .j-stage{max-height:calc(100svh - var(--bar-h,60px) - 24px)}
 }
+/* dark mode: the trust band and the pricing badge follow the dark theme (they kept light-theme colours) */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .trust-band{background:linear-gradient(180deg,#061A3C,#031228)}:root:not([data-theme="light"]) .tier .tag{background:#9DB4EA;color:#061A3C}}
+:root[data-theme="dark"] .trust-band{background:linear-gradient(180deg,#061A3C,#031228)}
+:root[data-theme="dark"] .tier .tag{background:#9DB4EA;color:#061A3C}
 
 /* inner pages */
 .page-hero{background:var(--band);padding-block:44px 56px}
