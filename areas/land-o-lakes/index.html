@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -94,6 +95,7 @@
       <a href="/areas/">Service Areas</a>
       <a href="/about/">About</a>
       <a href="/faq/">FAQ</a>
+      <a href="/resources/">Guides</a>
       <a href="/contact/">Contact</a>
     </nav>
     <div class="bar-ctas">
@@ -109,7 +111,7 @@
     <div class="wrap">
       <div>
         <nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li><a href="/areas/">Service areas</a></li><li aria-current="page">Land O' Lakes</li></ol></nav>
-        <p class="eyebrow">Roomi Movers · Tampa Bay</p>
+        <p class="eyebrow">Service area</p>
         <h1>Movers in Land O' Lakes, FL</h1>
         <p class="lede">Moving in or out of Land O' Lakes? Roomi Movers brings the truck, wraps and pads your furniture, and sets beds back up at your new place.</p>
         <div class="ctas">
@@ -197,6 +199,12 @@
       </div>
     </div>
   </section>
+  <section class="band">
+    <div class="wrap">
+      <h2 style="font-size:clamp(24px,2.6vw,30px);margin-bottom:20px">Helpful guides</h2>
+      <div class="gcards"><a class="gcard gcard-main" href="/resources/moving-checklist/"><span class="gtag">Checklist</span><b>Printable moving checklist</b><span>From six weeks out to the day after, with your progress saved on this device.</span></a><a class="gcard" href="/resources/how-hourly-moving-pricing-works/"><span class="gtag">Pricing</span><b>How hourly pricing works</b><span>An hourly rate is easy to understand once you know what the clock counts. Here is how it works, what changes the total, and how to keep it down.</span></a><a class="gcard" href="/resources/moving-day-preparation/"><span class="gtag">Moving day</span><b>Moving day preparation</b><span>A little preparation makes moving day faster and calmer. Here is what to do before the truck arrives.</span></a></div>
+    </div>
+  </section>
   <section class="closer">
     <div class="wrap" style="padding-top:56px">
       <h2>Ready to move?</h2>
@@ -216,7 +224,7 @@
         <a class="brand" href="/" aria-label="Roomi Movers home"><img class="flogo" src="/images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
         <p style="margin-top:8px"><a class="ph" href="tel:+18134363216">(813) 436-3216</a><br><a href="mailto:makeroom@roomimovers.com">makeroom@roomimovers.com</a></p>
       </div>
-      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
+      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/resources/">Guides</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
       <div><h2>Services</h2><ul><li><a href="/services/home-moves/">Home moves</a></li><li><a href="/services/apartment-condo-moves/">Apartment &amp; condo moves</a></li><li><a href="/services/loading-unloading/">Loading &amp; unloading</a></li><li><a href="/services/heavy-specialty-items/">Heavy &amp; specialty items</a></li></ul></div>
       <div><h2>Service areas</h2><ul><li><a href="/areas/tampa/">Tampa</a></li><li><a href="/areas/wesley-chapel/">Wesley Chapel</a></li><li><a href="/areas/lutz/">Lutz</a></li><li><a href="/areas/carrollwood/">Carrollwood</a></li><li><a href="/areas/">All service areas</a></li></ul></div>
     </div>
@@ -293,7 +301,8 @@
         sent = true;
         btn.textContent = 'Request sent';
         [].forEach.call(form.querySelectorAll('input, select, textarea'), function (el) { el.readOnly = true; });
-        say('is-ok', 'Thanks, ' + first + '. Your request is in, and Kareem will call you at ' + phone.value.trim() + ' with your estimate. Most estimates are back the same day.');
+        var safe = function (v) { var d = document.createElement('div'); d.textContent = v; return d.innerHTML; };
+        say('is-ok', '', '<b>Thanks, ' + safe(first) + '. Your request is in.</b><br>Kareem will call you at ' + safe(phone.value.trim()) + ' with your hourly rate and an estimate. Most estimates are back the same day.' + '<br><br><b>What happens next</b><br>1. Kareem reviews your rooms, stairs and big items.<br>2. He calls with your rate and the time we expect.<br>3. You pick your date and we confirm a two-hour arrival window.' + '<br><br>In a hurry? Call or text <a href="tel:+18134363216">(813) 436-3216</a>.');
       }).catch(function (err) {
         btn.disabled = false; btn.textContent = label;
         // a refusal from the form service is on our side, not the visitor's connection

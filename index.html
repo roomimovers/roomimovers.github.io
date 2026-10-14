@@ -481,6 +481,58 @@ footer a{color:#E9E2D6}
   .j-cta .btn{padding-inline:20px}
 }
 @media (prefers-reduced-motion:reduce){.j-stack>*{transition:none}}
+
+/* modules: glance strip, guides, package finder, search, checklist */
+.glance{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden}
+.glance div{padding:22px 18px;text-align:center;border-left:1px solid var(--line)}
+.glance div:first-child{border-left:0}
+.glance b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(28px,3.4vw,42px);letter-spacing:-.02em;color:var(--blue)}
+.glance span{color:var(--muted);font-weight:600;font-size:15px}
+@media (max-width:640px){.glance{grid-template-columns:1fr 1fr}.glance div:nth-child(3){border-left:0}.glance div:nth-child(n+3){border-top:1px solid var(--line)}}
+.gcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.gcard{display:grid;gap:8px;align-content:start;padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--card);text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
+.gcard:hover{border-color:var(--coral);transform:translateY(-2px)}
+.gcard b{font-family:var(--display);font-size:20px;line-height:1.15}
+.gcard span:last-child{color:var(--muted);font-size:15.5px}
+.gtag{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-ink)}
+.gcard-main{background:#061A3C;border-color:#061A3C;color:#fff}
+.gcard-main span:last-child{color:#CBD3E3}
+.gcard-main .gtag{color:#FFB08A}
+@media (max-width:900px){.gcards{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.gcards{grid-template-columns:1fr}}
+.finder-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:36px;align-items:start}
+.lede-sm{color:var(--muted);margin-top:12px}
+.finder fieldset{border:0;margin:0 0 22px;padding:0;min-width:0}
+.finder legend{font-family:var(--display);font-weight:800;font-size:18px;margin-bottom:8px;padding:0}
+.opt{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;margin:8px 0;cursor:pointer;background:var(--card);font-weight:600}
+.opt input{width:18px;height:18px;min-height:0;flex:none;accent-color:#F7652F}
+.opt:has(input:checked){border-color:var(--coral);background:#FFF3EA}
+.opt-note{font-weight:500;color:var(--muted);font-size:15px}
+.finder-result{border-top:1px solid var(--line);padding-top:22px;margin-top:6px}
+.finder-kicker{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-ink)}
+.finder-result h3{font-size:28px;margin-top:4px}
+.finder-sub{margin-top:14px;font-weight:700}
+.finder-fine{color:var(--muted);font-size:14px;margin-top:12px}
+@media (max-width:860px){.finder-wrap{grid-template-columns:1fr}}
+.search{display:grid;gap:8px;font-weight:700;max-width:560px}
+.guide{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;align-items:start}
+.guide-aside{position:sticky;top:96px}
+.plain{list-style:none;padding:0;display:grid;gap:8px;margin-top:10px}
+@media (max-width:900px){.guide{grid-template-columns:1fr}.guide-aside{position:static}}
+.page-hero.no-photo .wrap{grid-template-columns:1fr;max-width:860px}
+.chk-top{display:flex;justify-content:space-between;gap:20px;align-items:end;flex-wrap:wrap;margin-bottom:24px}
+.chk-count{font-family:var(--display);font-weight:800;font-size:20px}
+.chk-bar{width:min(320px,70vw);height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin-top:8px}
+.chk-bar i{display:block;height:100%;background:var(--coral);transform-origin:left;transform:scaleX(0);transition:transform .25s}
+.chk-actions{display:flex;gap:10px}
+.checklist{display:grid;gap:20px}
+.chk-sec{border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--card)}
+.chk-sec h2{font-size:22px;margin-bottom:10px}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-weight:500;cursor:pointer}
+.chk:first-of-type{border-top:0}
+.chk input{width:20px;height:20px;min-height:0;flex:none;margin-top:3px;accent-color:#F7652F}
+.chk:has(input:checked) span{color:var(--muted);text-decoration:line-through}
+@media print{.bar,.util,.actionbar,footer,.closer,.page-hero,.chk-actions,.skip{display:none!important}.chk-sec{break-inside:avoid;border:0;padding:8px 0}body{background:#fff}}
 </style>
 </head>
 <body>
@@ -505,6 +557,7 @@ footer a{color:#E9E2D6}
       <a href="/areas/">Service Areas</a>
       <a href="/about/">About</a>
       <a href="/faq/">FAQ</a>
+      <a href="/resources/">Guides</a>
       <a href="/contact/">Contact</a>
     </nav>
     <div class="bar-ctas">
@@ -882,6 +935,21 @@ footer a{color:#E9E2D6}
       </div>
     </div>
   </section>
+  <section class="band" id="guides">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Moving guides</p>
+        <h2>Plain-English help before moving day</h2>
+        <p>A printable checklist and short guides from a local moving company.</p>
+      </div>
+      <div class="gcards">
+        <a class="gcard gcard-main" href="/resources/moving-checklist/"><span class="gtag">Checklist</span><b>Printable moving checklist</b><span>From six weeks out to the day after, with your progress saved on this device.</span></a>
+        <a class="gcard" href="/resources/how-hourly-moving-pricing-works/"><span class="gtag">Pricing</span><b>How hourly pricing works</b><span>What the clock counts, what changes the total, and how to keep it down.</span></a>
+        <a class="gcard" href="/resources/moving-day-preparation/"><span class="gtag">Moving day</span><b>Moving day preparation</b><span>Parking, pathways, elevators, valuables and what to have on hand.</span></a>
+      </div>
+      <p class="after" style="margin-top:22px"><a href="/resources/">See all guides</a></p>
+    </div>
+  </section>
   <section class="band" id="faq">
     <div class="wrap">
       <div class="head center">
@@ -957,7 +1025,7 @@ footer a{color:#E9E2D6}
         <a class="brand" href="#top" aria-label="Roomi Movers home"><img class="flogo" src="images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
         <p style="margin-top:8px"><a class="ph" href="tel:+18134363216">(813) 436-3216</a><br><a href="mailto:makeroom@roomimovers.com">makeroom@roomimovers.com</a></p>
       </div>
-      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
+      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/resources/">Guides</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
       <div><h2>Services</h2><ul><li><a href="/services/home-moves/">Home moves</a></li><li><a href="/services/apartment-condo-moves/">Apartment &amp; condo moves</a></li><li><a href="/services/loading-unloading/">Loading &amp; unloading</a></li><li><a href="/services/heavy-specialty-items/">Heavy &amp; specialty items</a></li></ul></div>
       <div><h2>Service areas</h2><ul><li><a href="/areas/tampa/">Tampa</a></li><li><a href="/areas/wesley-chapel/">Wesley Chapel</a></li><li><a href="/areas/lutz/">Lutz</a></li><li><a href="/areas/carrollwood/">Carrollwood</a></li><li><a href="/areas/">All service areas</a></li></ul></div>
     </div>
@@ -1591,7 +1659,8 @@ footer a{color:#E9E2D6}
         sent = true;
         btn.textContent = 'Request sent';
         [].forEach.call(form.querySelectorAll('input, select, textarea'), function (el) { el.readOnly = true; });
-        say('is-ok', 'Thanks, ' + first + '. Your request is in, and Kareem will call you at ' + phone.value.trim() + ' with your estimate. Most estimates are back the same day.');
+        var safe = function (v) { var d = document.createElement('div'); d.textContent = v; return d.innerHTML; };
+        say('is-ok', '', '<b>Thanks, ' + safe(first) + '. Your request is in.</b><br>Kareem will call you at ' + safe(phone.value.trim()) + ' with your hourly rate and an estimate. Most estimates are back the same day.' + '<br><br><b>What happens next</b><br>1. Kareem reviews your rooms, stairs and big items.<br>2. He calls with your rate and the time we expect.<br>3. You pick your date and we confirm a two-hour arrival window.' + '<br><br>In a hurry? Call or text <a href="tel:+18134363216">(813) 436-3216</a>.');
       }).catch(function (err) {
         btn.disabled = false; btn.textContent = label;
         // a refusal from the form service is on our side, not the visitor's connection

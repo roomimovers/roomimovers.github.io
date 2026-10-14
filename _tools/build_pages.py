@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = 'https://roomimovers.com'
-UPDATED = '2026-10-12'
+UPDATED = '2026-10-13'
 PHONE, PHONE_TEL, EMAIL = '(813) 436-3216', '+18134363216', 'makeroom@roomimovers.com'
 OFFER = '<b>Launch special:</b> $50 off moves booked by Dec 31, 2026'
 
@@ -356,6 +356,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
 <script type="application/ld+json">
 {ld}
 </script>
@@ -381,6 +382,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
       <a href="/areas/">Service Areas</a>
       <a href="/about/">About</a>
       <a href="/faq/">FAQ</a>
+      <a href="/resources/">Guides</a>
       <a href="/contact/">Contact</a>
     </nav>
     <div class="bar-ctas">
@@ -460,7 +462,7 @@ def footer():
         <a class="brand" href="/" aria-label="Roomi Movers home"><img class="flogo" src="/images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
         <p style="margin-top:8px"><a class="ph" href="tel:{tel}">{phone}</a><br><a href="mailto:{email}">{email}</a></p>
       </div>
-      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
+      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/resources/">Guides</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
       <div><h2>Services</h2><ul>{svc}</ul></div>
       <div><h2>Service areas</h2><ul>{areas}</ul></div>
     </div>
@@ -720,6 +722,13 @@ def with_journey(html):
     return html.replace('</body>', scr + '\n</body>')
 
 
+def with_journey_late(html):
+    section, scr = journey_parts()
+    i = html.index('</section>', html.index('id="quote"')) + len('</section>')
+    html = html[:i] + '\n' + section + html[i:]
+    return html.replace('</body>', scr + '\n</body>')
+
+
 def with_form(html, cls=''):
     html = html.replace('</body>', form_script() + '\n</body>')
     if cls:
@@ -783,7 +792,7 @@ def pricing_page():
     ]))
     b += '\n' + sec('<div class="cols"><div class="card"><h2>Get the most accurate estimate</h2>' + ticks(['The number of rooms or your home size', 'Stairs and elevators at both addresses', 'Big or heavy items, with a photo texted to (813) 436-3216', 'Your move date']) +
                     '<p style="margin-top:18px"><a class="btn btn-primary" href="/contact/">Get a Free Estimate</a></p></div>'
-                    '<div class="card"><h2>Launch special</h2><p><b>$50 off moves booked by Dec 31, 2026.</b></p><p>Mention it when we call you back with your estimate.</p></div></div>', alt=True)
+                    '<div class="card"><h2>Launch special</h2><p><b>$50 off moves booked by Dec 31, 2026.</b></p></div></div>', alt=True)
     b += '\n' + home_section('how')
     p, html = hub_page('/pricing/', 'Pricing: Hourly Rate, Two-Hour Minimum | Roomi Movers',
                        'Roomi Movers bills by the hour with a two-hour minimum. Labor-only, full-service and white-glove packages, with a free estimate before you book.',
@@ -854,7 +863,7 @@ def contact_page():
                        'Request a free moving estimate from Roomi Movers, or call or text (813) 436-3216. Most estimates are back the same day.',
                        'Contact', 'Get your free estimate',
                        'Tell us about your move and Kareem will get back to you with your hourly rate and an estimate. Most estimates are back the same day.', b)
-    return p, with_journey(with_form(html, 'is-contact'))
+    return p, with_journey_late(with_form(html, 'is-contact'))
 
 
 def privacy_page():
@@ -876,10 +885,319 @@ def notfound_page():
     return p, html.replace('<meta name="viewport"', '<meta name="robots" content="noindex">\n<meta name="viewport"', 1)
 
 
+# ======================= guides, tools, and page-specific modules =======================
+def nophoto(html):
+    html = re.sub(r'<figure class="page-photo">.*?</figure>', '', html, flags=re.S)
+    return html.replace('<section class="page-hero">', '<section class="page-hero no-photo">', 1)
+
+
+def glance():
+    items = [('20', 'areas served'), ('4', 'moving services'), ('3', 'packages'), ('2-hour', 'arrival window')]
+    return '<div class="glance">' + ''.join('<div><b>%s</b><span>%s</span></div>' % (n, l) for n, l in items) + '</div>'
+
+
+def after_journey(html, block):
+    return html.replace('<div id="after-journey"></div>', '<div id="after-journey"></div>\n' + block, 1)
+
+
+def radio(name, value, label):
+    return '<label class="opt"><input type="radio" name="%s" value="%s"> <span>%s</span></label>' % (name, value, esc(label))
+
+
+def check(name, value, label):
+    return '<label class="opt"><input type="checkbox" name="%s" value="%s"> <span>%s</span></label>' % (name, value, esc(label))
+
+
+def finder_block():
+    return sec('''<div class="finder-wrap">
+        <div>
+          <p class="eyebrow">Package finder</p>
+          <h2 style="margin-top:12px;font-size:clamp(26px,3vw,38px)">Which package fits your move?</h2>
+          <p class="lede-sm">Answer a few quick questions. We will point you to the right package and tell you what to share for an accurate estimate.</p>
+        </div>
+        <div class="finder card" data-finder>
+          <fieldset><legend>Do you already have a truck, container or storage unit to load or unload?</legend>%s%s</fieldset>
+          <fieldset data-needs-truck hidden><legend>How big is the home?</legend>%s%s%s%s%s</fieldset>
+          <fieldset data-needs-care hidden><legend>What matters most?</legend>%s%s</fieldset>
+          <fieldset><legend>Anything we should plan for? <span class="opt-note">(optional)</span></legend>%s%s%s</fieldset>
+          <div class="finder-result" aria-live="polite" hidden></div>
+        </div>
+      </div>''' % (
+        radio('truck', 'yes', 'Yes, I have my own'), radio('truck', 'no', 'No, I need the truck too'),
+        radio('size', 'studio', 'Studio or 1 bedroom'), radio('size', 'two', '2 bedrooms'), radio('size', 'three', '3 bedrooms'), radio('size', 'four', '4 or more bedrooms'), radio('size', 'few', 'Just a few items'),
+        radio('care', 'care', 'Furniture wrapped and padded, beds set back up'), radio('care', 'protect', 'Extra protection for floors, TVs, art and mirrors'),
+        check('flag', 'stairs', 'Stairs or an elevator'), check('flag', 'heavy', 'A heavy item over 300 lbs, like a gun safe'), check('flag', 'tight', 'A long walk from the truck or tight doorways')))
+
+
+_pricing_v2 = pricing_page
+
+
+def pricing_page():
+    p, html = _pricing_v2()
+    return p, after_journey(html, finder_block())
+
+
+_faq_v2 = faq_page
+
+
+def faq_page():
+    p, html = _faq_v2()
+    search = sec('<label class="search">Search the questions<input type="search" data-faq-search placeholder="Try: stairs, truck, minimum, safe" autocomplete="off"></label>'
+                 '<p class="after" data-faq-empty hidden>No match. Call or text us at <a class="ph" href="tel:+18134363216">(813) 436-3216</a> and we will answer it.</p>')
+    return p, after_journey(html, search)
+
+
+_areas_v2 = areas_hub
+
+
+def areas_hub():
+    p, html = _areas_v2()
+    html = html.replace('<ul class="cities all">',
+                        '<label class="search" style="max-width:420px;margin:6px 0 18px">Find your area<input type="search" data-area-filter placeholder="Type your city" autocomplete="off"></label>'
+                        '<p class="after" data-area-msg hidden>Not on the list? Call us anyway at <a class="ph" href="tel:+18134363216">(813) 436-3216</a>.</p>'
+                        '<ul class="cities all">', 1)
+    return p, after_journey(html, sec(glance()))
+
+
+_services_v2 = services_hub
+
+
+def services_hub():
+    p, html = _services_v2()
+    return p, after_journey(html, sec(glance()))
+
+
+_about_v2 = about_page
+
+
+def about_page():
+    p, html = _about_v2()
+    return p, after_journey(nophoto(html), sec(glance()))
+
+
+# ---------- the guides ----------
+def gh(t):
+    return '<h2 style="margin-top:32px">%s</h2>' % esc(t)
+
+
+def gp(t):
+    return '<p>%s</p>' % esc(t)
+
+
+def gl(items):
+    return '<ul class="ticks">' + ''.join('<li>%s</li>' % esc(i) for i in items) + '</ul>'
+
+
+GUIDES = [
+    {
+        'slug': 'how-hourly-moving-pricing-works', 'short': 'How hourly pricing works', 'tag': 'Pricing',
+        'title': 'How Hourly Moving Pricing Works | Roomi Movers',
+        'desc': 'What the clock counts, what makes a move take longer, and how to keep your hourly total down, explained by Roomi Movers in Tampa.',
+        'h1': 'How hourly moving pricing works',
+        'lede': 'An hourly rate is easy to understand once you know what the clock counts. Here is how it works, what changes the total, and how to keep it down.',
+        'body': (gh('What the clock counts') +
+                 gp('At Roomi Movers the clock starts when we arrive and stops when the last item is placed. Every move has a two-hour minimum.') +
+                 gh('Your estimate has three parts') +
+                 gl(['Your hourly rate for the package you choose', 'The time we expect the move to take, based on what you tell us', 'Any extra charges, named before you book']) +
+                 gp('The more accurate your answers, the closer the estimate. That is why we ask about rooms, stairs and big items.') +
+                 gh('What makes a move take longer') +
+                 gl(['Stairs, at either address', 'A long walk from the truck to the door', 'Boxes that are not packed or labeled when we arrive', 'Large furniture that has to come apart', 'Heavy items, such as gun safes, appliances and treadmills', 'Blocked pathways, or parking far from the door']) +
+                 gh('How to keep your total down') +
+                 gl(['Be packed before we arrive, with every box taped and labeled', 'Clear the pathways and keep the truck close to the door', 'Tell us about stairs, elevators and heavy items when you ask for your estimate', 'Decide where larger furniture will go before moving day']) +
+                 gh('Extra charges we name up front') +
+                 gp('Stairs, long carries from the truck and items over 300 lbs, like gun safes, may add to the price. We tell you before you book, so nothing is a surprise on moving day.') +
+                 gh('Packages') +
+                 gp('Labor Only is two movers for your own truck, container or storage unit. Full-Service adds the box truck, wrapped and padded furniture, and beds taken apart and set back up. White-Glove adds floor runners and door-frame guards, boxed TVs, art and mirrors, furniture placed room by room, and an extra crew member.')),
+        'related': ['moving-day-preparation', 'moving-checklist'],
+    },
+    {
+        'slug': 'moving-day-preparation', 'short': 'Moving day preparation', 'tag': 'Moving day',
+        'title': 'How to Prepare for Moving Day | Roomi Movers',
+        'desc': 'A simple guide to getting ready for the movers: parking, pathways, elevators, valuables and what to have on hand. From Roomi Movers in Tampa.',
+        'h1': 'How to get ready for moving day',
+        'lede': 'A little preparation makes moving day faster and calmer. Here is what to do before the truck arrives.',
+        'body': (gh('The day before') +
+                 gl(['Finish packing and tape every box', 'Label each box with its room and contents', 'Pack an essentials bag with chargers, medications, toiletries and a change of clothes', 'Set aside documents, jewelry and other valuables to carry yourself']) +
+                 gh('Make room for the truck') +
+                 gp('Save a parking spot close to the door if you can. If you live in an apartment or condo, reserve the elevator or loading area if your building requires it, and ask about move-in hours.') +
+                 gh('Clear the way') +
+                 gl(['Move cars, bikes and boxes out of driveways and hallways', 'Keep pets and small children in a safe room', 'Open gates and have access codes ready for both addresses']) +
+                 gh('Appliances and electronics') +
+                 gl(['Empty and defrost the fridge and freezer ahead of time', 'Disconnect and drain washer hoses', 'Take a photo of how cables are connected before you unplug them']) +
+                 gh('When we arrive') +
+                 gl(['Walk through with us and point out fragile or high-value items', 'Tell us where each room at the new place is', 'Keep your essentials bag with you']) +
+                 gh('Before we leave') +
+                 gp('Do a last walk through every room, closet and cabinet, and check that everything has been placed where you want it.')),
+        'related': ['moving-checklist', 'packing-guide'],
+    },
+    {
+        'slug': 'packing-guide', 'short': 'Packing guide', 'tag': 'Packing',
+        'title': 'Packing Guide: How to Pack for a Move | Roomi Movers',
+        'desc': 'Simple packing tips from a local Tampa moving company: boxes, heavy items, fragile things, clothing, electronics and labels.',
+        'h1': 'A simple guide to packing',
+        'lede': 'Good packing keeps your things safe and keeps your move moving. Start early and go room by room.',
+        'body': (gh('Gather supplies') +
+                 gl(['Sturdy boxes in a few sizes', 'Packing paper or bubble wrap for fragile items', 'Strong tape and a marker', 'Bags or covers for mattresses']) +
+                 gh('Pack room by room') +
+                 gp('Start with the rooms you use least. Keep every room in its own boxes so unpacking is quick.') +
+                 gh('Heavy things in small boxes') +
+                 gp('Books and tools go in small boxes. Lighter items, like linens and pillows, go in larger ones. A box you can lift comfortably is easier and safer to carry.') +
+                 gh('Wrap the fragile things') +
+                 gl(['Wrap dishes one at a time and stand plates on their edges', 'Fill empty space so nothing shifts', 'Mark the box FRAGILE on the top and sides']) +
+                 gh('Clothes, art and electronics') +
+                 gl(['Leave clothes on hangers in wardrobe boxes or garment bags if you can', 'Keep TVs, art and mirrors upright, wrapped and protected', 'Photograph cable setups before unplugging']) +
+                 gh('Label everything') +
+                 gp('Write the room and a short list of contents on two sides of each box, and number them so you can tell that every box arrived.') +
+                 gh('Do not pack') +
+                 gp('Keep flammables, cleaning chemicals and other hazardous materials out of the truck, and carry important papers, medications and valuables with you.') +
+                 gh('Want help?') +
+                 gp('On a full-service move we wrap and pad your furniture and take beds apart and set them back up. Tell us what is packed and what is not when you request your estimate.')),
+        'related': ['moving-day-preparation', 'moving-checklist'],
+    },
+    {
+        'slug': 'moving-heavy-items', 'short': 'Moving heavy items', 'tag': 'Heavy items',
+        'title': 'Moving Gun Safes, Appliances & Heavy Items | Roomi Movers',
+        'desc': 'How to prepare a gun safe, washer, dryer, fridge or treadmill for a move, and what to tell your movers. From Roomi Movers in Tampa.',
+        'h1': 'Moving gun safes, appliances and other heavy items',
+        'lede': 'Heavy items need a plan and the right equipment. Here is how to prepare, and what to tell us so we bring what the job needs.',
+        'body': (gh('Tell us three things') +
+                 gl(['What it is and how large it is, with a photo if you can', 'About how much it weighs', 'Where it is going: garage, upstairs, a tight hallway']) +
+                 gp('Items over 300 lbs, like gun safes, may add to the price. We tell you before you book.') +
+                 gh('Measure first') +
+                 gp('Measure the item, the doorways, the hallways and the stairs at both addresses. A piece that does not fit through a doorway cannot be moved through it.') +
+                 gh('Gun safes') +
+                 gl(['Empty the safe before the move and carry its contents yourself', 'Make sure the path from the safe to the truck is clear', 'Tell us the weight and where it is going']) +
+                 gh('Washers, dryers and refrigerators') +
+                 gl(['Disconnect the water, power and drain lines ahead of time', 'Empty and defrost the fridge and freezer the day before', 'Secure or remove loose shelves and drawers']) +
+                 gh('Treadmills and exercise equipment') +
+                 gl(['Unplug and fold or lower the equipment if it is designed to', 'Remove loose parts and keep screws in a labeled bag']) +
+                 gh('Oversized furniture') +
+                 gp('Take note of any piece that may need to come apart, and tell us which one. On full-service moves, beds are taken apart and set back up.')),
+        'related': ['how-hourly-moving-pricing-works', 'moving-day-preparation'],
+    },
+]
+CHECKLIST = [
+    ('6 to 8 weeks before', ['Set your move date and book your movers', 'Decide what to keep, donate or sell', 'Start collecting boxes, tape and packing paper', 'Measure large furniture and the doorways and stairs at your new place']),
+    ('4 weeks before', ['Start packing the rooms you use least', 'Request time off for moving day if you need it', 'Reserve the elevator or loading area if your building requires it', 'Tell your landlord or building manager your move-out date']),
+    ('2 weeks before', ['Change your address with USPS and update banks, insurance and subscriptions', 'Schedule power, water and internet at your new place for move-in day', 'Arrange care for pets and children for moving day', 'Text photos of large or heavy items to (813) 436-3216 for an accurate estimate']),
+    ('1 week before', ['Confirm your arrival window with us', 'Pack everything except daily essentials', 'Empty and defrost the fridge and freezer, and drain washer hoses', 'Label every box with its room and contents', 'Set aside documents, medications and valuables to carry yourself']),
+    ('The day before', ['Pack an essentials bag with chargers, medications, toiletries and a change of clothes', 'Photograph cable setups before you unplug electronics', 'Clear pathways and save parking close to the door']),
+    ('Moving day', ['Walk through with the crew and point out fragile items', 'Tell the crew where each room is at the new place', 'Do a last walk through every room, closet and cabinet', 'Keep your essentials bag with you']),
+    ('After the move', ['Unpack the essentials first', 'Update the address on your driver license and vehicle registration', 'Call us promptly if anything needs attention']),
+]
+
+
+def guide_cards(slugs):
+    return ''.join('<a class="gcard" href="/resources/%s/"><span class="gtag">%s</span><b>%s</b><span>%s</span></a>' % (
+        g['slug'], esc(g['tag']), esc(g['short']), esc(g['lede'])) for g in GUIDES if g['slug'] in slugs)
+
+
+def guide_page(g):
+    path = '/resources/%s/' % g['slug']
+    related = ''.join('<li><a href="/resources/%s/">%s</a></li>' % (s, esc(t)) for s, t in
+                      [(x['slug'], x['short']) for x in GUIDES if x['slug'] in g['related']] + ([('moving-checklist', 'Printable moving checklist')] if 'moving-checklist' in g['related'] else []))
+    aside = ('<aside class="card guide-aside"><h2>Need a hand?</h2><p>Get your hourly rate and an estimate, free.</p>'
+             '<p style="margin-top:14px"><a class="btn btn-primary" href="/contact/">Get a Free Estimate</a></p>'
+             '<p style="margin-top:12px">or call <a class="ph" href="tel:+18134363216">(813) 436-3216</a></p>'
+             '<h3 style="margin-top:22px">Keep reading</h3><ul class="plain">%s</ul></aside>' % related)
+    b = sec('<div class="guide"><article class="prose">%s</article>%s</div>' % (g['body'], aside))
+    ld = [{'@type': 'Article', 'headline': g['h1'], 'description': g['desc'], 'url': SITE + path, 'datePublished': '2026-10-13', 'dateModified': '2026-10-13',
+           'author': BUSINESS_REF, 'publisher': BUSINESS_REF}]
+    p, html = hub_page(path, g['title'], g['desc'], g['short'], g['h1'], g['lede'], b, ld)
+    html = html.replace('<li><a href="/resources/">Guides</a></li>', '')
+    html = html.replace('<li aria-current="page">%s</li>' % esc(g['short']), '<li><a href="/resources/">Guides</a></li><li aria-current="page">%s</li>' % esc(g['short']), 1)
+    return p, nophoto(html)
+
+
+def checklist_page():
+    secs = ''
+    for title, items in CHECKLIST:
+        secs += '<section class="chk-sec"><h2>%s</h2>%s</section>' % (esc(title), ''.join('<label class="chk"><input type="checkbox"> <span>%s</span></label>' % esc(i) for i in items))
+    b = sec('<div class="chk-top"><div><p data-progress class="chk-count">0 of 0 done</p><div class="chk-bar"><i data-bar></i></div></div>'
+            '<div class="chk-actions"><button type="button" class="btn btn-ghost" data-print>Print</button><button type="button" class="btn btn-ghost" data-reset>Clear</button></div></div>'
+            '<div class="checklist" data-checklist="moving">' + secs + '</div>'
+            '<p class="after" style="margin-top:28px">Your ticks are saved on this device only. Ready for your estimate? <a href="/contact/">Request one here</a>.</p>')
+    path = '/resources/moving-checklist/'
+    ld = [{'@type': 'Article', 'headline': 'Moving checklist', 'description': 'A printable moving checklist from Roomi Movers.', 'url': SITE + path,
+           'datePublished': '2026-10-13', 'dateModified': '2026-10-13', 'author': BUSINESS_REF, 'publisher': BUSINESS_REF}]
+    p, html = hub_page(path, 'Moving Checklist: What to Do and When | Roomi Movers',
+                       'A printable moving checklist from Roomi Movers: what to do 6 to 8 weeks out, the week before, moving day and after, with your progress saved on this device.',
+                       'Moving checklist', 'Your moving checklist',
+                       'From six weeks out to the day after. Tick things off as you go and print it if you like.', b, ld)
+    html = html.replace('<li aria-current="page">Moving checklist</li>', '<li><a href="/resources/">Guides</a></li><li aria-current="page">Moving checklist</li>', 1)
+    return p, nophoto(html)
+
+
+def resources_hub():
+    cards = ('<a class="gcard gcard-main" href="/resources/moving-checklist/"><span class="gtag">Checklist</span><b>Printable moving checklist</b>'
+             '<span>From six weeks out to the day after, with your progress saved on this device.</span></a>' + guide_cards([g['slug'] for g in GUIDES]))
+    b = sec('<div class="gcards">' + cards + '</div>')
+    b += '\n' + sec('<div class="cols"><div class="card"><h2>Ready for your estimate?</h2><p>Tell us about your move and Kareem will call with your hourly rate and the time we expect. Most estimates are back the same day.</p>'
+                    '<p style="margin-top:16px"><a class="btn btn-primary" href="/contact/">Get a Free Estimate</a></p></div>'
+                    '<div class="card"><h2>Have a question that is not here?</h2><p>Call or text us and ask. We will answer it, and it might become a guide.</p>'
+                    '<p style="margin-top:16px"><a class="btn btn-ghost" href="tel:+18134363216">Call (813) 436-3216</a> <a class="btn btn-ghost" href="/faq/">Read the FAQ</a></p></div></div>', alt=True)
+    p, html = hub_page('/resources/', 'Moving Guides & Checklist | Roomi Movers',
+                       'Free moving guides from Roomi Movers in Tampa: a printable checklist, how hourly pricing works, moving day preparation, packing and heavy items.',
+                       'Guides', 'Moving guides and tools',
+                       'Plain-English help from a local moving company: a printable checklist, how hourly pricing works, and what to do before the truck arrives.', b)
+    return p, nophoto(html)
+
+
+# ---------- final pass: each page gets its own hero identity and related guides ----------
+HERO_FIXED = {
+    '/services/': ('What we move', True), '/pricing/': ('Pricing', True), '/areas/': ('Where we move', True),
+    '/about/': ('About Roomi Movers', True), '/faq/': ('FAQ', True), '/contact/': ('Contact', False),
+    '/privacy/': ('Legal', False), '/resources/': ('Moving guides', False), '/resources/moving-checklist/': ('Tool: checklist', False),
+}
+GUIDES_FOR = {
+    '/services/home-moves/': ['moving-checklist', 'packing-guide', 'moving-day-preparation'],
+    '/services/apartment-condo-moves/': ['moving-day-preparation', 'moving-checklist', 'how-hourly-moving-pricing-works'],
+    '/services/loading-unloading/': ['how-hourly-moving-pricing-works', 'moving-day-preparation', 'packing-guide'],
+    '/services/heavy-specialty-items/': ['moving-heavy-items', 'how-hourly-moving-pricing-works', 'moving-day-preparation'],
+}
+
+
+def guide_card(slug):
+    if slug == 'moving-checklist':
+        return ('<a class="gcard gcard-main" href="/resources/moving-checklist/"><span class="gtag">Checklist</span><b>Printable moving checklist</b>'
+                '<span>From six weeks out to the day after, with your progress saved on this device.</span></a>')
+    g = [x for x in GUIDES if x['slug'] == slug][0]
+    return '<a class="gcard" href="/resources/%s/"><span class="gtag">%s</span><b>%s</b><span>%s</span></a>' % (slug, esc(g['tag']), esc(g['short']), esc(g['lede']))
+
+
+def finish_pages(paths):
+    tags = {'/resources/%s/' % x['slug']: x['tag'] for x in GUIDES}
+    for path in paths:
+        if path == '/':
+            continue
+        f = ROOT / path.strip('/') / 'index.html'
+        html = f.read_text(encoding='utf-8')
+        if path in HERO_FIXED:
+            eb, ctas = HERO_FIXED[path]
+        elif path in tags:
+            eb, ctas = 'Guide: ' + tags[path].lower(), False
+        elif path.startswith('/services/'):
+            eb, ctas = 'Moving service', True
+        elif path.startswith('/areas/'):
+            eb, ctas = 'Service area', True
+        else:
+            eb, ctas = 'Roomi Movers', True
+        html = html.replace('<p class="eyebrow">Roomi Movers · Tampa Bay</p>', '<p class="eyebrow">%s</p>' % esc(eb), 1)
+        if not ctas:
+            html = re.sub(r'\s*<div class="ctas">\s*<a class="btn btn-primary"[^>]*>Get a Free Estimate</a>\s*<a class="btn btn-ghost"[^>]*>[^<]*</a>\s*</div>\s*<p class="offer">.*?</p>',
+                          '', html, count=1, flags=re.S)
+        slugs = GUIDES_FOR.get(path) or (['moving-checklist', 'how-hourly-moving-pricing-works', 'moving-day-preparation'] if path.startswith('/areas/') and path != '/areas/' else None)
+        if slugs and '<section class="closer">' in html:
+            block = ('  <section class="band">\n    <div class="wrap">\n      <h2 style="font-size:clamp(24px,2.6vw,30px);margin-bottom:20px">Helpful guides</h2>\n'
+                     '      <div class="gcards">' + ''.join(guide_card(s) for s in slugs) + '</div>\n    </div>\n  </section>\n')
+            html = html.replace('  <section class="closer">', block + '  <section class="closer">', 1)
+        f.write_text(html, encoding='utf-8', newline='\n')
+
+
 def main():
     build_css()
     paths = ['/']
-    for fn in (services_hub, pricing_page, areas_hub, about_page, faq_page, contact_page, privacy_page):
+    for fn in (services_hub, pricing_page, areas_hub, about_page, faq_page, contact_page, privacy_page, resources_hub, checklist_page) + tuple((lambda g=g: guide_page(g)) for g in GUIDES):
         path, html = fn()
         out = ROOT / path.strip('/') / 'index.html'
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -892,6 +1210,7 @@ def main():
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(html, encoding='utf-8', newline='\n')
             paths.append(path)
+    finish_pages(paths)
     _, nf = notfound_page()
     (ROOT / '404.html').write_text(nf, encoding='utf-8', newline='\n')
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(

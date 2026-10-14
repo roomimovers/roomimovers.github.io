@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -78,6 +79,7 @@
       <a href="/areas/">Service Areas</a>
       <a href="/about/">About</a>
       <a href="/faq/">FAQ</a>
+      <a href="/resources/">Guides</a>
       <a href="/contact/">Contact</a>
     </nav>
     <div class="bar-ctas">
@@ -93,14 +95,9 @@
     <div class="wrap">
       <div>
         <nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li aria-current="page">Contact</li></ol></nav>
-        <p class="eyebrow">Roomi Movers · Tampa Bay</p>
+        <p class="eyebrow">Contact</p>
         <h1>Get your free estimate</h1>
         <p class="lede">Tell us about your move and Kareem will get back to you with your hourly rate and an estimate. Most estimates are back the same day.</p>
-        <div class="ctas">
-          <a class="btn btn-primary" href="/contact/">Get a Free Estimate</a>
-          <a class="btn btn-ghost" href="tel:+18134363216">Call (813) 436-3216</a>
-        </div>
-        <p class="offer"><b>Launch special:</b> $50 off moves booked by Dec 31, 2026</p>
       </div>
       <figure class="page-photo">
         <picture>
@@ -108,6 +105,43 @@
           <img src="/images/roomi-team-truck-960.jpg" srcset="/images/roomi-team-truck-960.jpg 960w, /images/roomi-team-truck-1672.jpg 1672w" sizes="(max-width: 860px) 100vw, 520px" alt="Kareem Aboroomi, owner of Roomi Movers, in front of the Roomi Movers box truck" width="960" height="540">
         </picture>
       </figure>
+    </div>
+  </section>
+<section class="band alt" id="quote">
+    <div class="wrap quote-wrap">
+      <div class="quote-side">
+        <p class="eyebrow">Free estimate</p>
+        <h2 style="margin-top:12px">Tell us about your move</h2>
+        <p>Kareem will get back to you with your hourly rate and an estimate. Most estimates are back the same day.</p>
+        <div class="direct">
+          <span>Call or text: <a class="ph" href="tel:+18134363216">(813) 436-3216</a></span>
+          <span>Email: makeroom@roomimovers.com</span>
+        </div>
+      </div>
+      <div class="quote">
+        <form id="quoteForm" novalidate>
+          <div class="grid2">
+            <label for="q-name">Your name<input id="q-name" name="name" autocomplete="name" required></label>
+            <label for="q-phone">Phone<input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
+          </div>
+          <div class="grid2">
+            <label for="q-date">Move date<input id="q-date" name="date" type="date"></label>
+            <label for="q-size">Home size
+              <select id="q-size" name="size">
+                <option>Studio / 1 bedroom</option><option>2 bedrooms</option><option>3 bedrooms</option><option>4+ bedrooms</option><option>Just a few items</option><option>Labor only (my truck)</option>
+              </select>
+            </label>
+          </div>
+          <div class="grid2">
+            <label for="q-from">Moving from (city or ZIP)<input id="q-from" name="from"></label>
+            <label for="q-to">Moving to (city or ZIP)<input id="q-to" name="to"></label>
+          </div>
+          <label for="q-notes">Stairs, elevator, heavy items?<textarea id="q-notes" name="notes" placeholder="e.g. 2nd floor walk-up, gun safe, washer and dryer"></textarea></label>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-primary" type="submit">Request My Free Estimate</button>
+          <p class="form-msg" id="thanks" role="status" aria-live="polite" hidden></p>
+        </form>
+      </div>
     </div>
   </section>
 <section class="journey is-short" id="journey" aria-labelledby="j-title">
@@ -303,43 +337,6 @@
     </div>
   </section>
 <div id="after-journey"></div>
-<section class="band alt" id="quote">
-    <div class="wrap quote-wrap">
-      <div class="quote-side">
-        <p class="eyebrow">Free estimate</p>
-        <h2 style="margin-top:12px">Tell us about your move</h2>
-        <p>Kareem will get back to you with your hourly rate and an estimate. Most estimates are back the same day.</p>
-        <div class="direct">
-          <span>Call or text: <a class="ph" href="tel:+18134363216">(813) 436-3216</a></span>
-          <span>Email: makeroom@roomimovers.com</span>
-        </div>
-      </div>
-      <div class="quote">
-        <form id="quoteForm" novalidate>
-          <div class="grid2">
-            <label for="q-name">Your name<input id="q-name" name="name" autocomplete="name" required></label>
-            <label for="q-phone">Phone<input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
-          </div>
-          <div class="grid2">
-            <label for="q-date">Move date<input id="q-date" name="date" type="date"></label>
-            <label for="q-size">Home size
-              <select id="q-size" name="size">
-                <option>Studio / 1 bedroom</option><option>2 bedrooms</option><option>3 bedrooms</option><option>4+ bedrooms</option><option>Just a few items</option><option>Labor only (my truck)</option>
-              </select>
-            </label>
-          </div>
-          <div class="grid2">
-            <label for="q-from">Moving from (city or ZIP)<input id="q-from" name="from"></label>
-            <label for="q-to">Moving to (city or ZIP)<input id="q-to" name="to"></label>
-          </div>
-          <label for="q-notes">Stairs, elevator, heavy items?<textarea id="q-notes" name="notes" placeholder="e.g. 2nd floor walk-up, gun safe, washer and dryer"></textarea></label>
-          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button class="btn btn-primary" type="submit">Request My Free Estimate</button>
-          <p class="form-msg" id="thanks" role="status" aria-live="polite" hidden></p>
-        </form>
-      </div>
-    </div>
-  </section>
   <section class="band alt">
     <div class="wrap">
 <div class="cols"><div class="card"><h2>Other ways to reach us</h2><ul class="ticks"><li>Call (813) 436-3216</li><li>Text a photo of your big items to (813) 436-3216</li><li>Email makeroom@roomimovers.com</li></ul><p style="margin-top:16px"><a class="btn btn-ghost" href="tel:+18134363216">Call now</a> <a class="btn btn-ghost" href="sms:+18134363216">Text us</a></p></div><div class="card"><h2>What happens next</h2><ol class="steps" style="margin-top:12px;grid-template-columns:1fr"><li><h3>We review your request</h3><p>Kareem looks at your rooms, stairs and big items.</p></li><li><h3>You get your estimate</h3><p>He calls with your hourly rate and the time we expect. Most estimates are back the same day.</p></li><li><h3>You lock in your date</h3><p>We confirm your rate, crew size and a two-hour arrival window.</p></li></ol></div></div>
@@ -364,7 +361,7 @@
         <a class="brand" href="/" aria-label="Roomi Movers home"><img class="flogo" src="/images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
         <p style="margin-top:8px"><a class="ph" href="tel:+18134363216">(813) 436-3216</a><br><a href="mailto:makeroom@roomimovers.com">makeroom@roomimovers.com</a></p>
       </div>
-      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
+      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/resources/">Guides</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
       <div><h2>Services</h2><ul><li><a href="/services/home-moves/">Home moves</a></li><li><a href="/services/apartment-condo-moves/">Apartment &amp; condo moves</a></li><li><a href="/services/loading-unloading/">Loading &amp; unloading</a></li><li><a href="/services/heavy-specialty-items/">Heavy &amp; specialty items</a></li></ul></div>
       <div><h2>Service areas</h2><ul><li><a href="/areas/tampa/">Tampa</a></li><li><a href="/areas/wesley-chapel/">Wesley Chapel</a></li><li><a href="/areas/lutz/">Lutz</a></li><li><a href="/areas/carrollwood/">Carrollwood</a></li><li><a href="/areas/">All service areas</a></li></ul></div>
     </div>
@@ -441,7 +438,8 @@
         sent = true;
         btn.textContent = 'Request sent';
         [].forEach.call(form.querySelectorAll('input, select, textarea'), function (el) { el.readOnly = true; });
-        say('is-ok', 'Thanks, ' + first + '. Your request is in, and Kareem will call you at ' + phone.value.trim() + ' with your estimate. Most estimates are back the same day.');
+        var safe = function (v) { var d = document.createElement('div'); d.textContent = v; return d.innerHTML; };
+        say('is-ok', '', '<b>Thanks, ' + safe(first) + '. Your request is in.</b><br>Kareem will call you at ' + safe(phone.value.trim()) + ' with your hourly rate and an estimate. Most estimates are back the same day.' + '<br><br><b>What happens next</b><br>1. Kareem reviews your rooms, stairs and big items.<br>2. He calls with your rate and the time we expect.<br>3. You pick your date and we confirm a two-hour arrival window.' + '<br><br>In a hurry? Call or text <a href="tel:+18134363216">(813) 436-3216</a>.');
       }).catch(function (err) {
         btn.disabled = false; btn.textContent = label;
         // a refusal from the form service is on our side, not the visitor's connection

@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -78,6 +79,7 @@
       <a href="/areas/">Service Areas</a>
       <a href="/about/">About</a>
       <a href="/faq/">FAQ</a>
+      <a href="/resources/">Guides</a>
       <a href="/contact/">Contact</a>
     </nav>
     <div class="bar-ctas">
@@ -93,7 +95,7 @@
     <div class="wrap">
       <div>
         <nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li aria-current="page">Pricing</li></ol></nav>
-        <p class="eyebrow">Roomi Movers · Tampa Bay</p>
+        <p class="eyebrow">Pricing</p>
         <h1>One hourly rate, explained up front</h1>
         <p class="lede">Every package is billed by the hour with a two-hour minimum. Your free estimate shows the rate and the time we expect, so there are no surprises on moving day.</p>
         <div class="ctas">
@@ -303,6 +305,24 @@
     </div>
   </section>
 <div id="after-journey"></div>
+  <section class="band">
+    <div class="wrap">
+<div class="finder-wrap">
+        <div>
+          <p class="eyebrow">Package finder</p>
+          <h2 style="margin-top:12px;font-size:clamp(26px,3vw,38px)">Which package fits your move?</h2>
+          <p class="lede-sm">Answer a few quick questions. We will point you to the right package and tell you what to share for an accurate estimate.</p>
+        </div>
+        <div class="finder card" data-finder>
+          <fieldset><legend>Do you already have a truck, container or storage unit to load or unload?</legend><label class="opt"><input type="radio" name="truck" value="yes"> <span>Yes, I have my own</span></label><label class="opt"><input type="radio" name="truck" value="no"> <span>No, I need the truck too</span></label></fieldset>
+          <fieldset data-needs-truck hidden><legend>How big is the home?</legend><label class="opt"><input type="radio" name="size" value="studio"> <span>Studio or 1 bedroom</span></label><label class="opt"><input type="radio" name="size" value="two"> <span>2 bedrooms</span></label><label class="opt"><input type="radio" name="size" value="three"> <span>3 bedrooms</span></label><label class="opt"><input type="radio" name="size" value="four"> <span>4 or more bedrooms</span></label><label class="opt"><input type="radio" name="size" value="few"> <span>Just a few items</span></label></fieldset>
+          <fieldset data-needs-care hidden><legend>What matters most?</legend><label class="opt"><input type="radio" name="care" value="care"> <span>Furniture wrapped and padded, beds set back up</span></label><label class="opt"><input type="radio" name="care" value="protect"> <span>Extra protection for floors, TVs, art and mirrors</span></label></fieldset>
+          <fieldset><legend>Anything we should plan for? <span class="opt-note">(optional)</span></legend><label class="opt"><input type="checkbox" name="flag" value="stairs"> <span>Stairs or an elevator</span></label><label class="opt"><input type="checkbox" name="flag" value="heavy"> <span>A heavy item over 300 lbs, like a gun safe</span></label><label class="opt"><input type="checkbox" name="flag" value="tight"> <span>A long walk from the truck or tight doorways</span></label></fieldset>
+          <div class="finder-result" aria-live="polite" hidden></div>
+        </div>
+      </div>
+    </div>
+  </section>
 <section class="band alt" id="pricing">
     <div class="wrap">
       <div class="head">
@@ -347,7 +367,7 @@
   </section>
   <section class="band alt">
     <div class="wrap">
-<div class="cols"><div class="card"><h2>Get the most accurate estimate</h2><ul class="ticks"><li>The number of rooms or your home size</li><li>Stairs and elevators at both addresses</li><li>Big or heavy items, with a photo texted to (813) 436-3216</li><li>Your move date</li></ul><p style="margin-top:18px"><a class="btn btn-primary" href="/contact/">Get a Free Estimate</a></p></div><div class="card"><h2>Launch special</h2><p><b>$50 off moves booked by Dec 31, 2026.</b></p><p>Mention it when we call you back with your estimate.</p></div></div>
+<div class="cols"><div class="card"><h2>Get the most accurate estimate</h2><ul class="ticks"><li>The number of rooms or your home size</li><li>Stairs and elevators at both addresses</li><li>Big or heavy items, with a photo texted to (813) 436-3216</li><li>Your move date</li></ul><p style="margin-top:18px"><a class="btn btn-primary" href="/contact/">Get a Free Estimate</a></p></div><div class="card"><h2>Launch special</h2><p><b>$50 off moves booked by Dec 31, 2026.</b></p></div></div>
     </div>
   </section>
 <section class="band" id="how">
@@ -382,7 +402,7 @@
         <a class="brand" href="/" aria-label="Roomi Movers home"><img class="flogo" src="/images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
         <p style="margin-top:8px"><a class="ph" href="tel:+18134363216">(813) 436-3216</a><br><a href="mailto:makeroom@roomimovers.com">makeroom@roomimovers.com</a></p>
       </div>
-      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
+      <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/resources/">Guides</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
       <div><h2>Services</h2><ul><li><a href="/services/home-moves/">Home moves</a></li><li><a href="/services/apartment-condo-moves/">Apartment &amp; condo moves</a></li><li><a href="/services/loading-unloading/">Loading &amp; unloading</a></li><li><a href="/services/heavy-specialty-items/">Heavy &amp; specialty items</a></li></ul></div>
       <div><h2>Service areas</h2><ul><li><a href="/areas/tampa/">Tampa</a></li><li><a href="/areas/wesley-chapel/">Wesley Chapel</a></li><li><a href="/areas/lutz/">Lutz</a></li><li><a href="/areas/carrollwood/">Carrollwood</a></li><li><a href="/areas/">All service areas</a></li></ul></div>
     </div>
