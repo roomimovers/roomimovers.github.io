@@ -370,7 +370,7 @@ footer a{color:#E9E2D6}
 .fcols a:hover{color:#FF8A5B}
 .tagline{font-family:var(--display);font-weight:900;font-size:22px;color:var(--ink);margin-top:10px}
 .legal{border-top:1px solid rgba(247,238,226,.12);margin-top:32px;padding-top:18px;font-size:14px}
-@media (max-width:860px){.fcols{grid-template-columns:1fr 1fr}}
+@media (max-width:860px){.fcols{grid-template-columns:repeat(2,minmax(0,1fr))}.fcols a,.fcols p,.fcols li{overflow-wrap:anywhere}}
 @media (min-width:861px){footer{padding-block:48px}}
 
 /* mobile action bar */
@@ -422,29 +422,7 @@ footer a{color:#E9E2D6}
 /* scroll journey: one orange line draws the truck, the route, the home and the room */
 .journey{--ink:#0B1C3D;--muted:#3B4663;--coral:#F7652F;--coral-ink:#A33711;--line:#E4D6C2;--band:#F7EEE2;
   position:relative;background:#FBF7F0;color:var(--ink);border-bottom:1px solid var(--line)}
-.journey.is-live{height:450vh;height:450svh}
-.journey-pin{display:flex;flex-direction:column;gap:6px;padding-block:28px 20px;background:#FBF7F0}
-.journey.is-live .journey-pin{position:sticky;top:var(--bar-h,60px);height:calc(100vh - var(--bar-h,60px));height:calc(100svh - var(--bar-h,60px));overflow:hidden;padding-block:20px 14px}
-.journey-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 36px;width:100%}
-.j-copy{width:100%;display:grid;gap:8px}
-.j-stack{display:grid}
-.j-stack>*{grid-area:1/1;opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
-.j-stack>.is-on{opacity:1;transform:none}
-.journey.is-gsap .j-stack>*{transition:none}
-.j-title{font-size:clamp(30px,4.4vw,52px);font-weight:900;letter-spacing:-.025em;color:var(--ink)}
-.j-title>*{align-self:end;max-width:880px}
-.j-sub{color:var(--muted);font-size:clamp(15px,1.5vw,18px);margin:0}
-.j-sub>*{align-self:start;max-width:52em}
-.j-stack>.j-fin{justify-self:center;text-align:center;max-width:none}
-.j-next{font-family:var(--display);font-weight:800;font-size:clamp(20px,2.3vw,27px);line-height:1.15;letter-spacing:-.01em;color:var(--coral-ink)}
-.j-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px;pointer-events:auto}
-.journey:not(.is-live) #jEyebrow{text-align:center}
-.j-stage{position:relative;width:100%;height:clamp(300px,54vh,560px)}
-.journey.is-live .j-stage{height:auto;flex:1 1 0;min-height:0}
 .j-stage svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
-.journey-pin>.wrap{width:100%}
-.j-steps{list-style:none;margin:4px 0 0;padding:0;display:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.journey.is-live .j-steps{display:grid}
 .j-steps li{display:grid;gap:7px}
 .j-steps i{display:block;height:3px;border-radius:3px;background:var(--line);overflow:hidden}
 .j-steps b{display:block;height:100%;background:var(--coral);transform-origin:left;transform:scaleX(0)}
@@ -456,12 +434,7 @@ footer a{color:#E9E2D6}
 .journey svg .j-fillbg,.journey svg .j-house.j-fillbg{fill:#FBF7F0}
 .j-hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:opacity .4s;display:none}
 .journey.is-live .j-hint{display:block}
-.j-foot{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px 22px}
-.j-foot .j-steps{flex:1 1 320px}
-.j-skip{display:none;font:600 13px/1 var(--body);color:var(--muted);text-decoration:underline;text-underline-offset:3px;white-space:nowrap;padding:6px 0}
-.journey.is-live .j-skip{display:inline-block}
 .j-skip:hover{color:var(--ink)}
-@media (max-width:560px){.j-skip{order:-1;margin-left:auto;padding:0 0 2px}}
 
 .journey svg .j-ink{fill:none;stroke:#12306B;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
 .journey svg .j-house{fill:none;stroke:#061A3C;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -475,12 +448,6 @@ footer a{color:#E9E2D6}
 .journey svg .j-route{fill:none;stroke:#12306B;stroke-opacity:.2;stroke-width:1.2;stroke-dasharray:1 8;stroke-linecap:round}
 .journey.is-js svg .j-draw{stroke-dasharray:1;stroke-dashoffset:0}
 .journey:not(.is-js) .final{display:none}
-@media (max-width:860px){
-  .journey.is-live .journey-pin{padding-bottom:78px}
-  .j-call{display:none}
-  .j-cta .btn{padding-inline:20px}
-}
-@media (prefers-reduced-motion:reduce){.j-stack>*{transition:none}}
 
 /* modules: glance strip, guides, package finder, search, checklist */
 .glance{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden}
@@ -549,14 +516,6 @@ footer a{color:#E9E2D6}
 @media (max-height:540px) and (orientation:landscape){
   .actionbar{display:none}
   .bar .wrap{padding-block:6px}
-  .journey.is-live .journey-pin{padding-block:6px;gap:2px}
-  .j-copy .eyebrow{display:none}
-  .j-title{font-size:clamp(20px,3.4vw,30px)}
-  .j-sub>p:not(.j-fin){display:none}
-  .j-stack>.j-fin{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 16px}
-  .j-fin .j-call{display:none}
-  .j-fin .j-cta{margin-top:0}
-  .j-steps,.j-hint{display:none}
   footer{padding-bottom:32px}
 }
 
@@ -574,7 +533,6 @@ label{font-size:16px;font-weight:700}
 .tier ul,.svc ul{line-height:1.55}
 .eyebrow,.card-kicker,.gtag,.tier .tag{font-size:14px}
 .card-fine{font-size:15px}
-.j-sub{font-size:clamp(17px,1.6vw,20px)}
 .j-steps span{font-size:13px}
 .j-hint{font-size:14px}
 footer,.fcols a,.legal{font-size:16px}
@@ -586,15 +544,6 @@ footer,.fcols a,.legal{font-size:16px}
 @media (max-width:560px){.badges ul{grid-template-columns:1fr}.badges li,.badges li+li{border-left:0}.badges li+li{border-top:1px solid var(--line)}.badges li{padding:16px 6px;font-size:18px}}
 
 /* animation: a clear skip button, a balanced layout and a shorter scroll on phones */
-.journey.is-live .j-skip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:2px solid var(--field-line);border-radius:999px;background:#fff;color:var(--ink);font:800 15px var(--body);text-decoration:none}
-.journey.is-live .j-skip::after{content:"\2193"}
-.journey.is-live .j-skip:hover{border-color:var(--coral)}
-@media (max-width:560px){
-  .journey.is-live{height:400vh;height:400svh}
-  .journey.is-live .journey-pin{justify-content:center;gap:12px}
-  .journey.is-live .j-stage{flex:0 0 auto;height:min(64vw,310px)}
-  .journey.is-live .j-foot{margin-top:4px}
-}
 
 /* trust section */
 .trust-band{background:linear-gradient(180deg,#F7EEE2,#FBF7F0)}
@@ -626,6 +575,66 @@ footer,.fcols a,.legal{font-size:16px}
 .rwho .rsrc{display:inline-block;margin-left:8px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-ink)}
 @keyframes roomi-scroll{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.marquee-track{animation:none}}
+
+/* scroll journey, side by side: the scene stays on the side while the real information scrolls beside it.
+   Stacked on phones (scene sticks under the menu, text scrolls beneath), split on desktop, tablets in landscape and landscape phones. */
+.journey .j-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-items:start}
+.j-stagecol{grid-column:1;grid-row:1;position:sticky;top:var(--bar-h,60px);z-index:5;display:flex;flex-direction:column;gap:6px;padding:6px 0 8px;background:#FBF7F0;box-shadow:0 14px 16px -16px rgba(11,28,61,.5)}
+.j-story{grid-column:1;grid-row:2;padding-bottom:6vh}
+.j-stage{position:relative;width:100%;height:min(60vw,42svh,320px);overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#FBF7F0;box-shadow:0 26px 50px -36px rgba(11,28,61,.45)}
+.j-intro{display:grid;gap:10px;justify-items:start;padding-block:26px 6px}
+.j-title{font-size:clamp(30px,8vw,46px);font-weight:900;letter-spacing:-.025em;color:var(--ink)}
+.j-sub{color:var(--muted);font-size:clamp(17px,4.4vw,20px);margin:0;max-width:34em}
+.j-skip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:2px solid var(--field-line,#7C869C);border-radius:999px;background:#fff;color:var(--ink);font:800 15px var(--body);text-decoration:none}
+.j-skip::after{content:"\2193"}
+.j-skip:hover{border-color:var(--coral)}
+.j-block{position:relative;min-height:56vh;min-height:56svh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:12px;padding:30px 0 30px 22px}
+.j-block::before{content:"";position:absolute;left:0;top:16%;bottom:16%;width:4px;border-radius:4px;background:var(--line);transition:background-color .35s ease}
+.j-block.is-active::before{background:var(--coral)}
+.j-lab{margin:0;display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral-ink)}
+.j-lab b{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--coral);color:#1A0E0A;font-size:16px;letter-spacing:0}
+.j-block h3{font-family:var(--display);font-size:clamp(28px,7.2vw,38px);font-weight:900;letter-spacing:-.02em;line-height:1.08;color:var(--ink)}
+.j-block p{color:var(--muted);font-size:clamp(17px,4.3vw,19px);margin:0}
+.j-facts{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:11px}
+.j-facts li{position:relative;padding-left:32px;font-weight:600;color:var(--ink);font-size:17px;line-height:1.45}
+.j-facts li::before{content:"";position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:50%;background:var(--coral) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231A0E0A' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/13px no-repeat}
+.j-final{min-height:72vh;min-height:72svh}
+.j-final h3{font-size:clamp(36px,10vw,56px)}
+.j-block p.j-next{font-family:var(--display);font-weight:800;font-size:clamp(22px,5.4vw,28px);line-height:1.15;letter-spacing:-.01em;color:var(--coral-ink)}
+.j-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.j-block p.j-promo{font-size:17px;color:var(--ink);margin-top:4px;text-wrap:balance}
+.j-badges{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:8px}
+.j-badges li{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);font-size:17px}
+.j-badges .i{display:inline-flex;color:var(--blue)}
+.journey.is-short .j-block{min-height:46vh;min-height:46svh}
+.journey.is-short .j-final{min-height:60vh;min-height:60svh}
+.journey .j-steps{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0;padding:0 2px}
+@media (max-width:440px){.j-steps span{font-size:10.5px}}
+@media (min-width:900px), (max-height:540px) and (orientation:landscape) and (min-width:600px){
+  .journey .j-grid{grid-template-columns:minmax(0,6fr) minmax(0,7fr);gap:clamp(24px,3.5vw,56px)}
+  .j-story{grid-column:1;grid-row:1}
+  .j-stagecol{grid-column:2;grid-row:1;height:calc(100vh - var(--bar-h,60px));height:calc(100svh - var(--bar-h,60px));justify-content:center;gap:16px;padding:0;background:transparent;box-shadow:none;z-index:1}
+  .j-stage{height:auto;aspect-ratio:8/5;max-height:calc(100svh - var(--bar-h,60px) - 120px);border-radius:24px}
+  .j-intro{padding-block:clamp(36px,9vh,96px) clamp(10px,3vh,34px)}
+  .j-title{font-size:clamp(32px,3.6vw,50px)}
+  .j-sub{font-size:clamp(17px,1.5vw,20px)}
+  .j-block{min-height:66vh;min-height:66svh;padding-left:28px}
+  .j-block h3{font-size:clamp(28px,3vw,40px)}
+  .j-block p{font-size:clamp(17px,1.4vw,19px)}
+  .j-final{min-height:86vh;min-height:86svh}
+  .j-final h3{font-size:clamp(36px,4.2vw,58px)}
+  .j-block p.j-next{font-size:clamp(22px,2.3vw,28px)}
+  .journey.is-short .j-block{min-height:50vh;min-height:50svh}
+  .journey.is-short .j-final{min-height:64vh;min-height:64svh}
+}
+@media (max-height:540px) and (orientation:landscape){
+  .j-steps,.j-hint{display:none!important}
+  .j-stage{max-height:calc(100svh - var(--bar-h,60px) - 24px)}
+  .j-block{min-height:78svh}
+  .j-final{min-height:84svh}
+  .j-block h3{font-size:clamp(24px,3vw,32px)}
+}
+@media (prefers-reduced-motion:reduce){.j-block::before{transition:none}}
 </style>
 </head>
 <body>
@@ -720,35 +729,75 @@ footer,.fcols a,.legal{font-size:16px}
     </div>
   </section>
 
-  <section class="journey" id="journey" aria-labelledby="j-title">
-    <div class="journey-pin">
-      <div class="wrap journey-top">
-        <div class="j-copy">
+    <section class="journey" id="journey" aria-labelledby="j-title">
+    <div class="wrap j-grid">
+      <div class="j-story">
+        <header class="j-intro">
           <p class="eyebrow" id="jEyebrow">How a Roomi move works</p>
-          <h2 class="j-title j-stack" id="j-title">
-            <span data-stage="0">Packed tight, so nothing shifts.</span>
-            <span data-stage="1">No surprise fees on the way.</span>
-            <span data-stage="2">No waiting around all day.</span>
-            <span data-stage="3">Set up, not just dropped off.</span>
-            <span class="is-on j-fin" data-stage="4">We make room.</span>
-          </h2>
-          <div class="j-sub j-stack">
-            <p data-stage="0">We treat your home like our own: every piece wrapped and padded, then packed tight on the truck.</p>
-            <p data-stage="1">Your hourly rate, and any extra charges for stairs or heavy items, explained before you book.</p>
-            <p data-stage="2">A two-hour arrival window, and we keep you posted on timing.</p>
-            <p data-stage="3">Beds set back up, every piece in place, and the new place left clean.</p>
-            <div class="is-on j-fin" data-stage="4">
-              <p class="j-next" id="jNext">For your next chapter.</p>
-              <div class="j-cta" id="jCta">
-                <a class="btn btn-primary" href="#quote">Get a Free Estimate</a>
-                <a class="btn btn-ghost j-call ph" href="tel:+18134363216">Call (813) 436-3216</a>
-              </div>
-            </div>
+          <h2 class="j-title" id="j-title">One move, start to finish.</h2>
+          <p class="j-sub">Scroll along. The truck loads, crosses Tampa and settles in while you read what you can count on at every step.</p>
+          <a class="j-skip" href="#services">Skip the animation</a>
+        </header>
+
+        <article class="j-block" data-stage="0" aria-labelledby="jb0">
+          <p class="j-lab"><b>1</b><span>Load</span></p>
+          <h3 id="jb0">Packed tight, so nothing shifts.</h3>
+          <p>We treat your home like our own: every piece wrapped and padded, then packed tight on the truck.</p>
+          <ul class="j-facts">
+            <li>Blankets, stretch wrap, dollies and straps come with a full-service move</li>
+            <li>Beds taken apart and set back up</li>
+            <li>Floor runners and door-frame guards on White-Glove moves</li>
+          </ul>
+        </article>
+
+        <article class="j-block" data-stage="1" aria-labelledby="jb1">
+          <p class="j-lab"><b>2</b><span>Drive</span></p>
+          <h3 id="jb1">No surprise fees on the way.</h3>
+          <p>Your hourly rate, and any extra charges for stairs or heavy items, explained before you book.</p>
+          <ul class="j-facts">
+            <!--slot:rate:Full-Service Move--><li>Full-service moves start at $149/hour</li><!--/slot:rate:Full-Service Move-->
+            <li>Billed by the hour, with a two-hour minimum</li>
+            <li>The clock starts when we arrive and stops when the last item is placed</li>
+            <li>Stairs, long carries and items over 300 lbs are explained up front</li>
+          </ul>
+        </article>
+
+        <article class="j-block" data-stage="2" aria-labelledby="jb2">
+          <p class="j-lab"><b>3</b><span>Arrive</span></p>
+          <h3 id="jb2">No waiting around all day.</h3>
+          <p>A two-hour arrival window, and we keep you posted on timing.</p>
+          <ul class="j-facts">
+            <li>Kareem calls you with your rate and the time we expect, most often the same day</li>
+            <li>One to two weeks ahead is ideal; weekends and month-end book first</li>
+            <li>Tell us the floor and elevator situation at both addresses and we plan for it</li>
+          </ul>
+        </article>
+
+        <article class="j-block" data-stage="3" aria-labelledby="jb3">
+          <p class="j-lab"><b>4</b><span>Settle in</span></p>
+          <h3 id="jb3">Set up, not just dropped off.</h3>
+          <p>Beds set back up, every piece in place, and the new place left clean.</p>
+          <ul class="j-facts">
+            <li>Furniture placed room by room on White-Glove moves</li>
+            <li>Boxed TVs, art and mirrors handled with care on White-Glove moves</li>
+            <li>Gun safes, appliances and other heavy items: just tell us what and where</li>
+          </ul>
+        </article>
+
+        <article class="j-block j-final" data-stage="4" aria-labelledby="jb4">
+          <h3 id="jb4">We make room.</h3>
+          <p class="j-next" id="jNext">For your next chapter.</p>
+          <div class="j-cta" id="jCta">
+            <a class="btn btn-primary" href="#quote">Get a Free Estimate</a>
+            <a class="btn btn-ghost j-call ph" href="tel:+18134363216">Call (813) 436-3216</a>
           </div>
-        </div>
+          <p class="j-promo"><b>Launch special:</b> $50 off moves booked by Dec 31, 2026</p>
+          <ul class="j-badges"><!--slot:badge-lic--><li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span>Licensed &amp; insured before every move</li><!--/slot:badge-lic--></ul>
+        </article>
       </div>
 
-      <div class="j-stage">
+      <div class="j-stagecol">
+        <div class="j-stage">
         <svg id="jSvg" viewBox="0 60 900 470" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustration: Kareem and a teammate load a Roomi Movers truck, drive across Tampa, unload at a home, and carry boxes through the doorway into a cozy room." focusable="false">
           <defs>
             <clipPath id="jOpen"><path id="jOpenPath" d="M-85 0V-165A85 85 0 0 1 85-165V0Z"/></clipPath>
@@ -903,13 +952,14 @@ footer,.fcols a,.legal{font-size:16px}
           </g>
         </svg>
         <span class="j-hint" id="jHint" aria-hidden="true">Scroll</span>
+        </div>
+        <ol class="j-steps" aria-hidden="true">
+          <li><i><b></b></i><span>Load</span></li>
+          <li><i><b></b></i><span>Drive</span></li>
+          <li><i><b></b></i><span>Arrive</span></li>
+          <li><i><b></b></i><span>Settle in</span></li>
+        </ol>
       </div>
-      <div class="wrap j-foot"><ol class="j-steps" aria-hidden="true">
-        <li><i><b></b></i><span>Load</span></li>
-        <li><i><b></b></i><span>Drive</span></li>
-        <li><i><b></b></i><span>Arrive</span></li>
-        <li><i><b></b></i><span>Settle in</span></li>
-      </ol><a class="j-skip" href="#services">Skip animation</a></div>
     </div>
   </section>
 
@@ -1146,7 +1196,6 @@ footer,.fcols a,.legal{font-size:16px}
   var root = document.getElementById('journey');
   if (!root) return;
   var svg = document.getElementById('jSvg');
-  var pin = root.querySelector('.journey-pin');
   var bar = document.querySelector('.bar');
   var NS = 'http://www.w3.org/2000/svg';
 
@@ -1157,6 +1206,9 @@ footer,.fcols a,.legal{font-size:16px}
   var LOAD_WALK = [0.006, 0.095], UNLOAD_WALK = [0.355, 0.49];
   var GROW = [0.50, 0.64], LAMP = 0.675;
   var STAGE_AT = [DRIVE[0], 0.335, 0.43, 0.60];
+  // the scene beat each text block belongs to: when a block is being read, the scene is here; between blocks it moves smoothly
+  var ANCH = [0.06, 0.225, 0.385, 0.515, 0.82];
+  var STAGE_UI = [(ANCH[0] + ANCH[1]) / 2, (ANCH[1] + ANCH[2]) / 2, (ANCH[2] + ANCH[3]) / 2, (ANCH[3] + ANCH[4]) / 2];
   var STEP_RANGES = [[0, STAGE_AT[0]], [STAGE_AT[0], STAGE_AT[1]], [STAGE_AT[1], STAGE_AT[2]], [STAGE_AT[2], 0.83]];
   function clamp(v, a, b) { a = a === undefined ? 0 : a; b = b === undefined ? 1 : b; return v < a ? a : v > b ? b : v; }
   function lerp(a, b, t) { return a + (b - a) * t; }
@@ -1261,7 +1313,7 @@ footer,.fcols a,.legal{font-size:16px}
     return { el: e, s: mapRoom(parseFloat(e.getAttribute('data-s'))), e: mapRoom(parseFloat(e.getAttribute('data-e'))) };
   });
   var delivered = [].slice.call(sym.querySelectorAll('.j-delivered'));
-  var caps = [].slice.call(root.querySelectorAll('.j-stack > *'));
+  var blocks = [].slice.call(root.querySelectorAll('.j-block'));
   var hint = document.getElementById('jHint');
   var steps = [].slice.call(root.querySelectorAll('.j-steps li')).map(function (li) { return { li: li, b: li.querySelector('b') }; });
   var far = document.getElementById('jFar');
@@ -1460,8 +1512,7 @@ footer,.fcols a,.legal{font-size:16px}
   function setStage(s) {
     if (s === stage) return;
     stage = s;
-    caps.forEach(function (c) { c.setAttribute('aria-hidden', +c.getAttribute('data-stage') === s ? 'false' : 'true'); });
-    steps.forEach(function (st, k) { st.li.classList.toggle('is-on', k === Math.min(s, 3)); });
+    blocks.forEach(function (b) { b.classList.toggle('is-active', +b.getAttribute('data-stage') === s); });
   }
   function leafTo(e, half, open) {
     e.setAttribute('transform', 'translate(' + (-half) + ' 0) scale(' + (1 - 0.84 * open).toFixed(3) + ' 1) translate(' + half + ' 0)');
@@ -1602,8 +1653,13 @@ footer,.fcols a,.legal{font-size:16px}
     far.setAttribute('transform', 'translate(' + f1(cam * 0.45) + ' 0)');
     far.style.opacity = span(p, DRIVE[0], DRIVE[0] + 0.05) * (1 - away);
 
-    setStage(p < STAGE_AT[0] ? 0 : p < STAGE_AT[1] ? 1 : p < STAGE_AT[2] ? 2 : p < STAGE_AT[3] ? 3 : 4);
-    steps.forEach(function (st, k) { var g = STEP_RANGES[k]; st.b.style.transform = 'scaleX(' + span(p, g[0], g[1]).toFixed(4) + ')'; });
+    setStage(p < STAGE_UI[0] ? 0 : p < STAGE_UI[1] ? 1 : p < STAGE_UI[2] ? 2 : p < STAGE_UI[3] ? 3 : 4);
+    var onStep = p < STAGE_AT[0] ? 0 : p < STAGE_AT[1] ? 1 : p < STAGE_AT[2] ? 2 : 3;
+    steps.forEach(function (st, k) {
+      var g = STEP_RANGES[k];
+      st.b.style.transform = 'scaleX(' + span(p, g[0], g[1]).toFixed(4) + ')';
+      st.li.classList.toggle('is-on', k === onStep);
+    });
     hint.style.opacity = p > 0.01 ? 0 : 1;
   }
 
@@ -1620,8 +1676,7 @@ footer,.fcols a,.legal{font-size:16px}
     root.classList.add('is-static');
     measureView();
     render(1, 1);
-    caps.forEach(function (c) { var on = c.getAttribute('data-stage') === '4'; c.classList.toggle('is-on', on); c.setAttribute('aria-hidden', on ? 'false' : 'true'); });
-    setStage(4);
+    blocks.forEach(function (b) { b.classList.remove('is-active'); });   // static: every block reads the same, nothing is dimmed or highlighted
   }
   if (!window.gsap || !window.ScrollTrigger) {
     still();
@@ -1642,42 +1697,58 @@ footer,.fcols a,.legal{font-size:16px}
   mm.add('(prefers-reduced-motion: no-preference)', function () {
     root.classList.add('is-live', 'is-gsap');
     measureView();
-    var state = { p: 0, entry: 0 }, dirty = true;
+    var scene = { p: 0 }, ent = { entry: 0 }, dirty = true;
     function draw() { dirty = true; }
-    function tick() { if (dirty) { dirty = false; render(state.p, state.entry); } }
+    function tick() { if (dirty) { dirty = false; render(scene.p, ent.entry); } }
     gsap.ticker.add(tick);
 
     // the truck and pickup draw in as the section scrolls into view
-    gsap.fromTo(state, { entry: 0 }, { entry: 1, ease: 'none', onUpdate: draw,
+    gsap.fromTo(ent, { entry: 0 }, { entry: 1, ease: 'none', onUpdate: draw,
       scrollTrigger: { trigger: root, start: 'top bottom', end: function () { return 'top ' + barH() + 'px'; }, scrub: 0.4 } });
 
-    // the pinned journey: CSS sticky holds the stage; this timeline maps the section's scroll onto one 0-1 timeline
-    var tl = gsap.timeline({ defaults: { ease: 'none' },
-      scrollTrigger: { trigger: root, start: function () { return 'top ' + barH() + 'px'; }, end: 'bottom bottom', scrub: 0.6 } });
-    tl.fromTo(state, { p: 0 }, { p: 1, duration: 1, onUpdate: draw }, 0);
+    // the scene follows the text: each block's position on screen sets how far the move has progressed, so words and picture can never drift apart
+    var SPLIT = window.matchMedia('(min-width:900px), (max-height:540px) and (orientation:landscape) and (min-width:600px)');
+    var stagecol = root.querySelector('.j-stagecol'), abar = document.querySelector('.actionbar');
+    var knots = [[0, 0], [1, 1]];
+    function readLine() {
+      var top = barH(), bottom = window.innerHeight;
+      if (!SPLIT.matches) {
+        top += stagecol.offsetHeight;
+        if (abar && getComputedStyle(abar).display !== 'none') bottom -= abar.offsetHeight;
+      }
+      return top + (bottom - top) * (SPLIT.matches ? 0.5 : 0.42);   // phones read a little high, clear of the chat button
+    }
+    function measureKnots() {
+      var y = window.pageYOffset, line = readLine(), top = root.getBoundingClientRect().top + y;
+      var k = [[top - barH(), 0]];
+      blocks.forEach(function (bl, i) { var r = bl.getBoundingClientRect(); k.push([r.top + y + r.height / 2 - line, ANCH[i]]); });
+      k.push([top + root.offsetHeight - window.innerHeight, 1]);
+      for (var i = 1; i < k.length; i++) if (k[i][0] <= k[i - 1][0] + 1) k[i][0] = k[i - 1][0] + 1;   // always moving forward
+      knots = k;
+    }
+    function pAt(y) {
+      var k = knots, n = k.length;
+      if (y <= k[0][0]) return 0;
+      if (y >= k[n - 1][0]) return 1;
+      for (var i = 1; i < n; i++) if (y <= k[i][0]) return k[i - 1][1] + (k[i][1] - k[i - 1][1]) * (y - k[i - 1][0]) / (k[i][0] - k[i - 1][0]);
+      return 1;
+    }
+    root.roomiScrollFor = function (p) {   // the scroll position that shows the scene at progress p (used by the visual tests)
+      var k = knots;
+      for (var i = 1; i < k.length; i++) if (p <= k[i][1]) return k[i - 1][0] + (k[i][0] - k[i - 1][0]) * (p - k[i - 1][1]) / (k[i][1] - k[i - 1][1]);
+      return k[k.length - 1][0];
+    };
+    var glide = gsap.quickTo(scene, 'p', { duration: 0.5, ease: 'power2.out', onUpdate: draw });
+    function aim() { glide(pAt(window.pageYOffset)); }
+    var follow = ScrollTrigger.create({ trigger: root, start: 'top bottom', end: 'bottom top',
+      onUpdate: aim, onLeave: aim, onLeaveBack: aim });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
 
-    // headlines: the old one is fully gone before the next one starts
-    var titles = [], subs = [];
-    caps.forEach(function (c) { (c.parentNode.classList.contains('j-title') ? titles : subs)[+c.getAttribute('data-stage')] = c; });
-    gsap.set(caps, { autoAlpha: 0, y: 12 });
-    gsap.set([titles[0], subs[0]], { autoAlpha: 1, y: 0 });
-    var last = STAGE_AT.length - 1;
-    STAGE_AT.forEach(function (t, k) {
-      var into = k === last ? [titles[k + 1]] : [titles[k + 1], subs[k + 1]];
-      tl.to([titles[k], subs[k]], { autoAlpha: 0, y: -10, duration: 0.016, ease: 'power1.in' }, t - 0.02)
-        .fromTo(into, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.02, ease: 'power2.out', immediateRender: false }, t);
-    });
-    // the ending: the eyebrow steps aside so "We make room." centers over the doorway; the second line arrives as the room warms
-    tl.to('#jEyebrow', { autoAlpha: 0, duration: 0.016, ease: 'power1.in' }, STAGE_AT[last] - 0.02)
-      .fromTo(subs[last + 1], { autoAlpha: 0, y: 0 }, { autoAlpha: 1, y: 0, duration: 0.001, immediateRender: false }, STAGE_AT[last])
-      .fromTo('#jNext', { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.04, ease: 'power1.out' }, LAMP + 0.01)
-      .fromTo('#jCta', { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.035, ease: 'power2.out' }, 0.79)
-      .to({}, { duration: 0.17 }, 0.83);   // a breath on the finished room
-
-    var onRefresh = function () { measureView(); draw(); };
+    var onRefresh = function () { measureView(); measureKnots(); scene.p = pAt(window.pageYOffset); draw(); };
     ScrollTrigger.addEventListener('refresh', onRefresh);
     return function () {
       gsap.ticker.remove(tick);
+      follow.kill();
       ScrollTrigger.removeEventListener('refresh', onRefresh);
       root.classList.remove('is-live', 'is-gsap');
     };
@@ -1697,6 +1768,8 @@ footer,.fcols a,.legal{font-size:16px}
   document.addEventListener('click', function (e) { if (!e.target.closest('.bar')) set(false); });
 })();
 </script>
+<script src="assets/facts.js"></script>
+<script src="assets/chat.js" defer></script>
 <nav class="actionbar" aria-label="Quick actions">
   <a href="tel:+18134363216">Call</a>
   <a href="sms:+18134363216">Text</a>

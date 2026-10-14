@@ -20,7 +20,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/rates.js"></script>
+<script src="/assets/facts.js"></script>
 <script src="/assets/site.js" defer></script>
+<script src="/assets/chat.js" defer></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -114,34 +116,74 @@
     </div>
   </section>
 <section class="journey is-short" id="journey" aria-labelledby="j-title">
-    <div class="journey-pin">
-      <div class="wrap journey-top">
-        <div class="j-copy">
+    <div class="wrap j-grid">
+      <div class="j-story">
+        <header class="j-intro">
           <p class="eyebrow" id="jEyebrow">How a Roomi move works</p>
-          <h2 class="j-title j-stack" id="j-title">
-            <span data-stage="0">Packed tight, so nothing shifts.</span>
-            <span data-stage="1">No surprise fees on the way.</span>
-            <span data-stage="2">No waiting around all day.</span>
-            <span data-stage="3">Set up, not just dropped off.</span>
-            <span class="is-on j-fin" data-stage="4">We make room.</span>
-          </h2>
-          <div class="j-sub j-stack">
-            <p data-stage="0">We treat your home like our own: every piece wrapped and padded, then packed tight on the truck.</p>
-            <p data-stage="1">Your hourly rate, and any extra charges for stairs or heavy items, explained before you book.</p>
-            <p data-stage="2">A two-hour arrival window, and we keep you posted on timing.</p>
-            <p data-stage="3">Beds set back up, every piece in place, and the new place left clean.</p>
-            <div class="is-on j-fin" data-stage="4">
-              <p class="j-next" id="jNext">For your next chapter.</p>
-              <div class="j-cta" id="jCta">
-                <a class="btn btn-primary" href="#quote">Get a Free Estimate</a>
-                <a class="btn btn-ghost j-call ph" href="tel:+18134363216">Call (813) 436-3216</a>
-              </div>
-            </div>
+          <h2 class="j-title" id="j-title">One move, start to finish.</h2>
+          <p class="j-sub">Scroll along. The truck loads, crosses Tampa and settles in while you read what you can count on at every step.</p>
+          <a class="j-skip" href="#after-journey">Skip the animation</a>
+        </header>
+
+        <article class="j-block" data-stage="0" aria-labelledby="jb0">
+          <p class="j-lab"><b>1</b><span>Load</span></p>
+          <h3 id="jb0">Packed tight, so nothing shifts.</h3>
+          <p>We treat your home like our own: every piece wrapped and padded, then packed tight on the truck.</p>
+          <ul class="j-facts">
+            <li>Blankets, stretch wrap, dollies and straps come with a full-service move</li>
+            <li>Beds taken apart and set back up</li>
+            <li>Floor runners and door-frame guards on White-Glove moves</li>
+          </ul>
+        </article>
+
+        <article class="j-block" data-stage="1" aria-labelledby="jb1">
+          <p class="j-lab"><b>2</b><span>Drive</span></p>
+          <h3 id="jb1">No surprise fees on the way.</h3>
+          <p>Your hourly rate, and any extra charges for stairs or heavy items, explained before you book.</p>
+          <ul class="j-facts">
+            <!--slot:rate:Full-Service Move--><li>Full-service moves start at $149/hour</li><!--/slot:rate:Full-Service Move-->
+            <li>Billed by the hour, with a two-hour minimum</li>
+            <li>The clock starts when we arrive and stops when the last item is placed</li>
+            <li>Stairs, long carries and items over 300 lbs are explained up front</li>
+          </ul>
+        </article>
+
+        <article class="j-block" data-stage="2" aria-labelledby="jb2">
+          <p class="j-lab"><b>3</b><span>Arrive</span></p>
+          <h3 id="jb2">No waiting around all day.</h3>
+          <p>A two-hour arrival window, and we keep you posted on timing.</p>
+          <ul class="j-facts">
+            <li>Kareem calls you with your rate and the time we expect, most often the same day</li>
+            <li>One to two weeks ahead is ideal; weekends and month-end book first</li>
+            <li>Tell us the floor and elevator situation at both addresses and we plan for it</li>
+          </ul>
+        </article>
+
+        <article class="j-block" data-stage="3" aria-labelledby="jb3">
+          <p class="j-lab"><b>4</b><span>Settle in</span></p>
+          <h3 id="jb3">Set up, not just dropped off.</h3>
+          <p>Beds set back up, every piece in place, and the new place left clean.</p>
+          <ul class="j-facts">
+            <li>Furniture placed room by room on White-Glove moves</li>
+            <li>Boxed TVs, art and mirrors handled with care on White-Glove moves</li>
+            <li>Gun safes, appliances and other heavy items: just tell us what and where</li>
+          </ul>
+        </article>
+
+        <article class="j-block j-final" data-stage="4" aria-labelledby="jb4">
+          <h3 id="jb4">We make room.</h3>
+          <p class="j-next" id="jNext">For your next chapter.</p>
+          <div class="j-cta" id="jCta">
+            <a class="btn btn-primary" href="#quote">Get a Free Estimate</a>
+            <a class="btn btn-ghost j-call ph" href="tel:+18134363216">Call (813) 436-3216</a>
           </div>
-        </div>
+          <p class="j-promo"><b>Launch special:</b> $50 off moves booked by Dec 31, 2026</p>
+          <ul class="j-badges"><!--slot:badge-lic--><li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span>Licensed &amp; insured before every move</li><!--/slot:badge-lic--></ul>
+        </article>
       </div>
 
-      <div class="j-stage">
+      <div class="j-stagecol">
+        <div class="j-stage">
         <svg id="jSvg" viewBox="0 60 900 470" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustration: Kareem and a teammate load a Roomi Movers truck, drive across Tampa, unload at a home, and carry boxes through the doorway into a cozy room." focusable="false">
           <defs>
             <clipPath id="jOpen"><path id="jOpenPath" d="M-85 0V-165A85 85 0 0 1 85-165V0Z"/></clipPath>
@@ -296,13 +338,14 @@
           </g>
         </svg>
         <span class="j-hint" id="jHint" aria-hidden="true">Scroll</span>
+        </div>
+        <ol class="j-steps" aria-hidden="true">
+          <li><i><b></b></i><span>Load</span></li>
+          <li><i><b></b></i><span>Drive</span></li>
+          <li><i><b></b></i><span>Arrive</span></li>
+          <li><i><b></b></i><span>Settle in</span></li>
+        </ol>
       </div>
-      <div class="wrap j-foot"><ol class="j-steps" aria-hidden="true">
-        <li><i><b></b></i><span>Load</span></li>
-        <li><i><b></b></i><span>Drive</span></li>
-        <li><i><b></b></i><span>Arrive</span></li>
-        <li><i><b></b></i><span>Settle in</span></li>
-      </ol><a class="j-skip" href="#after-journey">Skip animation</a></div>
     </div>
   </section>
 <div id="after-journey"></div>
@@ -495,7 +538,6 @@
   var root = document.getElementById('journey');
   if (!root) return;
   var svg = document.getElementById('jSvg');
-  var pin = root.querySelector('.journey-pin');
   var bar = document.querySelector('.bar');
   var NS = 'http://www.w3.org/2000/svg';
 
@@ -506,6 +548,9 @@
   var LOAD_WALK = [0.006, 0.095], UNLOAD_WALK = [0.355, 0.49];
   var GROW = [0.50, 0.64], LAMP = 0.675;
   var STAGE_AT = [DRIVE[0], 0.335, 0.43, 0.60];
+  // the scene beat each text block belongs to: when a block is being read, the scene is here; between blocks it moves smoothly
+  var ANCH = [0.06, 0.225, 0.385, 0.515, 0.82];
+  var STAGE_UI = [(ANCH[0] + ANCH[1]) / 2, (ANCH[1] + ANCH[2]) / 2, (ANCH[2] + ANCH[3]) / 2, (ANCH[3] + ANCH[4]) / 2];
   var STEP_RANGES = [[0, STAGE_AT[0]], [STAGE_AT[0], STAGE_AT[1]], [STAGE_AT[1], STAGE_AT[2]], [STAGE_AT[2], 0.83]];
   function clamp(v, a, b) { a = a === undefined ? 0 : a; b = b === undefined ? 1 : b; return v < a ? a : v > b ? b : v; }
   function lerp(a, b, t) { return a + (b - a) * t; }
@@ -610,7 +655,7 @@
     return { el: e, s: mapRoom(parseFloat(e.getAttribute('data-s'))), e: mapRoom(parseFloat(e.getAttribute('data-e'))) };
   });
   var delivered = [].slice.call(sym.querySelectorAll('.j-delivered'));
-  var caps = [].slice.call(root.querySelectorAll('.j-stack > *'));
+  var blocks = [].slice.call(root.querySelectorAll('.j-block'));
   var hint = document.getElementById('jHint');
   var steps = [].slice.call(root.querySelectorAll('.j-steps li')).map(function (li) { return { li: li, b: li.querySelector('b') }; });
   var far = document.getElementById('jFar');
@@ -809,8 +854,7 @@
   function setStage(s) {
     if (s === stage) return;
     stage = s;
-    caps.forEach(function (c) { c.setAttribute('aria-hidden', +c.getAttribute('data-stage') === s ? 'false' : 'true'); });
-    steps.forEach(function (st, k) { st.li.classList.toggle('is-on', k === Math.min(s, 3)); });
+    blocks.forEach(function (b) { b.classList.toggle('is-active', +b.getAttribute('data-stage') === s); });
   }
   function leafTo(e, half, open) {
     e.setAttribute('transform', 'translate(' + (-half) + ' 0) scale(' + (1 - 0.84 * open).toFixed(3) + ' 1) translate(' + half + ' 0)');
@@ -951,8 +995,13 @@
     far.setAttribute('transform', 'translate(' + f1(cam * 0.45) + ' 0)');
     far.style.opacity = span(p, DRIVE[0], DRIVE[0] + 0.05) * (1 - away);
 
-    setStage(p < STAGE_AT[0] ? 0 : p < STAGE_AT[1] ? 1 : p < STAGE_AT[2] ? 2 : p < STAGE_AT[3] ? 3 : 4);
-    steps.forEach(function (st, k) { var g = STEP_RANGES[k]; st.b.style.transform = 'scaleX(' + span(p, g[0], g[1]).toFixed(4) + ')'; });
+    setStage(p < STAGE_UI[0] ? 0 : p < STAGE_UI[1] ? 1 : p < STAGE_UI[2] ? 2 : p < STAGE_UI[3] ? 3 : 4);
+    var onStep = p < STAGE_AT[0] ? 0 : p < STAGE_AT[1] ? 1 : p < STAGE_AT[2] ? 2 : 3;
+    steps.forEach(function (st, k) {
+      var g = STEP_RANGES[k];
+      st.b.style.transform = 'scaleX(' + span(p, g[0], g[1]).toFixed(4) + ')';
+      st.li.classList.toggle('is-on', k === onStep);
+    });
     hint.style.opacity = p > 0.01 ? 0 : 1;
   }
 
@@ -969,8 +1018,7 @@
     root.classList.add('is-static');
     measureView();
     render(1, 1);
-    caps.forEach(function (c) { var on = c.getAttribute('data-stage') === '4'; c.classList.toggle('is-on', on); c.setAttribute('aria-hidden', on ? 'false' : 'true'); });
-    setStage(4);
+    blocks.forEach(function (b) { b.classList.remove('is-active'); });   // static: every block reads the same, nothing is dimmed or highlighted
   }
   if (!window.gsap || !window.ScrollTrigger) {
     still();
@@ -991,42 +1039,58 @@
   mm.add('(prefers-reduced-motion: no-preference)', function () {
     root.classList.add('is-live', 'is-gsap');
     measureView();
-    var state = { p: 0, entry: 0 }, dirty = true;
+    var scene = { p: 0 }, ent = { entry: 0 }, dirty = true;
     function draw() { dirty = true; }
-    function tick() { if (dirty) { dirty = false; render(state.p, state.entry); } }
+    function tick() { if (dirty) { dirty = false; render(scene.p, ent.entry); } }
     gsap.ticker.add(tick);
 
     // the truck and pickup draw in as the section scrolls into view
-    gsap.fromTo(state, { entry: 0 }, { entry: 1, ease: 'none', onUpdate: draw,
+    gsap.fromTo(ent, { entry: 0 }, { entry: 1, ease: 'none', onUpdate: draw,
       scrollTrigger: { trigger: root, start: 'top bottom', end: function () { return 'top ' + barH() + 'px'; }, scrub: 0.4 } });
 
-    // the pinned journey: CSS sticky holds the stage; this timeline maps the section's scroll onto one 0-1 timeline
-    var tl = gsap.timeline({ defaults: { ease: 'none' },
-      scrollTrigger: { trigger: root, start: function () { return 'top ' + barH() + 'px'; }, end: 'bottom bottom', scrub: 0.6 } });
-    tl.fromTo(state, { p: 0 }, { p: 1, duration: 1, onUpdate: draw }, 0);
+    // the scene follows the text: each block's position on screen sets how far the move has progressed, so words and picture can never drift apart
+    var SPLIT = window.matchMedia('(min-width:900px), (max-height:540px) and (orientation:landscape) and (min-width:600px)');
+    var stagecol = root.querySelector('.j-stagecol'), abar = document.querySelector('.actionbar');
+    var knots = [[0, 0], [1, 1]];
+    function readLine() {
+      var top = barH(), bottom = window.innerHeight;
+      if (!SPLIT.matches) {
+        top += stagecol.offsetHeight;
+        if (abar && getComputedStyle(abar).display !== 'none') bottom -= abar.offsetHeight;
+      }
+      return top + (bottom - top) * (SPLIT.matches ? 0.5 : 0.42);   // phones read a little high, clear of the chat button
+    }
+    function measureKnots() {
+      var y = window.pageYOffset, line = readLine(), top = root.getBoundingClientRect().top + y;
+      var k = [[top - barH(), 0]];
+      blocks.forEach(function (bl, i) { var r = bl.getBoundingClientRect(); k.push([r.top + y + r.height / 2 - line, ANCH[i]]); });
+      k.push([top + root.offsetHeight - window.innerHeight, 1]);
+      for (var i = 1; i < k.length; i++) if (k[i][0] <= k[i - 1][0] + 1) k[i][0] = k[i - 1][0] + 1;   // always moving forward
+      knots = k;
+    }
+    function pAt(y) {
+      var k = knots, n = k.length;
+      if (y <= k[0][0]) return 0;
+      if (y >= k[n - 1][0]) return 1;
+      for (var i = 1; i < n; i++) if (y <= k[i][0]) return k[i - 1][1] + (k[i][1] - k[i - 1][1]) * (y - k[i - 1][0]) / (k[i][0] - k[i - 1][0]);
+      return 1;
+    }
+    root.roomiScrollFor = function (p) {   // the scroll position that shows the scene at progress p (used by the visual tests)
+      var k = knots;
+      for (var i = 1; i < k.length; i++) if (p <= k[i][1]) return k[i - 1][0] + (k[i][0] - k[i - 1][0]) * (p - k[i - 1][1]) / (k[i][1] - k[i - 1][1]);
+      return k[k.length - 1][0];
+    };
+    var glide = gsap.quickTo(scene, 'p', { duration: 0.5, ease: 'power2.out', onUpdate: draw });
+    function aim() { glide(pAt(window.pageYOffset)); }
+    var follow = ScrollTrigger.create({ trigger: root, start: 'top bottom', end: 'bottom top',
+      onUpdate: aim, onLeave: aim, onLeaveBack: aim });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
 
-    // headlines: the old one is fully gone before the next one starts
-    var titles = [], subs = [];
-    caps.forEach(function (c) { (c.parentNode.classList.contains('j-title') ? titles : subs)[+c.getAttribute('data-stage')] = c; });
-    gsap.set(caps, { autoAlpha: 0, y: 12 });
-    gsap.set([titles[0], subs[0]], { autoAlpha: 1, y: 0 });
-    var last = STAGE_AT.length - 1;
-    STAGE_AT.forEach(function (t, k) {
-      var into = k === last ? [titles[k + 1]] : [titles[k + 1], subs[k + 1]];
-      tl.to([titles[k], subs[k]], { autoAlpha: 0, y: -10, duration: 0.016, ease: 'power1.in' }, t - 0.02)
-        .fromTo(into, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.02, ease: 'power2.out', immediateRender: false }, t);
-    });
-    // the ending: the eyebrow steps aside so "We make room." centers over the doorway; the second line arrives as the room warms
-    tl.to('#jEyebrow', { autoAlpha: 0, duration: 0.016, ease: 'power1.in' }, STAGE_AT[last] - 0.02)
-      .fromTo(subs[last + 1], { autoAlpha: 0, y: 0 }, { autoAlpha: 1, y: 0, duration: 0.001, immediateRender: false }, STAGE_AT[last])
-      .fromTo('#jNext', { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.04, ease: 'power1.out' }, LAMP + 0.01)
-      .fromTo('#jCta', { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.035, ease: 'power2.out' }, 0.79)
-      .to({}, { duration: 0.17 }, 0.83);   // a breath on the finished room
-
-    var onRefresh = function () { measureView(); draw(); };
+    var onRefresh = function () { measureView(); measureKnots(); scene.p = pAt(window.pageYOffset); draw(); };
     ScrollTrigger.addEventListener('refresh', onRefresh);
     return function () {
       gsap.ticker.remove(tick);
+      follow.kill();
       ScrollTrigger.removeEventListener('refresh', onRefresh);
       root.classList.remove('is-live', 'is-gsap');
     };

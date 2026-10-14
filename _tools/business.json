@@ -23,5 +23,10 @@
     "yelp": null
   },
   "google_reviews_url": null,
-  "google_review_link": null
+  "google_review_link": null,
+  "lead_email": "roomimovers@gmail.com",
+  "chat": {
+    "enabled": true,
+    "ai_endpoint": null
+  }
 }

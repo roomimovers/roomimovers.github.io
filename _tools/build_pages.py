@@ -301,7 +301,6 @@ PAGE_CSS = '''
 .ph-table th,.ph-table td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line)}
 .ph-table th{font-family:var(--display);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-ink)}
 @media (max-width:640px){.ph-photos{grid-template-columns:1fr 1fr}}
-.journey.is-short.is-live{height:300vh;height:300svh}
 .cols .card .btn+.btn{margin-left:6px}
 .card h2 a{color:inherit;text-decoration:none}
 .card h2 a:hover{color:var(--coral-ink);text-decoration:underline;text-underline-offset:3px}
@@ -374,7 +373,9 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/rates.js"></script>
+<script src="/assets/facts.js"></script>
 <script src="/assets/site.js" defer></script>
+<script src="/assets/chat.js" defer></script>
 <script type="application/ld+json">
 {ld}
 </script>
@@ -695,7 +696,12 @@ def render_slots():
     for name, html in fills.items():
         s = re.sub(r'<!--slot:%s-->.*?<!--/slot:%s-->' % (re.escape(name), re.escape(name)),
                    lambda m, n=name, h=html: '<!--slot:%s-->%s<!--/slot:%s-->' % (n, h, n), s, flags=re.S)
+    LABELS = {'Labor Only': 'Labor-only help', 'Full-Service Move': 'Full-service moves', 'White-Glove Move': 'White-glove moves'}
     for pkg, rate in (b.get('rates') or {}).items():
+        verb = ('start at ' + rate[5:]) if rate.startswith('From ') else ('are ' + rate)
+        line = ('<li>%s %s</li>' % (LABELS.get(pkg, pkg), esc(verb))) if rate else ''
+        s = re.sub(r'<!--slot:rate:%s-->.*?<!--/slot:rate:%s-->' % (re.escape(pkg), re.escape(pkg)),
+                   lambda m, n=pkg, h=line: '<!--slot:rate:%s-->%s<!--/slot:rate:%s-->' % (n, h, n), s, flags=re.S)
         inner = ('<span class="price" style="font-size:30px">%s</span><span class="price-sub">Crew size and total confirmed in your free estimate</span>' % esc(rate)) if rate else \
                 '<span class="price" style="font-size:30px">Billed hourly</span><span class="price-sub">Exact rate with your free estimate</span>'
         s = re.sub(r'<!--slot:price:%s-->.*?<!--/slot:price:%s-->' % (re.escape(pkg), re.escape(pkg)),
@@ -1007,7 +1013,7 @@ def privacy_page():
     b = sec('<div class="prose">'
             '<h2>What we collect</h2><p>When you request an estimate we collect the details you type into the form: your name, phone number, move date, home size, the cities or ZIP codes you are moving from and to, and any notes about stairs or heavy items.</p>'
             '<h2 style="margin-top:28px">How we use it</h2><p>We use it to call you with your estimate and to plan your move. We do not sell your information.</p>'
-            '<h2 style="margin-top:28px">Who handles it</h2><p>Estimate requests are sent from this website to Roomi Movers through FormSubmit, a form-delivery service that emails each request to us. Calls and texts to (813) 436-3216 are handled by Roomi Movers directly.</p>'
+            '<h2 style="margin-top:28px">Who handles it</h2><p>Estimate requests are sent from this website to Roomi Movers through FormSubmit, a form-delivery service that emails each request to us. Calls and texts to (813) 436-3216 are handled by Roomi Movers directly.</p><h2 style="margin-top:28px">The chat assistant</h2><p>If you use the chat assistant, what you type is used to answer you. An estimate request you send through chat, together with the questions you asked in the chat, reaches us the same way as the forms. If AI answers are turned on, your messages are also sent, through our own secure relay, to Anthropic, the company that makes the Claude model, only so a reply can be written. Please do not type payment details or ID numbers into the chat.</p>'
             '<h2 style="margin-top:28px">Your choices</h2><p>To ask us to delete your request, call or text (813) 436-3216 or email makeroom@roomimovers.com.</p>'
             '<p style="margin-top:28px;color:var(--muted)">Last updated October 2026.</p></div>')
     return hub_page('/privacy/', 'Privacy Policy | Roomi Movers',
@@ -1427,6 +1433,72 @@ def faq_items():
     return items
 
 
+# ======================= chat assistant: facts for the widget and the system prompt for the optional AI relay =======================
+def chat_facts():
+    b = _biz(); lic = b.get('license') or {}
+    chat = b.get('chat') or {}
+    return {
+        'phone': '(813) 436-3216', 'tel': '+18134363216', 'email': 'makeroom@roomimovers.com', 'hours': b.get('hours') or '',
+        'rates': {k: v for k, v in (b.get('rates') or {}).items() if v},
+        'license': {'status': license_state(), 'number': lic.get('registration_number'), 'insurance': lic.get('insurance_summary')},
+        'areas': [{'n': a['name'], 's': a['slug']} for a in AREAS],
+        'faq': [[q, a] for q, a in faq_items()],
+        'formEndpoint': 'https://formsubmit.co/ajax/' + (b.get('lead_email') or 'roomimovers@gmail.com'),
+        'aiEndpoint': chat.get('ai_endpoint'),
+        'chatEnabled': chat.get('enabled', True),
+        'reviewCount': len(b.get('reviews') or []),
+    }
+
+
+def ai_system_prompt(f):
+    areas = ', '.join(a['n'] for a in f['areas'])
+    rates = '; '.join('%s: %s' % (k, v) for k, v in f['rates'].items()) or 'not published; tell the customer the exact rate comes with their free estimate'
+    if f['license']['status'] == 'active':
+        lic = 'Roomi Movers is a Florida registered household mover, FDACS registration #%s.%s' % (
+            f['license']['number'], (' Insurance: ' + f['license']['insurance'] + '.') if f['license']['insurance'] else '')
+    else:
+        lic = ('Roomi Movers registers with the Florida Department of Agriculture and Consumer Services (FDACS) and puts the insurance Florida requires of movers '
+               'in place before moving any customer. The registration number is not issued yet. NEVER say we are currently licensed or insured.')
+    faq = '\n'.join('Q: %s\nA: %s' % (q, a) for q, a in f['faq'])
+    return '''You are the virtual assistant for Roomi Movers, a family-run local moving company based in Tampa, Florida. You are an AI assistant, and you say so if asked.
+Your job: answer customer questions using ONLY the facts below, and help people request a free moving estimate.
+
+FACTS
+- Phone and text: %(phone)s. Email: %(email)s. Hours: %(hours)s.
+- Owner: Kareem Aboroomi. Kareem calls customers back himself; most estimates are back the same day.
+- Services: home moves, apartment and condo moves, loading and unloading (labor only), heavy and specialty items such as gun safes, appliances and treadmills.
+- Packages: Labor Only (two movers for the customer's own truck, container or storage unit), Full-Service (box truck, crew, furniture wrapped and padded, beds taken apart and set back up), White-Glove (floor runners and door-frame guards, boxed TVs, art and mirrors, furniture placed room by room, an extra crew member).
+- Pricing: billed by the hour with a two-hour minimum. The clock starts when we arrive and stops when the last item is placed. Starting rates: %(rates)s.
+  Stairs, long carries from the truck and items over 300 lbs may add to the price. Exact rate, crew size and expected time come with the free estimate.
+- Arrival window: two hours, and we keep customers posted on timing.
+- Launch special: $50 off moves booked by Dec 31, 2026.
+- Reviews: %(reviews)s
+- Service areas: %(areas)s.
+- Licensing and insurance: %(lic)s
+
+FAQ
+%(faq)s
+
+RULES
+- Never invent prices, discounts, availability, policies, reviews, awards, license or insurance claims. If you do not have the answer, say you do not have it and offer to take their details or point them to %(phone)s.
+- Do not promise a total price. Say the exact figure comes from Kareem in the free estimate.
+- Never ask for payment details, card numbers, passwords or government IDs.
+- When the customer wants an estimate, wants to book, or wants someone to contact them, reply in one short sentence and end your message with the exact marker [[ESTIMATE]]. The website then collects their details.
+- Plain words that anyone of any age can follow. At most 80 words. No markdown, no bullet lists, no emojis.
+- If someone is upset, in a hurry, or has an urgent problem, give the phone number and nothing more.
+''' % {'phone': f['phone'], 'email': f['email'], 'hours': f['hours'], 'rates': rates, 'areas': areas, 'lic': lic, 'faq': faq,
+           'reviews': ('there are %d customer reviews on the website homepage.' % f['reviewCount']) if f['reviewCount'] else 'we are new and family-run and have no customer reviews yet. Never invent reviews, ratings or testimonials.'}
+
+
+def write_chat_assets():
+    f = chat_facts()
+    (ROOT / 'assets' / 'facts.js').write_text('window.ROOMI_FACTS = ' + json.dumps(f, ensure_ascii=False) + ';\n', encoding='utf-8', newline='\n')
+    d = ROOT / '_tools' / 'ai-relay' / 'src'
+    d.mkdir(parents=True, exist_ok=True)
+    (d / 'prompt.ts').write_text('// Generated by _tools/build_pages.py from business.json. Do not edit by hand.\nexport const SYSTEM: string = ' +
+                                 json.dumps(ai_system_prompt(f), ensure_ascii=False) + ';\n', encoding='utf-8', newline='\n')
+
+
 def main():
     build_css()
     paths = ['/']
@@ -1445,6 +1517,7 @@ def main():
             paths.append(path)
     finish_pages(paths)
     write_rates_js()
+    write_chat_assets()
     _, pv = preview_page()
     (ROOT / 'preview-placeholders').mkdir(exist_ok=True)
     (ROOT / 'preview-placeholders' / 'index.html').write_text(pv, encoding='utf-8', newline='\n')

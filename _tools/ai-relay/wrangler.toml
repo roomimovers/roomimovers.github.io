@@ -1,0 +1,16 @@
+name = "roomi-assistant"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Model the assistant uses. claude-haiku-5-5 is roughly 40x cheaper and fast; claude-opus-5-5 is the most careful.
+MODEL = "claude-opus-5-5"
+ALLOWED_ORIGINS = "https://roomimovers.com,https://www.roomimovers.com"
+DAILY_CAP = "1500"
+
+# The API key is NOT stored here. Set it once with:  npx wrangler secret put ANTHROPIC_API_KEY
+#
+# Optional daily cap across all visitors (create with: npx wrangler kv namespace create RATE_KV):
+# [[kv_namespaces]]
+# binding = "RATE_KV"
+# id = "<the id wrangler prints>"
