@@ -45,7 +45,7 @@ SERVICES = [
         'h1': 'Apartment and condo moves, on your schedule',
         'lede': 'Studios to three bedrooms, walk-ups and elevator buildings. We work around your move-out deadline and keep you posted on timing.',
         'included_title': 'What we handle',
-        'included': ['Walk-ups and elevator buildings', 'Move-out deadlines met', 'Studios to 3 bedrooms', 'Furniture wrapped and padded', 'Beds taken apart and set back up'],
+        'included': ['Walk-ups and elevator buildings', 'Planned around your move-out date', 'Studios to 3 bedrooms', 'Furniture wrapped and padded', 'Beds taken apart and set back up'],
         'extra_title': 'Help us plan your building',
         'extra_intro': 'Tell us when you request your estimate:',
         'extra': ['Which floor you are on, at both places', 'Whether there is an elevator, and if it needs a reservation', 'Where the truck can park, and how far it is to your door', 'Any gate codes or building move-in rules'],
@@ -353,6 +353,22 @@ PAGE_CSS += r'''
 .af-form .btn{margin-top:16px}
 .af-form .form-msg{margin-top:12px}
 .af-call{margin:14px 0 0;font-size:16px;color:var(--muted)}
+.af-note{padding:12px 14px;font-size:16px;color:var(--muted);list-style:none}
+.af-opt.is-addr b{font-size:18px}
+.af-badge{display:inline-flex;align-items:center;gap:10px;margin:0 0 12px;padding:7px 16px 7px 8px;border-radius:999px;font-family:var(--display);font-weight:800;font-size:18px;line-height:1.2}
+.af-badge-ico{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:18px;font-weight:900;color:#fff}
+.af-badge.is-ok{background:#E3F5EA;color:#0C5230;border:1px solid #9FD6B4}
+.af-badge.is-ok .af-badge-ico{background:#1B7F4B}
+.af-badge.is-check{background:#FFF1D6;color:#7A4300;border:1px solid #F0C879}
+.af-badge.is-check .af-badge-ico{background:#B46A00}
+.af-card.is-ok{border-left-color:#1B7F4B;background:linear-gradient(180deg,rgba(27,127,75,.07),transparent 140px),var(--card)}
+.af-card.is-check{border-left-color:#B46A00}
+.af-line{margin:6px 0 0;font-size:17px;font-weight:700;color:var(--ink)}
+.af-line.is-verified::before{content:"\2713";display:inline-block;margin-right:8px;color:#1B7F4B;font-weight:900}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .af-badge.is-ok{background:#0F3A28;color:#9DEAC0;border-color:#1F6B47}:root:not([data-theme="light"]) .af-badge.is-check{background:#3B2A08;color:#FFD38A;border-color:#7A5410}:root:not([data-theme="light"]) .af-line.is-verified::before{color:#6FE0A3}}
+:root[data-theme="dark"] .af-badge.is-ok{background:#0F3A28;color:#9DEAC0;border-color:#1F6B47}
+:root[data-theme="dark"] .af-badge.is-check{background:#3B2A08;color:#FFD38A;border-color:#7A5410}
+:root[data-theme="dark"] .af-line.is-verified::before{color:#6FE0A3}
 @media (max-width:640px){.af-grid{grid-template-columns:1fr}.finder-box{flex-direction:column}.finder-go{width:100%}}
 '''
 
@@ -407,7 +423,8 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/rates.js"></script>
 <script src="/assets/facts.js"></script>
@@ -428,7 +445,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 
 <header class="bar">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="Roomi Movers home">
+    <a class="brand" href="/">
       <picture><source type="image/webp" srcset="/images/logo-mark-120.webp"><img src="/images/logo-mark-120.png" alt="" width="41" height="40"></picture>
       <span class="brand-word"><b>roomi</b><span>MOVERS</span></span>
     </a>
@@ -654,10 +671,23 @@ def license_state():
     return 'active' if (lic.get('status') == 'active' and lic.get('registration_number')) else 'pending'
 
 
+def insured():
+    # the owner states the policy is in force. A full registration implies insurance too.
+    ins = _biz().get('insurance') or {}
+    return ins.get('status') == 'active' or license_state() == 'active'
+
+
+def insurance_summary():
+    b = _biz()
+    return (b.get('insurance') or {}).get('summary') or (b.get('license') or {}).get('insurance_summary')
+
+
 def badge_text():
     b = _biz(); lic = b.get('license') or {}
     if license_state() == 'active':
         return 'Licensed &amp; Insured &middot; FDACS #%s' % esc(str(lic['registration_number']))
+    if insured():
+        return 'Insured &middot; Florida registration pending'
     return 'Licensed &amp; insured before every move'
 
 
@@ -672,6 +702,12 @@ def trust_inner():
         c1 = ('Registered with the State of Florida', 'Roomi Movers is registered with the Florida Department of Agriculture and Consumer Services (FDACS) as a household mover.')
         c2 = ('Insured for your protection', 'We carry the insurance Florida requires of movers, so your belongings are protected from the first box to the last.')
         fine = 'Registration number and coverage shown above. You can confirm any mover at FDACS.'
+    elif insured():
+        head = 'Insured today. Registered with Florida before your first move.'
+        chips = ('<div class="trust-chips"><span>%s</span></div>' % esc(insurance_summary())) if insurance_summary() else ''
+        c1 = ('Registered with the State of Florida', 'Florida requires household movers to register with the Florida Department of Agriculture and Consumer Services (FDACS). Roomi Movers registers before moving a single customer.')
+        c2 = ('Insured for your protection', 'Roomi Movers is insured. Questions about our coverage? Ask Kareem when he calls with your estimate.')
+        fine = 'Our registration number is listed here as soon as it is issued, so you can check us yourself.'
     else:
         head = 'Licensed and insured. Before your move, not after.'
         chips = ''
@@ -681,8 +717,9 @@ def trust_inner():
     c3 = ('Check us yourself', 'You can confirm any Florida mover with FDACS at <a href="%s">fdacs.gov/Consumer-Resources</a> or by calling 1-800-HELP-FLA (435-7352).' % FDACS_URL)
     cards = ''.join('<div class="tcard"><span class="tnum">%s</span><h3>%s</h3><p>%s</p></div>' % (n, esc(t), body)
                     for n, (t, body) in zip(['1', '2', '3'], [c1, c2, c3]))
-    return ('<div class="trust-head"><span class="trust-shield">%s</span><div><p class="eyebrow">Licensed and insured</p><h2 id="trust-title">%s</h2></div></div>'
-            '<div class="trust-cards">%s</div>%s<p class="trust-fine">%s</p>') % (SHIELD, head, cards, chips, fine)
+    eyebrow = 'Licensed and insured' if (license_state() == 'active' or not insured()) else 'Insured, registering with Florida'
+    return ('<div class="trust-head"><span class="trust-shield">%s</span><div><p class="eyebrow">%s</p><h2 id="trust-title">%s</h2></div></div>'
+            '<div class="trust-cards">%s</div>%s<p class="trust-fine">%s</p>') % (SHIELD, eyebrow, head, cards, chips, fine)
 
 
 def review_card(r, demo=False, hidden=False):
@@ -728,7 +765,12 @@ def render_slots():
     badge = ('<li><span class="i">' + SHIELD.replace('width="30" height="30"', 'width="22" height="22"') + '</span>' + badge_text() + '</li>')
     trust = ('<section class="band trust-band" id="trust" aria-labelledby="trust-title">\n    <div class="wrap">' + trust_inner() + '</div>\n  </section>\n')
     revs = b.get('reviews') or []
-    reviews = reviews_wall(revs, b.get('google_reviews_url'), b.get('google_review_link')) if revs else reviews_empty(b.get('google_review_link'))
+    if revs:
+        reviews = reviews_wall(revs, b.get('google_reviews_url'), b.get('google_review_link'))
+    elif b.get('show_empty_reviews_band'):
+        reviews = reviews_empty(b.get('google_review_link'))
+    else:
+        reviews = ''   # nothing to show yet: no empty stars, no "no reviews" band
     fills = {'badge-lic': badge, 'trust': trust, 'reviews': reviews + '\n'}
     for name, html in fills.items():
         s = re.sub(r'<!--slot:%s-->.*?<!--/slot:%s-->' % (re.escape(name), re.escape(name)),
@@ -767,6 +809,8 @@ HOME = (ROOT / 'index.html').read_text(encoding='utf-8')
 
 def home_section(sid):
     m = re.search(r'<section class="[^"]*" id="%s"[^>]*>.*?</section>' % sid, HOME, re.S)
+    if not m and sid == 'reviews':
+        return ''   # the reviews band is hidden until there is a real review
     assert m, sid
     s = m.group(0)
     s = s.replace('src="images/', 'src="/images/').replace('srcset="images/', 'srcset="/images/').replace(', images/', ', /images/')
@@ -881,7 +925,7 @@ def journey_parts():
     assert m
     section = m.group(0).replace('<section class="journey"', '<section class="journey is-short"', 1).replace('href="#services"', 'href="#after-journey"')
     section += '\n<div id="after-journey"></div>'
-    s = re.search(r'<script src="https://cdnjs[^"]*gsap\.min\.js"></script>\s*<script src="[^"]*ScrollTrigger\.min\.js"></script>\s*<script>\n/\* Scroll journey.*?</script>', HOME, re.S)
+    s = re.search(r'<script src="https://cdnjs[^"]*gsap\.min\.js"[^>]*></script>\s*<script src="[^"]*ScrollTrigger\.min\.js"[^>]*></script>\s*<script>\n/\* Scroll journey.*?</script>', HOME, re.S)
     assert s
     return section, s.group(0)
 
@@ -1051,6 +1095,7 @@ def privacy_page():
             '<h2>What we collect</h2><p>When you request an estimate we collect the details you type into the form: your name, phone number, move date, home size, the cities or ZIP codes you are moving from and to, and any notes about stairs or heavy items.</p>'
             '<h2 style="margin-top:28px">How we use it</h2><p>We use it to call you with your estimate and to plan your move. We do not sell your information.</p>'
             '<h2 style="margin-top:28px">Who handles it</h2><p>Estimate requests are sent from this website to Roomi Movers through FormSubmit, a form-delivery service that emails each request to us. Calls and texts to (813) 436-3216 are handled by Roomi Movers directly.</p><h2 style="margin-top:28px">The chat assistant</h2><p>If you use the chat assistant, what you type is used to answer you. An estimate request you send through chat, together with the questions you asked in the chat, reaches us the same way as the forms. If AI answers are turned on, your messages are also sent, through our own secure relay, to Anthropic, the company that makes the Claude model, only so a reply can be written. Please do not type payment details or ID numbers into the chat.</p>'
+            '<h2 style="margin-top:28px">Address search</h2><p>If you search for your address on the Service Areas page, what you type is sent to the Photon address search (OpenStreetMap data, run by komoot) to suggest addresses, and the address you pick is sent to the U.S. Census Bureau geocoder to verify it. We do not store these searches. An address reaches us only if you send an estimate request.</p>'
             '<h2 style="margin-top:28px">Your choices</h2><p>To ask us to delete your request, call or text (813) 436-3216 or email makeroom@roomimovers.com.</p>'
             '<p style="margin-top:28px;color:var(--muted)">Last updated October 2026.</p></div>')
     return hub_page('/privacy/', 'Privacy Policy | Roomi Movers',
@@ -1147,17 +1192,18 @@ _areas_v2 = areas_hub
 def areas_hub():
     p, html = _areas_v2()
     finder = ('<div class="finder" data-area-finder>'
-              '<label class="finder-label" for="af-q">Search by ZIP code, city or neighborhood</label>'
+              '<label class="finder-label" for="af-q">Search your address, ZIP code or city</label>'
               '<div class="finder-box"><div class="finder-field">'
               '<input id="af-q" type="text" role="combobox" aria-expanded="false" aria-controls="af-list" aria-autocomplete="list" aria-describedby="af-help" '
-              'autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="Try 33558, Lutz or Hyde Park">'
+              'autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="Start typing your street address">'
               '<button type="button" class="finder-clear" data-af-clear aria-label="Clear search" hidden>&times;</button>'
               '<ul id="af-list" class="finder-list" role="listbox" aria-label="Suggestions" data-af-list hidden></ul></div>'
-              '<button type="button" class="btn btn-primary finder-go" data-af-go>Check my area</button></div>'
-              '<p class="finder-help" id="af-help">Not sure we come to you? Type your ZIP code. Every result lets you request a free estimate.</p>'
+              '<button type="button" class="btn btn-primary finder-go" data-af-go>Check my address</button></div>'
+              '<p class="finder-help" id="af-help">Start with your house number and pick your address from the list. We check it and show whether we can help. '
+              'You can also try a ZIP code like 33558 or a city. Every result lets you request a free estimate.</p>'
               '<p class="af-sr" role="status" aria-live="polite" data-af-status></p><div data-af-result></div></div>')
     html = html.replace('Choose your area for local details and to request an estimate there.',
-                        'Search by ZIP code or name, or choose your area below for local details and to request an estimate there.', 1)
+                        'Search your address or ZIP code, or choose your area below for local details and to request an estimate there.', 1)
     html = html.replace('<ul class="cities all">', finder + '<ul class="cities all">', 1)
     html = html.replace('</body>', '<script src="/assets/areas-data.js"></script>\n<script src="/assets/areas.js" defer></script>\n</body>', 1)
     return p, after_journey(html, sec(glance()))
@@ -1501,7 +1547,7 @@ def chat_facts():
     return {
         'phone': '(813) 436-3216', 'tel': '+18134363216', 'email': 'makeroom@roomimovers.com', 'hours': b.get('hours') or '',
         'rates': {k: v for k, v in (b.get('rates') or {}).items() if v},
-        'license': {'status': license_state(), 'number': lic.get('registration_number'), 'insurance': lic.get('insurance_summary')},
+        'license': {'status': license_state(), 'number': lic.get('registration_number'), 'insurance': insurance_summary(), 'insured': insured()},
         'areas': [{'n': a['name'], 's': a['slug']} for a in AREAS],
         'faq': [[q, a] for q, a in faq_items()],
         'formEndpoint': 'https://formsubmit.co/ajax/' + (b.get('lead_email') or 'roomimovers@gmail.com'),
@@ -1517,6 +1563,10 @@ def ai_system_prompt(f):
     if f['license']['status'] == 'active':
         lic = 'Roomi Movers is a Florida registered household mover, FDACS registration #%s.%s' % (
             f['license']['number'], (' Insurance: ' + f['license']['insurance'] + '.') if f['license']['insurance'] else '')
+    elif f['license'].get('insured'):
+        lic = ('Roomi Movers IS insured. It is registering with the Florida Department of Agriculture and Consumer Services (FDACS) and will be registered before moving any customer. '
+               'The FDACS registration number is not issued yet: NEVER say we are licensed or registered, and never give a registration number. '
+               'Do not state coverage amounts, insurers, policy types or claim procedures; say Kareem can answer coverage questions when he calls.')
     else:
         lic = ('Roomi Movers registers with the Florida Department of Agriculture and Consumer Services (FDACS) and puts the insurance Florida requires of movers '
                'in place before moving any customer. The registration number is not issued yet. NEVER say we are currently licensed or insured.')
@@ -1595,6 +1645,28 @@ NEAR_PLACES = [
     ('Holiday', '34690 34691 34692', []), ('Port Richey', '34668 34673', []), ('New Port Richey', '34652 34653 34654 34655 34656', []),
     ('Spring Hill', '34610', []),
 ]
+AREA_CENTERS = {  # [lat, lon] of each service area's centre
+    'tampa': [27.945, -82.458],
+    'carrollwood': [28.051, -82.501],
+    'wesley-chapel': [28.187, -82.366],
+    'zephyrhills': [28.234, -82.181],
+    'brandon': [27.938, -82.286],
+    'riverview': [27.871, -82.327],
+    'temple-terrace': [28.035, -82.389],
+    'town-n-country': [27.997, -82.582],
+    'westchase': [28.055, -82.624],
+    'citrus-park': [28.078, -82.57],
+    'valrico': [27.948, -82.236],
+    'seffner': [27.984, -82.276],
+    'gibsonton': [27.85, -82.382],
+    'oldsmar': [28.034, -82.665],
+    'thonotosassa': [28.058, -82.295],
+    'egypt-lake-leto': [28.017, -82.506],
+    'lutz': [28.13, -82.459],
+    'land-o-lakes': [28.219, -82.458],
+    'dade-city': [28.365, -82.196],
+    'san-antonio': [28.336, -82.275],
+}
 ZIP3_REGIONS = {'335': 'the Hillsborough and Pasco County area', '336': 'the Tampa area', '337': 'the St. Petersburg and Pinellas County area',
                 '338': 'the Lakeland area', '342': 'the Sarasota and Bradenton area', '346': 'the Pasco and Hernando County area'}
 EXTRA_HOODS = {'tampa': ['Ybor City', 'South Tampa', 'Davis Islands', 'Harbour Island', 'Tampa Palms', 'Palma Ceia', 'Bayshore']}
@@ -1604,6 +1676,7 @@ def write_area_finder_data():
     by_name = {a['name']: a for a in AREAS}
     slugs = {a['slug'] for a in AREAS}
     assert set(AREA_ZIPS) == {by_name[n]['slug'] for n in ALL_AREAS}, 'ZIP table must cover exactly the service areas'
+    assert set(AREA_CENTERS) == set(AREA_ZIPS), 'every service area needs a centre point'
     areas_out = []
     for n in ALL_AREAS:
         a = by_name[n]
@@ -1616,7 +1689,7 @@ def write_area_finder_data():
         for h in hoods:
             if h.lower() not in seen and h not in ALL_AREAS:
                 seen.add(h.lower()); clean.append(h)
-        areas_out.append({'n': n, 's': a['slug'], 'z': AREA_ZIPS[a['slug']].split(), 'k': clean})
+        areas_out.append({'n': n, 's': a['slug'], 'z': AREA_ZIPS[a['slug']].split(), 'k': clean, 'c': AREA_CENTERS[a['slug']]})
     places = []
     for name, zips, near in NEAR_PLACES:
         assert all(s in slugs for s in near), name

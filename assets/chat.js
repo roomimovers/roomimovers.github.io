@@ -221,6 +221,10 @@
       return A('Yes. Roomi Movers is registered with the State of Florida as a household mover, FDACS registration #' + L.number + '.' + (L.insurance ? ' ' + L.insurance : '') +
         '\nYou can verify any Florida mover at [fdacs.gov](https://www.fdacs.gov/Consumer-Resources) or by calling 1-800-HELP-FLA (435-7352).', ['Get a free estimate', 'How much does it cost?'], EST_OFFER);
     }
+    if (L.insured) {
+      return A('Roomi Movers is insured. Florida also requires household movers to register with the Florida Department of Agriculture and Consumer Services (FDACS), and we register before moving a single customer. Our registration number goes on this site the moment it is issued. For coverage details, ask Kareem when he calls with your estimate.' +
+        '\nYou can verify any Florida mover yourself at [fdacs.gov](https://www.fdacs.gov/Consumer-Resources) or by calling 1-800-HELP-FLA (435-7352).', ['Get a free estimate', 'How much does it cost?']);
+    }
     return A('Florida requires household movers to register with the Florida Department of Agriculture and Consumer Services (FDACS), and to carry insurance. We register and put that insurance in place before moving a single customer. Our registration number and coverage details go on this site the moment they are issued.' +
       '\nYou can verify any Florida mover yourself at [fdacs.gov](https://www.fdacs.gov/Consumer-Resources) or by calling 1-800-HELP-FLA (435-7352).', ['Get a free estimate', 'How much does it cost?']);
   }
@@ -271,7 +275,7 @@
     if (has(/\b(license|licence|licensed|licensing|insured|insurance|registered|registration|fdacs|bonded|certified|legit|legitimate)\b/)) return licenseAnswer();
 
     if (has(/\b(damage|damaged|broke|break|breaks|breakage|claim|claims|liable|liability|lost|stolen|scratch)\b/))
-      return A('We wrap and pad furniture on every full-service move, and we put the insurance Florida requires of movers in place before moving a customer. I do not have our written claims terms in front of me, so please ask Kareem when he calls with your estimate, or call or text ' + PHONE + '.', ['Have Kareem call me', 'Are you licensed?']);
+      return A('We wrap and pad furniture on every full-service move, and ' + ((F.license || {}).insured || (F.license || {}).status === 'active' ? 'Roomi Movers is insured' : 'we put the insurance Florida requires of movers in place before moving a customer') + '. I do not have our written claims terms in front of me, so please ask Kareem when he calls with your estimate, or call or text ' + PHONE + '.', ['Have Kareem call me', 'Are you licensed?']);
 
     if (has(/\b(review|reviews|rating|ratings|testimonial|testimonials|reference|references|yelp)\b/)) {
       if (F.reviewCount > 0) return A('Our customer reviews are on the home page: [See reviews](/#reviews)', ['Get a free estimate']);

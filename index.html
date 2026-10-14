@@ -17,7 +17,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap"></noscript>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -272,7 +273,8 @@ section.alt{background:var(--band)}
 .services{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
 .svc{display:grid;grid-template-rows:auto auto 1fr;gap:12px;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
 .svc .ico{width:48px;height:48px;border-radius:12px;background:var(--band);display:grid;place-items:center;color:var(--blue)}
-.svc ul{padding-left:18px;color:var(--muted);font-size:15.5px;display:grid;gap:4px}
+.svc ul{padding-left:18px;color:var(--muted);font-size:15.5px;display:grid;gap:4px;align-content:start}
+.nb{white-space:nowrap}
 .after{margin-top:26px;color:var(--muted)}
 .after b{color:var(--ink)}
 @media (max-width:1000px){.services{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -660,7 +662,7 @@ footer,.fcols a,.legal{font-size:16px}
 
 <header class="bar">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Roomi Movers home">
+    <a class="brand" href="#top">
       <picture><source type="image/webp" srcset="images/logo-mark-120.webp"><img src="images/logo-mark-120.png" alt="" width="41" height="40"></picture>
       <span class="brand-word"><b>roomi</b><span>MOVERS</span></span>
     </a>
@@ -723,8 +725,8 @@ footer,.fcols a,.legal{font-size:16px}
 
   <section class="photo-band" aria-label="Kareem with the Roomi Movers truck">
     <picture>
-      <source type="image/webp" srcset="images/roomi-team-v2-960.webp 960w, images/roomi-team-v2-1672.webp 1672w, images/roomi-team-v2-2560.webp 2560w" sizes="100vw">
-      <img src="images/roomi-team-v2-1672.jpg" srcset="images/roomi-team-v2-960.jpg 960w, images/roomi-team-v2-1672.jpg 1672w, images/roomi-team-v2-2560.jpg 2560w" sizes="100vw" alt="Kareem Aboroomi, owner of Roomi Movers, in a Roomi Movers shirt in front of the branded Roomi Movers box truck" width="2560" height="1441" fetchpriority="high" decoding="sync">
+      <source type="image/webp" srcset="images/roomi-team-v2-720.webp 720w, images/roomi-team-v2-960.webp 960w, images/roomi-team-v2-1672.webp 1672w, images/roomi-team-v2-2560.webp 2560w" sizes="100vw">
+      <img src="images/roomi-team-v2-1672.jpg" srcset="images/roomi-team-v2-720.jpg 720w, images/roomi-team-v2-960.jpg 960w, images/roomi-team-v2-1672.jpg 1672w, images/roomi-team-v2-2560.jpg 2560w" sizes="100vw" alt="Kareem Aboroomi, owner of Roomi Movers, in a Roomi Movers shirt in front of the branded Roomi Movers box truck" width="2560" height="1441" fetchpriority="high" decoding="sync">
     </picture>
     <div class="photo-cap"><b>Kareem Aboroomi</b><span>Owner, Roomi Movers</span></div>
   </section>
@@ -732,7 +734,7 @@ footer,.fcols a,.legal{font-size:16px}
   <section class="badges" aria-label="Why Roomi">
     <div class="wrap">
       <ul>
-        <!--slot:badge-lic--><li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span>Licensed &amp; insured before every move</li><!--/slot:badge-lic-->
+        <!--slot:badge-lic--><li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span>Insured &middot; Florida registration pending</li><!--/slot:badge-lic-->
         <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5M15 14.6c2.8-.3 5.2 1.4 5.8 4.4"/></svg></span>Family Owned &amp; Operated</li>
         <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="14" height="10"/><path d="M15 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>Truck &amp; Equipment Provided</li>
         <li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Free, Upfront Estimates</li>
@@ -803,7 +805,7 @@ footer,.fcols a,.legal{font-size:16px}
             <a class="btn btn-ghost j-call ph" href="tel:+18134363216">Call (813) 436-3216</a>
           </div>
           <p class="j-promo"><b>Launch special:</b> $50 off moves booked by Dec 31, 2026</p>
-          <ul class="j-badges"><!--slot:badge-lic--><li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span>Licensed &amp; insured before every move</li><!--/slot:badge-lic--></ul>
+          <ul class="j-badges"><!--slot:badge-lic--><li><span class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span>Insured &middot; Florida registration pending</li><!--/slot:badge-lic--></ul>
         </article>
       </div>
 
@@ -975,7 +977,7 @@ footer,.fcols a,.legal{font-size:16px}
   </section>
 
 <!--slot:trust--><section class="band trust-band" id="trust" aria-labelledby="trust-title">
-    <div class="wrap"><div class="trust-head"><span class="trust-shield"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span><div><p class="eyebrow">Licensed and insured</p><h2 id="trust-title">Licensed and insured. Before your move, not after.</h2></div></div><div class="trust-cards"><div class="tcard"><span class="tnum">1</span><h3>Registered with the State of Florida</h3><p>Florida requires household movers to register with the Florida Department of Agriculture and Consumer Services (FDACS). Roomi Movers registers before moving a single customer.</p></div><div class="tcard"><span class="tnum">2</span><h3>Insured for your protection</h3><p>We put the insurance Florida requires of movers in place before your first move, so your belongings are protected from the first box to the last.</p></div><div class="tcard"><span class="tnum">3</span><h3>Check us yourself</h3><p>You can confirm any Florida mover with FDACS at <a href="https://www.fdacs.gov/Consumer-Resources">fdacs.gov/Consumer-Resources</a> or by calling 1-800-HELP-FLA (435-7352).</p></div></div><p class="trust-fine">Our registration number and coverage details are listed here as soon as they are issued, so you can check us yourself.</p></div>
+    <div class="wrap"><div class="trust-head"><span class="trust-shield"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6z"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg></span><div><p class="eyebrow">Insured, registering with Florida</p><h2 id="trust-title">Insured today. Registered with Florida before your first move.</h2></div></div><div class="trust-cards"><div class="tcard"><span class="tnum">1</span><h3>Registered with the State of Florida</h3><p>Florida requires household movers to register with the Florida Department of Agriculture and Consumer Services (FDACS). Roomi Movers registers before moving a single customer.</p></div><div class="tcard"><span class="tnum">2</span><h3>Insured for your protection</h3><p>Roomi Movers is insured. Questions about our coverage? Ask Kareem when he calls with your estimate.</p></div><div class="tcard"><span class="tnum">3</span><h3>Check us yourself</h3><p>You can confirm any Florida mover with FDACS at <a href="https://www.fdacs.gov/Consumer-Resources">fdacs.gov/Consumer-Resources</a> or by calling 1-800-HELP-FLA (435-7352).</p></div></div><p class="trust-fine">Our registration number is listed here as soon as it is issued, so you can check us yourself.</p></div>
   </section>
 <!--/slot:trust-->
   <section class="band" id="services">
@@ -993,7 +995,7 @@ footer,.fcols a,.legal{font-size:16px}
         <article class="svc">
           <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="1"/><path d="M9 6h1M14 6h1M9 10h1M14 10h1M9 14h1M14 14h1M10 22v-4h4v4"/></svg></div>
           <h3><a href="/services/apartment-condo-moves/">Apartment &amp; Condo Moves</a></h3>
-          <ul><li>Walk-ups and elevators</li><li>Move-out deadlines met</li><li>Studios to 3 bedrooms</li></ul>
+          <ul><li>Walk-ups and elevators</li><li>Planned around your move-out date</li><li>Studios to 3 bedrooms</li></ul>
         </article>
         <article class="svc">
           <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></div>
@@ -1015,7 +1017,7 @@ footer,.fcols a,.legal{font-size:16px}
       <div class="head">
         <p class="eyebrow">How our pricing works</p>
         <h2>One hourly rate. No surprise fees.</h2>
-        <p>The clock starts when we arrive and stops when the last item is placed. Two-hour minimum.</p>
+        <p>The clock starts when we arrive and stops when the last item is placed. <span class="nb">Two-hour</span> minimum.</p>
       </div>
       <div class="tiers">
         <div class="tier">
@@ -1025,7 +1027,7 @@ footer,.fcols a,.legal{font-size:16px}
           <ul><li>Pads, straps and dollies</li><li>Packed tight so nothing shifts</li></ul>
         </div>
         <div class="tier pop">
-          <span class="tag">Most booked</span>
+          <span class="tag">Best for most moves</span>
           <span class="who">Full-Service Move</span>
           <!--slot:price:Full-Service Move--><span class="price" style="font-size:30px">From $149/hour</span><span class="price-sub">Crew size and total confirmed in your free estimate</span><!--/slot:price:Full-Service Move-->
           <p class="tier-plain">We bring the truck and handle the whole move.</p><p>Truck plus crew for apartments and homes across Tampa Bay.</p>
@@ -1038,7 +1040,7 @@ footer,.fcols a,.legal{font-size:16px}
           <ul><li>Floor runners and door-frame guards</li><li>TVs, art and mirrors boxed</li><li>Furniture placed room by room</li><li>Extra crew member for faster moves</li></ul>
         </div>
       </div>
-      <p class="price-notes">Every package is billed by the hour with a two-hour minimum, and your free estimate shows the rate and expected time. Stairs, long carries from the truck and items over 300 lbs (like gun safes) may add to the price. We'll tell you before you book.</p>
+      <p class="price-notes">Every package is billed by the hour with a <span class="nb">two-hour</span> minimum, and your free estimate shows the rate and expected time. Stairs, long carries from the truck and items over 300 lbs (like gun safes) may add to the price. We'll tell you before you book.</p>
       <div class="ctas"><a class="btn btn-primary" href="#quote">Get a Free Estimate</a><a class="btn btn-ghost" href="tel:+18134363216">Call for an Estimate</a></div>
     </div>
   </section>
@@ -1051,7 +1053,7 @@ footer,.fcols a,.legal{font-size:16px}
       </div>
       <ol class="steps">
         <li><h3>Get your free estimate</h3><p>Fill out the form, call or text. We ask about rooms, stairs and big items so your estimate is as close as it can be.</p></li>
-        <li><h3>Lock in your date</h3><p>We confirm your rate, crew size and a two-hour arrival window. End-of-month dates fill fastest.</p></li>
+        <li><h3>Lock in your date</h3><p>We confirm your rate, crew size and a <span class="nb">two-hour</span> arrival window. End-of-month dates fill fastest.</p></li>
         <li><h3>We move you</h3><p>We walk through with you, wrap your furniture, load the truck and set everything in place at your new home.</p></li>
       </ol>
     </div>
@@ -1062,7 +1064,7 @@ footer,.fcols a,.legal{font-size:16px}
       <div>
         <p class="eyebrow">Service areas</p>
         <h2 style="margin-top:12px">Proudly moving Tampa Bay</h2>
-        <p class="note">Based in Tampa and serving the areas around it, matching our Google Business Profile. Outside our area? Call us anyway.</p>
+        <p class="note">Based in Tampa and serving the areas around it. Outside our area? Call us anyway.</p>
       </div>
       <ul class="cities all"><li><a href="/areas/tampa/">Tampa</a></li><li><a href="/areas/carrollwood/">Carrollwood</a></li><li><a href="/areas/wesley-chapel/">Wesley Chapel</a></li><li><a href="/areas/zephyrhills/">Zephyrhills</a></li><li><a href="/areas/brandon/">Brandon</a></li><li><a href="/areas/riverview/">Riverview</a></li><li><a href="/areas/temple-terrace/">Temple Terrace</a></li><li><a href="/areas/town-n-country/">Town &#39;n&#39; Country</a></li><li><a href="/areas/westchase/">Westchase</a></li><li><a href="/areas/citrus-park/">Citrus Park</a></li><li><a href="/areas/valrico/">Valrico</a></li><li><a href="/areas/seffner/">Seffner</a></li><li><a href="/areas/gibsonton/">Gibsonton</a></li><li><a href="/areas/oldsmar/">Oldsmar</a></li><li><a href="/areas/thonotosassa/">Thonotosassa</a></li><li><a href="/areas/egypt-lake-leto/">Egypt Lake-Leto</a></li><li><a href="/areas/lutz/">Lutz</a></li><li><a href="/areas/land-o-lakes/">Land O&#39; Lakes</a></li><li><a href="/areas/dade-city/">Dade City</a></li><li><a href="/areas/san-antonio/">San Antonio</a></li></ul>
     </div>
@@ -1080,19 +1082,7 @@ footer,.fcols a,.legal{font-size:16px}
     </div>
   </section>
 
-<!--slot:reviews-->  <section class="band alt reviews-band" id="reviews" aria-labelledby="reviews-title">
-    <div class="wrap reviews">
-      <div>
-        <p class="eyebrow">Reviews</p>
-        <h2 id="reviews-title">Our first reviews are on the way</h2>
-        <p class="reviews-note">We're new and family-run, so this space is saved for real reviews from the people we move.</p>
-      </div>
-      <div>
-        <p class="stars-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.4l-5.7 3 1.1-6.4L2.8 9.5l6.4-.9z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.4l-5.7 3 1.1-6.4L2.8 9.5l6.4-.9z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.4l-5.7 3 1.1-6.4L2.8 9.5l6.4-.9z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.4l-5.7 3 1.1-6.4L2.8 9.5l6.4-.9z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.4l-5.7 3 1.1-6.4L2.8 9.5l6.4-.9z"/></svg><span>No reviews yet</span></p>
-        <div class="ctas"><a class="btn btn-ghost" href="sms:+18134363216">Text us a review</a><a class="btn btn-ghost" href="mailto:makeroom@roomimovers.com?subject=My%20Roomi%20Movers%20review">Email a review</a></div>
-      </div>
-    </div>
-  </section>
+<!--slot:reviews-->
 <!--/slot:reviews-->
   <section class="band" id="guides">
     <div class="wrap">
@@ -1192,8 +1182,8 @@ footer,.fcols a,.legal{font-size:16px}
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
 /* Scroll journey, driven by one scrubbed GSAP timeline. The scene itself is a pure function of progress p (render),
    so scrolling back replays it exactly in reverse. Headlines and the finale are real GSAP tweens on the same timeline.
@@ -1203,7 +1193,7 @@ footer,.fcols a,.legal{font-size:16px}
    .50-.64 that same front door comes forward and grows into the Roomi doorway: the house outline becomes the arch's house,
            the Welcome home mat appears at the threshold and grows with it, the rest of the house and Tampa fade away
    .55-.70 the room fills in · .675 the lamp clicks on and the room warms · .72-.78 roof logo · .79-.83 estimate button · .83-1 hold */
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
   var root = document.getElementById('journey');
   if (!root) return;
   var svg = document.getElementById('jSvg');
@@ -1764,7 +1754,7 @@ footer,.fcols a,.legal{font-size:16px}
       root.classList.remove('is-live', 'is-gsap');
     };
   });
-})();
+});
 </script>
 
 <script>

@@ -28,5 +28,10 @@
   "chat": {
     "enabled": true,
     "ai_endpoint": null
-  }
+  },
+  "insurance": {
+    "status": "active",
+    "summary": null
+  },
+  "show_empty_reviews_band": false
 }
