@@ -66,18 +66,6 @@
     input.addEventListener('input', run);
   });
 
-  /* ---- area finder ---- */
-  $$('[data-area-filter]').forEach(function (input) {
-    var items = $$('.cities.all li'), msg = $('[data-area-msg]');
-    input.addEventListener('input', function () {
-      var q = input.value.trim().toLowerCase(), n = 0;
-      items.forEach(function (li) { var hit = !q || li.textContent.toLowerCase().indexOf(q) > -1; li.hidden = !hit; if (hit) n++; });
-      if (msg) {
-        msg.hidden = !(q && n === 0);
-      }
-    });
-  });
-
   /* ---- checklist: remembers what you ticked on this device ---- */
   $$('[data-checklist]').forEach(function (root) {
     var key = 'roomi-checklist-' + root.getAttribute('data-checklist');

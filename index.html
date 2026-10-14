@@ -450,12 +450,23 @@ footer a{color:#E9E2D6}
 .journey:not(.is-js) .final{display:none}
 
 /* modules: glance strip, guides, package finder, search, checklist */
-.glance{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden}
-.glance div{padding:22px 18px;text-align:center;border-left:1px solid var(--line)}
-.glance div:first-child{border-left:0}
-.glance b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(28px,3.4vw,42px);letter-spacing:-.02em;color:var(--blue)}
-.glance span{color:var(--muted);font-weight:600;font-size:15px}
-@media (max-width:640px){.glance{grid-template-columns:1fr 1fr}.glance div:nth-child(3){border-left:0}.glance div:nth-child(n+3){border-top:1px solid var(--line)}}
+.glance{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.glance li{display:flex}
+.glance a{flex:1;display:grid;align-content:start;gap:6px;padding:22px 20px 20px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s,box-shadow .2s}
+.glance a:hover{border-color:var(--coral);transform:translateY(-2px);box-shadow:0 18px 30px -24px rgba(11,28,61,.5)}
+.glance .g-ico{width:46px;height:46px;border-radius:13px;background:var(--band);color:var(--blue);display:grid;place-items:center;margin-bottom:6px}
+.glance b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(34px,3.6vw,46px);line-height:1;letter-spacing:-.025em;color:var(--blue)}
+.glance strong{font-family:var(--display);font-weight:800;font-size:19px;line-height:1.2;color:var(--ink)}
+.glance .g-txt{color:var(--muted);font-size:16px;line-height:1.5}
+.glance .g-go{margin-top:8px;font-family:var(--display);font-weight:800;font-size:16px;color:var(--coral-ink)}
+.glance a:hover .g-go{text-decoration:underline;text-underline-offset:3px}
+@media (max-width:900px){.glance{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){
+  .glance{grid-template-columns:1fr;gap:12px}
+  .glance a{grid-template-columns:auto 1fr;column-gap:16px;align-items:start;padding:18px}
+  .glance .g-ico{grid-row:1/span 4;margin:0}
+}
+@media (prefers-reduced-motion:reduce){.glance a{transition:none}.glance a:hover{transform:none}}
 .gcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .gcard{display:grid;gap:8px;align-content:start;padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--card);text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
 .gcard:hover{border-color:var(--coral);transform:translateY(-2px)}
@@ -640,7 +651,7 @@ footer,.fcols a,.legal{font-size:16px}
 <body>
 
 <a class="skip" href="#top">Skip to main content</a>
-<div class="util">
+<div class="util" role="region" aria-label="Contact details">
   <div class="wrap">
     <span>Local movers serving Tampa, Wesley Chapel, Lutz &amp; Carrollwood</span>
     <span><a class="ph" href="tel:+18134363216">(813) 436-3216</a> · <a href="mailto:makeroom@roomimovers.com">makeroom@roomimovers.com</a></span>

@@ -320,6 +320,43 @@ PAGE_CSS = '''
 '''
 
 
+PAGE_CSS += r'''
+/* area finder: search by ZIP code, city or neighborhood, with generated suggestions and an estimate request in every result */
+.finder{max-width:780px;margin:8px 0 26px}
+.finder-label{display:block;font-weight:800;font-size:18px;margin-bottom:8px;color:var(--ink)}
+.finder-box{display:flex;gap:12px;align-items:stretch}
+.finder-field{position:relative;flex:1;min-width:0}
+.finder input[type=text]{width:100%;min-height:58px;padding:0 52px 0 18px;border:2px solid var(--field-line,#7C869C);border-radius:14px;font-size:18px;background:var(--field,#fff);color:var(--ink)}
+.finder-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:46px;height:46px;border:0;border-radius:12px;background:transparent;color:var(--muted);font-size:28px;line-height:1;cursor:pointer}
+.finder-clear:hover{background:var(--band)}
+.finder-go{white-space:nowrap}
+.finder-list{position:absolute;z-index:30;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 26px 44px -22px rgba(11,28,61,.5);max-height:min(60vh,430px);overflow:auto}
+.af-opt{display:grid;gap:2px;padding:11px 14px;min-height:54px;border-radius:11px;cursor:pointer}
+.af-opt b{font-size:18px;line-height:1.25;color:var(--ink)}
+.af-opt span{font-size:16px;line-height:1.35;color:var(--muted)}
+.af-opt[aria-selected="true"],.af-opt:hover{background:var(--band)}
+.af-opt.is-ask{border-top:1px solid var(--line);border-radius:0 0 11px 11px;margin-top:4px}
+.af-opt.is-ask b{color:var(--coral-ink)}
+.finder-help{margin:10px 0 0;font-size:16px;color:var(--muted)}
+.af-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.af-card{margin-top:18px;padding:22px clamp(16px,3vw,30px) 20px;border:1px solid var(--line);border-left:6px solid var(--coral);border-radius:18px;background:var(--card)}
+.af-card.is-served{border-left-color:var(--blue)}
+.af-head{font-family:var(--display);font-size:clamp(22px,2.6vw,29px);font-weight:900;line-height:1.15;letter-spacing:-.015em}
+.af-head:focus{outline:0}
+.af-body{margin:8px 0 0;font-size:17px;color:var(--muted)}
+.af-links{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0}
+.af-form{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.af-form h3{font-size:20px;margin-bottom:14px}
+.af-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.af-f label{display:block;margin-bottom:6px;font-size:16px;font-weight:700}
+.af-f input,.af-f select{width:100%;min-height:52px;padding:0 14px;border:2px solid var(--field-line,#7C869C);border-radius:12px;font-size:17px;background:var(--field,#fff);color:var(--ink)}
+.af-form .btn{margin-top:16px}
+.af-form .form-msg{margin-top:12px}
+.af-call{margin:14px 0 0;font-size:16px;color:var(--muted)}
+@media (max-width:640px){.af-grid{grid-template-columns:1fr}.finder-box{flex-direction:column}.finder-go{width:100%}}
+'''
+
+
 def esc(s):
     return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
 
@@ -382,7 +419,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
-<div class="util">
+<div class="util" role="region" aria-label="Contact details">
   <div class="wrap">
     <span>Local movers serving Tampa, Wesley Chapel, Lutz &amp; Carrollwood</span>
     <span><a class="ph" href="tel:{tel}">{phone}</a> · <a href="mailto:{email}">{email}</a></span>
@@ -1035,8 +1072,22 @@ def nophoto(html):
 
 
 def glance():
-    items = [('20', 'areas served'), ('4', 'moving services'), ('3', 'packages'), ('2-hour', 'arrival window')]
-    return '<div class="glance">' + ''.join('<div><b>%s</b><span>%s</span></div>' % (n, l) for n, l in items) + '</div>'
+    def ico(path):
+        return ('<span class="g-ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+                'stroke-linecap="round" stroke-linejoin="round">%s</svg></span>' % path)
+    items = [
+        ('/areas/', '<path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+         '20', 'Tampa Bay areas', 'The cities and neighborhoods we move in, from Tampa to Dade City.', 'See the areas'),
+        ('/services/', '<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/>',
+         '4', 'kinds of moves', 'Homes, apartments and condos, loading and unloading, and heavy items.', 'See the services'),
+        ('/pricing/', '<path d="M4 8l8-4 8 4-8 4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16l8 4 8-4"/>',
+         '3', 'ways to book', 'Labor only, full-service or White-Glove. Pick how much help you want.', 'Compare prices'),
+        ('/faq/', '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+         '2 hours', 'arrival window', 'We give you a two-hour block to expect us, not an all-day wait.', 'Read the details'),
+    ]
+    lis = ''.join('<li><a href="%s">%s<b>%s</b><strong>%s</strong><span class="g-txt">%s</span><span class="g-go">%s &rarr;</span></a></li>'
+                  % (h, ico(p), n, l, d, go) for h, p, n, l, d, go in items)
+    return '<ul class="glance" aria-label="Roomi Movers at a glance">' + lis + '</ul>'
 
 
 def after_journey(html, block):
@@ -1095,10 +1146,20 @@ _areas_v2 = areas_hub
 
 def areas_hub():
     p, html = _areas_v2()
-    html = html.replace('<ul class="cities all">',
-                        '<label class="search" style="max-width:420px;margin:6px 0 18px">Find your area<input type="search" data-area-filter placeholder="Type your city" autocomplete="off"></label>'
-                        '<p class="after" data-area-msg hidden>Not on the list? Call us anyway at <a class="ph" href="tel:+18134363216">(813) 436-3216</a>.</p>'
-                        '<ul class="cities all">', 1)
+    finder = ('<div class="finder" data-area-finder>'
+              '<label class="finder-label" for="af-q">Search by ZIP code, city or neighborhood</label>'
+              '<div class="finder-box"><div class="finder-field">'
+              '<input id="af-q" type="text" role="combobox" aria-expanded="false" aria-controls="af-list" aria-autocomplete="list" aria-describedby="af-help" '
+              'autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="Try 33558, Lutz or Hyde Park">'
+              '<button type="button" class="finder-clear" data-af-clear aria-label="Clear search" hidden>&times;</button>'
+              '<ul id="af-list" class="finder-list" role="listbox" aria-label="Suggestions" data-af-list hidden></ul></div>'
+              '<button type="button" class="btn btn-primary finder-go" data-af-go>Check my area</button></div>'
+              '<p class="finder-help" id="af-help">Not sure we come to you? Type your ZIP code. Every result lets you request a free estimate.</p>'
+              '<p class="af-sr" role="status" aria-live="polite" data-af-status></p><div data-af-result></div></div>')
+    html = html.replace('Choose your area for local details and to request an estimate there.',
+                        'Search by ZIP code or name, or choose your area below for local details and to request an estimate there.', 1)
+    html = html.replace('<ul class="cities all">', finder + '<ul class="cities all">', 1)
+    html = html.replace('</body>', '<script src="/assets/areas-data.js"></script>\n<script src="/assets/areas.js" defer></script>\n</body>', 1)
     return p, after_journey(html, sec(glance()))
 
 
@@ -1499,6 +1560,72 @@ def write_chat_assets():
                                  json.dumps(ai_system_prompt(f), ensure_ascii=False) + ';\n', encoding='utf-8', newline='\n')
 
 
+# ======================= area finder: ZIP codes and neighborhoods behind the search on /areas/ =======================
+# ZIP -> place names come from the public county ZIP lists (Hillsborough, Pasco, Pinellas). A ZIP can sit in several of our areas
+# (for example 33624 touches Carrollwood, Citrus Park and Tampa); the finder says "covers parts of" in that case.
+AREA_ZIPS = {
+    'tampa': '33602 33603 33604 33605 33606 33607 33609 33610 33611 33612 33613 33614 33615 33616 33617 33618 33619 33620 33621 33624 33625 33626 33629 33634 33635 33637 33647',
+    'wesley-chapel': '33543 33544 33545',
+    'lutz': '33548 33549 33558 33559',
+    'carrollwood': '33618 33624 33625',
+    'zephyrhills': '33539 33540 33541 33542',
+    'brandon': '33508 33509 33510 33511',
+    'riverview': '33568 33569 33578 33579',
+    'temple-terrace': '33617 33637',
+    'town-n-country': '33615 33634 33635',
+    'westchase': '33626',
+    'citrus-park': '33624 33625',
+    'valrico': '33594 33595 33596',
+    'seffner': '33583 33584',
+    'gibsonton': '33534',
+    'oldsmar': '34677',
+    'thonotosassa': '33592',
+    'egypt-lake-leto': '33614 33615',
+    'land-o-lakes': '34637 34638 34639',
+    'dade-city': '33523 33525 33526',
+    'san-antonio': '33576',
+}
+# places people may search that are NOT on the service list, with the listed areas that sit next to them (empty = no claim made)
+NEAR_PLACES = [
+    ('Odessa', '33556', ['lutz', 'citrus-park']), ('Lithia', '33547', ['valrico', 'riverview']), ('Dover', '33527', ['seffner', 'brandon']),
+    ('Plant City', '33563 33565 33566 33567', ['seffner', 'brandon']), ('Apollo Beach', '33572', ['riverview']), ('Ruskin', '33570 33575', ['riverview']),
+    ('Sun City Center', '33571 33573', ['riverview']), ('Wimauma', '33598', ['riverview']), ('Safety Harbor', '34695', ['oldsmar']),
+    ('Tarpon Springs', '34688 34689', ['oldsmar']), ('Saint Leo', '33574', ['san-antonio', 'dade-city']), ('Lacoochee', '33537', ['dade-city']),
+    ('Trilby', '33593', ['dade-city']), ('Crystal Springs', '33524', ['zephyrhills']), ('Hudson', '34667 34669 34674', []),
+    ('Holiday', '34690 34691 34692', []), ('Port Richey', '34668 34673', []), ('New Port Richey', '34652 34653 34654 34655 34656', []),
+    ('Spring Hill', '34610', []),
+]
+ZIP3_REGIONS = {'335': 'the Hillsborough and Pasco County area', '336': 'the Tampa area', '337': 'the St. Petersburg and Pinellas County area',
+                '338': 'the Lakeland area', '342': 'the Sarasota and Bradenton area', '346': 'the Pasco and Hernando County area'}
+EXTRA_HOODS = {'tampa': ['Ybor City', 'South Tampa', 'Davis Islands', 'Harbour Island', 'Tampa Palms', 'Palma Ceia', 'Bayshore']}
+
+
+def write_area_finder_data():
+    by_name = {a['name']: a for a in AREAS}
+    slugs = {a['slug'] for a in AREAS}
+    assert set(AREA_ZIPS) == {by_name[n]['slug'] for n in ALL_AREAS}, 'ZIP table must cover exactly the service areas'
+    areas_out = []
+    for n in ALL_AREAS:
+        a = by_name[n]
+        hoods = []
+        for k, v in a['facts']:
+            if k.lower().startswith('neighborhood'):
+                hoods += [x.strip() for x in re.split(r',\s*|\s+and\s+', v) if x.strip()]
+        hoods += EXTRA_HOODS.get(a['slug'], [])
+        seen, clean = set(), []
+        for h in hoods:
+            if h.lower() not in seen and h not in ALL_AREAS:
+                seen.add(h.lower()); clean.append(h)
+        areas_out.append({'n': n, 's': a['slug'], 'z': AREA_ZIPS[a['slug']].split(), 'k': clean})
+    places = []
+    for name, zips, near in NEAR_PLACES:
+        assert all(s in slugs for s in near), name
+        places.append({'n': name, 'z': zips.split(), 'c': near})
+    payload = {'a': areas_out, 'p': places, 'r': ZIP3_REGIONS}
+    (ROOT / 'assets' / 'areas-data.js').write_text('window.ROOMI_AREAS = ' + json.dumps(payload, ensure_ascii=False, separators=(',', ':')) + ';\n',
+                                                   encoding='utf-8', newline='\n')
+
+
 def main():
     build_css()
     paths = ['/']
@@ -1518,6 +1645,7 @@ def main():
     finish_pages(paths)
     write_rates_js()
     write_chat_assets()
+    write_area_finder_data()
     _, pv = preview_page()
     (ROOT / 'preview-placeholders').mkdir(exist_ok=True)
     (ROOT / 'preview-placeholders' / 'index.html').write_text(pv, encoding='utf-8', newline='\n')
