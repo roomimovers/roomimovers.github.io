@@ -33,5 +33,5 @@
     "status": "active",
     "summary": null
   },
-  "show_empty_reviews_band": false
+  "show_empty_reviews_band": true
 }
