@@ -30,7 +30,7 @@
  "telephone": "+1-813-436-3216",
  "email": "makeroom@roomimovers.com",
  "logo": "https://roomimovers.com/images/logo-full.png",
- "image": "https://roomimovers.com/images/roomi-team-truck-1672.jpg",
+ "image": "https://roomimovers.com/images/roomi-team-v2-1672.jpg",
  "description": "Local, family-run movers for Tampa, Wesley Chapel, Lutz and Carrollwood. Hourly rate with a two-hour minimum and a free estimate before you book.",
  "address": {
   "@type": "PostalAddress",
@@ -533,6 +533,36 @@ footer a{color:#E9E2D6}
 .chk input{width:20px;height:20px;min-height:0;flex:none;margin-top:3px;accent-color:#F7652F}
 .chk:has(input:checked) span{color:var(--muted);text-decoration:line-through}
 @media print{.bar,.util,.actionbar,footer,.closer,.page-hero,.chk-actions,.skip{display:none!important}.chk-sec{break-inside:avoid;border:0;padding:8px 0}body{background:#fff}}
+
+/* mobile polish: thumb-sized targets, readable helper text, and short landscape screens */
+.cities.all a,.cities.all span{padding-block:12px}
+@media (max-width:860px){
+  .fcols a{display:inline-block;padding:10px 0}
+  .fcols ul{gap:0}
+  .crumbs a{display:inline-block;padding:11px 2px}
+  .j-skip{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
+  .brand{min-height:44px}
+  .card-fine,.card-kicker{font-size:14px}
+  .fcols a{padding:10px 10px;margin-left:-10px}
+  .crumbs a{padding:11px 8px}
+}
+@media (max-height:540px) and (orientation:landscape){
+  .actionbar{display:none}
+  .bar .wrap{padding-block:6px}
+  .journey.is-live .journey-pin{padding-block:6px;gap:2px}
+  .j-copy .eyebrow{display:none}
+  .j-title{font-size:clamp(20px,3.4vw,30px)}
+  .j-sub>p:not(.j-fin){display:none}
+  .j-stack>.j-fin{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 16px}
+  .j-fin .j-call{display:none}
+  .j-fin .j-cta{margin-top:0}
+  .j-steps,.j-hint{display:none}
+  footer{padding-bottom:32px}
+}
+
+/* the owner photo: one steady compositing layer, so it is never re-rasterised at a different quality mid-scroll */
+.photo-band img,.page-photo img,.owner img{transform:translateZ(0);backface-visibility:hidden;image-rendering:auto}
+.photo-band{contain:paint}
 </style>
 </head>
 <body>
@@ -548,7 +578,7 @@ footer a{color:#E9E2D6}
 <header class="bar">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Roomi Movers home">
-      <img src="images/logo-mark.png" alt="" width="56" height="40">
+      <picture><source type="image/webp" srcset="images/logo-mark-120.webp"><img src="images/logo-mark-120.png" alt="" width="41" height="40"></picture>
       <span class="brand-word"><b>roomi</b><span>MOVERS</span></span>
     </a>
     <nav class="links" id="site-nav" aria-label="Main">
@@ -590,7 +620,7 @@ footer a{color:#E9E2D6}
         <p class="card-kicker">Free estimate in under a minute</p>
         <h2>Where are you moving?</h2>
         <form id="heroForm" novalidate>
-          <label for="h-name">Name<input id="h-name" name="name" autocomplete="name" required></label>
+          <label for="h-name">Name<input id="h-name" name="name" autocomplete="name" autocapitalize="words" required></label>
           <label for="h-phone">Phone<input id="h-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
           <div class="grid2">
             <label for="h-size">Home size
@@ -610,8 +640,8 @@ footer a{color:#E9E2D6}
 
   <section class="photo-band" aria-label="Kareem with the Roomi Movers truck">
     <picture>
-      <source type="image/webp" srcset="images/roomi-team-truck-960.webp 960w, images/roomi-team-truck-1672.webp 1672w" sizes="100vw">
-      <img src="images/roomi-team-truck-1672.jpg" srcset="images/roomi-team-truck-960.jpg 960w, images/roomi-team-truck-1672.jpg 1672w" sizes="100vw" alt="Kareem Aboroomi, owner of Roomi Movers, in a Roomi Movers shirt in front of the branded Roomi Movers box truck" width="1672" height="941" fetchpriority="high">
+      <source type="image/webp" srcset="images/roomi-team-v2-960.webp 960w, images/roomi-team-v2-1672.webp 1672w, images/roomi-team-v2-2560.webp 2560w" sizes="100vw">
+      <img src="images/roomi-team-v2-1672.jpg" srcset="images/roomi-team-v2-960.jpg 960w, images/roomi-team-v2-1672.jpg 1672w, images/roomi-team-v2-2560.jpg 2560w" sizes="100vw" alt="Kareem Aboroomi, owner of Roomi Movers, in a Roomi Movers shirt in front of the branded Roomi Movers box truck" width="2560" height="1441" fetchpriority="high" decoding="sync">
     </picture>
     <div class="photo-cap"><b>Kareem Aboroomi</b><span>Owner, Roomi Movers</span></div>
   </section>
@@ -980,7 +1010,7 @@ footer a{color:#E9E2D6}
       <div class="quote">
         <form id="quoteForm" novalidate>
           <div class="grid2">
-            <label for="q-name">Your name<input id="q-name" name="name" autocomplete="name" required></label>
+            <label for="q-name">Your name<input id="q-name" name="name" autocomplete="name" autocapitalize="words" required></label>
             <label for="q-phone">Phone<input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
           </div>
           <div class="grid2">
@@ -1022,7 +1052,7 @@ footer a{color:#E9E2D6}
   <div class="wrap">
     <div class="fcols">
       <div>
-        <a class="brand" href="#top" aria-label="Roomi Movers home"><img class="flogo" src="images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
+        <a class="brand" href="#top" aria-label="Roomi Movers home"><picture><source type="image/webp" srcset="images/logo-full-300.webp"><img class="flogo" src="images/logo-full-300.png" alt="Roomi Movers: We make room." width="150" height="153" loading="lazy"></picture></a>
         <p style="margin-top:8px"><a class="ph" href="tel:+18134363216">(813) 436-3216</a><br><a href="mailto:makeroom@roomimovers.com">makeroom@roomimovers.com</a></p>
       </div>
       <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/resources/">Guides</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>

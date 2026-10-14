@@ -4,7 +4,7 @@
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return [].slice.call((r || document).querySelectorAll(s)); }
   /* When real hourly rates are ready, fill these in (for example 'Full-Service Move': 'from $__ per hour') and the finder shows them. */
-  var RATES = {};
+  var RATES = window.ROOMI_RATES || {};
   function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || 'null'); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
 
   /* ---- package finder: three or four answers become a recommendation and a prefilled estimate request ---- */

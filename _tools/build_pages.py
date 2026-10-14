@@ -284,6 +284,23 @@ PAGE_CSS = '''
 .chips a{display:block;padding:10px 18px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:800}
 .chips a:hover{border-color:var(--coral)}
 .prose{max-width:46em}
+.cols.cols3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:860px){.cols.cols3{grid-template-columns:1fr}}
+.ph-box{border:2px dashed var(--coral);border-radius:16px;padding:22px;background:#FFF8F2}
+.ph-tag{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-ink)}
+.ph-big{font-family:var(--display);font-weight:900;font-size:36px;margin:6px 0}
+.ph-big small{font-size:16px;color:var(--muted)}
+.ph-stars{color:var(--coral);letter-spacing:3px;margin:6px 0}
+.ph-note{color:var(--muted);font-size:14px;margin-top:10px}
+.ph-h{font-size:clamp(22px,2.4vw,28px);margin-bottom:18px}
+.ph-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ph-photo{aspect-ratio:4/3;border:2px dashed var(--coral);border-radius:14px;background:#FFF8F2;display:grid;place-items:center;text-align:center;padding:14px;font-weight:700;color:var(--muted)}
+.ph-chips{display:flex;flex-wrap:wrap;gap:10px}
+.ph-chip{border:2px dashed var(--coral);border-radius:999px;padding:10px 18px;font-weight:800;background:#FFF8F2}
+.ph-table{width:100%;border-collapse:collapse}
+.ph-table th,.ph-table td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line)}
+.ph-table th{font-family:var(--display);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-ink)}
+@media (max-width:640px){.ph-photos{grid-template-columns:1fr 1fr}}
 .journey.is-short.is-live{height:300vh;height:300svh}
 .cols .card .btn+.btn{margin-left:6px}
 .card h2 a{color:inherit;text-decoration:none}
@@ -356,6 +373,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/rates.js"></script>
 <script src="/assets/site.js" defer></script>
 <script type="application/ld+json">
 {ld}
@@ -373,7 +391,7 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
 <header class="bar">
   <div class="wrap">
     <a class="brand" href="/" aria-label="Roomi Movers home">
-      <img src="/images/logo-mark.png" alt="" width="56" height="40">
+      <picture><source type="image/webp" srcset="/images/logo-mark-120.webp"><img src="/images/logo-mark-120.png" alt="" width="41" height="40"></picture>
       <span class="brand-word"><b>roomi</b><span>MOVERS</span></span>
     </a>
     <nav class="links" id="site-nav" aria-label="Main">
@@ -409,8 +427,8 @@ def page(path, title, desc, crumbs, h1, lede, body, ld):
       </div>
       <figure class="page-photo">
         <picture>
-          <source type="image/webp" srcset="/images/roomi-team-truck-960.webp 960w, /images/roomi-team-truck-1672.webp 1672w" sizes="(max-width: 860px) 100vw, 520px">
-          <img src="/images/roomi-team-truck-960.jpg" srcset="/images/roomi-team-truck-960.jpg 960w, /images/roomi-team-truck-1672.jpg 1672w" sizes="(max-width: 860px) 100vw, 520px" alt="Kareem Aboroomi, owner of Roomi Movers, in front of the Roomi Movers box truck" width="960" height="540">
+          <source type="image/webp" srcset="/images/roomi-team-v2-960.webp 960w, /images/roomi-team-v2-1672.webp 1672w" sizes="(max-width: 860px) 100vw, 520px">
+          <img src="/images/roomi-team-v2-960.jpg" srcset="/images/roomi-team-v2-960.jpg 960w, /images/roomi-team-v2-1672.jpg 1672w" sizes="(max-width: 860px) 100vw, 520px" alt="Kareem Aboroomi, owner of Roomi Movers, in front of the Roomi Movers box truck" width="960" height="540">
         </picture>
       </figure>
     </div>
@@ -459,7 +477,7 @@ def footer():
   <div class="wrap">
     <div class="fcols">
       <div>
-        <a class="brand" href="/" aria-label="Roomi Movers home"><img class="flogo" src="/images/logo-full.png" alt="Roomi Movers: We make room." width="588" height="600" loading="lazy"></a>
+        <a class="brand" href="/" aria-label="Roomi Movers home"><picture><source type="image/webp" srcset="/images/logo-full-300.webp"><img class="flogo" src="/images/logo-full-300.png" alt="Roomi Movers: We make room." width="150" height="153" loading="lazy"></picture></a>
         <p style="margin-top:8px"><a class="ph" href="tel:{tel}">{phone}</a><br><a href="mailto:{email}">{email}</a></p>
       </div>
       <div><h2>Quick links</h2><ul><li><a href="/services/">Services</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/areas/">Service areas</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/resources/">Guides</a></li><li><a href="/contact/">Free Estimate</a></li></ul></div>
@@ -748,6 +766,7 @@ def faq_items():
         ('Will you take my bed apart and set it back up?', 'Yes. Beds are taken apart and set back up on full-service moves.'),
         ('Can you move a gun safe or appliances?', 'Yes. Tell us the size and where it is going (garage, upstairs, etc.) so we bring the right equipment. Items over 300 lbs may add to the price.'),
         ('Do you move apartments and condos?', 'Yes, from studios to three bedrooms, including walk-ups and elevator buildings. Tell us the floor and elevator situation at both addresses when you request your estimate.'),
+        ('What are your hours?', 'Our hours are ' + BUSINESS['hours'] + '. Call or text (813) 436-3216, or send an estimate request any time.'),
         ('How big is the arrival window?', 'A two-hour arrival window, and we keep you posted on timing so you are not waiting around all day.'),
         ('How far ahead should I book?', 'One to two weeks is ideal. Weekends and the last few days of the month book first, so reach out early if your date is fixed.'),
         ('Is there a launch offer?', 'Yes: $50 off moves booked by Dec 31, 2026.'),
@@ -853,7 +872,7 @@ def faq_page():
 
 def contact_page():
     b = home_section('quote')
-    b += '\n' + sec('<div class="cols"><div class="card"><h2>Other ways to reach us</h2>' + ticks(['Call (813) 436-3216', 'Text a photo of your big items to (813) 436-3216', 'Email makeroom@roomimovers.com']) +
+    b += '\n' + sec('<div class="cols"><div class="card"><h2>Other ways to reach us</h2>' + ticks(['Call (813) 436-3216', 'Text a photo of your big items to (813) 436-3216', 'Email makeroom@roomimovers.com', 'Hours: ' + BUSINESS['hours']]) +
                     '<p style="margin-top:16px"><a class="btn btn-ghost" href="tel:+18134363216">Call now</a> <a class="btn btn-ghost" href="sms:+18134363216">Text us</a></p></div>'
                     '<div class="card"><h2>What happens next</h2><ol class="steps" style="margin-top:12px;grid-template-columns:1fr">'
                     '<li><h3>We review your request</h3><p>Kareem looks at your rooms, stairs and big items.</p></li>'
@@ -1194,6 +1213,54 @@ def finish_pages(paths):
         f.write_text(html, encoding='utf-8', newline='\n')
 
 
+# ======================= business facts that arrive later, and the private placeholder board =======================
+import json as _json
+BUSINESS = _json.loads((ROOT / '_tools' / 'business.json').read_text(encoding='utf-8'))
+
+
+def write_rates_js():
+    rates = {k: v for k, v in (BUSINESS.get('rates') or {}).items() if v}
+    (ROOT / 'assets' / 'rates.js').write_text('window.ROOMI_RATES = ' + _json.dumps(rates, ensure_ascii=False) + ';\n', encoding='utf-8', newline='\n')
+
+
+def phbox(title, inner, note=''):
+    return '<div class="ph-box"><p class="ph-tag">Placeholder</p><h3>%s</h3>%s%s</div>' % (esc(title), inner, ('<p class="ph-note">%s</p>' % esc(note)) if note else '')
+
+
+def preview_page():
+    tiers = ''.join(
+        '<div class="ph-box"><p class="ph-tag">Placeholder</p><h3>%s</h3><p class="ph-big">$___ <small>/ hour</small></p><p>%s</p></div>' % (esc(n), esc(d))
+        for n, d in [('Labor Only', '2 movers, your truck'), ('Full-Service Move', 'Crew of ___ with the box truck'), ('White-Glove Move', 'Crew of ___ with extra protection')])
+    reviews = ''.join(
+        '<div class="ph-box"><p class="ph-tag">Placeholder</p><p class="ph-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p><p>"Real review text goes here."</p><p class="ph-note">First name, area, where it was posted</p></div>'
+        for _ in range(3))
+    photos = ''.join('<div class="ph-photo"><span>%s</span></div>' % esc(n) for n in
+                     ['Crew in front of the truck', 'Couch through a doorway', 'Furniture being wrapped', 'Packed truck interior', 'Floor runners in place', 'A finished, tidy room'])
+    social = ''.join('<span class="ph-chip">%s</span>' % esc(n) for n in ['Google profile', 'Facebook', 'Instagram', 'TikTok', 'YouTube', 'Nextdoor', 'Yelp'])
+    rows = [('1', 'Hourly rates and crew sizes', 'Pricing cards, package finder, FAQ'),
+            ('2', 'Real customer reviews', 'Reviews section, search results'),
+            ('3', 'FDACS registration number and insurance summary', 'About trust card, footer, structured data'),
+            ('4', 'Photos and short videos', 'Hero, About, area pages, Google profile'),
+            ('5', 'Profile links', 'Footer and structured data'),
+            ('6', 'Days you work (hours are 7:00 AM to 8:00 PM)', 'Hours in search results'),
+            ('7', 'Payment, cancellation and damage policies', 'FAQ and terms')]
+    table = '<table class="ph-table"><thead><tr><th>#</th><th>What to send</th><th>Where it goes</th></tr></thead><tbody>' + ''.join(
+        '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % tuple(esc(x) for x in r) for r in rows) + '</tbody></table>'
+    b = sec('<p class="after">This private board shows exactly where each missing piece will appear. Customers do not see any of these placeholders on the live pages: they only appear once real information replaces them.</p>')
+    b += '\n' + sec('<h2 class="ph-h">1. Hourly rates</h2><div class="cols cols3">' + tiers + '</div>', alt=True)
+    b += '\n' + sec('<h2 class="ph-h">2. Real reviews</h2><div class="cols cols3">' + reviews + '</div>')
+    b += '\n' + sec('<h2 class="ph-h">3. License and insurance</h2>' + phbox('Trust card on the About page and footer',
+        '<p><b>Florida registered mover</b> &middot; FDACS registration #__________</p><p><b>Insured</b> &middot; General liability $_______ &middot; Cargo or bond $_______ &middot; Workers\' compensation</p>',
+        'Only shown once you have the real number and policy details.'), alt=True)
+    b += '\n' + sec('<h2 class="ph-h">4. Photos</h2><div class="ph-photos">' + photos + '</div>')
+    b += '\n' + sec('<h2 class="ph-h">5. Profile links</h2><div class="ph-chips">' + social + '</div>', alt=True)
+    b += '\n' + sec('<h2 class="ph-h">What to send me</h2>' + table)
+    p, html = hub_page('/preview-placeholders/', 'Site setup board (private) | Roomi Movers', 'Private board.', 'Setup board',
+                       'Site setup board', 'Where each piece of missing information will appear. Private: not linked from the site.', b)
+    html = html.replace('<meta name="viewport"', '<meta name="robots" content="noindex,nofollow">\n<meta name="viewport"', 1)
+    return p, nophoto(html)
+
+
 def main():
     build_css()
     paths = ['/']
@@ -1211,6 +1278,10 @@ def main():
             out.write_text(html, encoding='utf-8', newline='\n')
             paths.append(path)
     finish_pages(paths)
+    write_rates_js()
+    _, pv = preview_page()
+    (ROOT / 'preview-placeholders').mkdir(exist_ok=True)
+    (ROOT / 'preview-placeholders' / 'index.html').write_text(pv, encoding='utf-8', newline='\n')
     _, nf = notfound_page()
     (ROOT / '404.html').write_text(nf, encoding='utf-8', newline='\n')
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(

@@ -1,0 +1,24 @@
+{
+  "_about": "Business facts that arrive later. null or empty means 'not provided yet' and the live site hides that piece. Fill a value, run: py _tools/build_pages.py",
+  "hours": "7:00 AM to 8:00 PM",
+  "hours_days": null,
+  "rates": {
+    "Labor Only": null,
+    "Full-Service Move": null,
+    "White-Glove Move": null
+  },
+  "reviews": [],
+  "license": {
+    "registration_number": null,
+    "insurance_summary": null
+  },
+  "social": {
+    "google_business": null,
+    "facebook": null,
+    "instagram": null,
+    "tiktok": null,
+    "youtube": null,
+    "nextdoor": null,
+    "yelp": null
+  }
+}

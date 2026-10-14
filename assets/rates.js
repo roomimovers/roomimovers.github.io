@@ -1,0 +1,1 @@
+window.ROOMI_RATES = {};
