@@ -284,6 +284,8 @@ PAGE_CSS = '''
 .chips a{display:block;padding:10px 18px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:800}
 .chips a:hover{border-color:var(--coral)}
 .prose{max-width:46em}
+.journey.is-short.is-live{height:300vh;height:300svh}
+.cols .card .btn+.btn{margin-left:6px}
 .card h2 a{color:inherit;text-decoration:none}
 .card h2 a:hover{color:var(--coral-ink);text-decoration:underline;text-underline-offset:3px}
 .cols .card h2{font-size:clamp(22px,2.2vw,28px)}
@@ -462,7 +464,7 @@ def footer():
       <div><h2>Services</h2><ul>{svc}</ul></div>
       <div><h2>Service areas</h2><ul>{areas}</ul></div>
     </div>
-    <p class="legal">© 2026 Roomi Movers LLC · Tampa, Florida</p>
+    <p class="legal">© 2026 Roomi Movers LLC · Tampa, Florida · <a href="/privacy/">Privacy policy</a></p>
   </div>
 </footer>'''.format(tel=PHONE_TEL, phone=PHONE, email=EMAIL, svc=svc, areas=areas)
 
@@ -679,10 +681,205 @@ def contact_page():
     return path, html.replace('<main id="main"', '<main id="main" class="is-contact"', 1).replace('</body>', m.group(0) + '\n</body>')
 
 
+# ======================= richer tab pages, shared journey animation, privacy and 404 =======================
+def sec(inner, alt=False, extra=''):
+    return '  <section class="band%s"%s>\n    <div class="wrap">\n%s\n    </div>\n  </section>' % (' alt' if alt else '', extra, inner)
+
+
+def cards(items, cols=2):
+    return '<div class="cols%s">' % (' cols3' if cols == 3 else '') + ''.join(
+        '<div class="card"><h2>%s</h2>%s</div>' % (esc(h), b) for h, b in items) + '</div>'
+
+
+def para(s):
+    return '<p>%s</p>' % esc(s)
+
+
+def journey_parts():
+    m = re.search(r'<section class="journey".*?</section>', HOME, re.S)
+    assert m
+    section = m.group(0).replace('<section class="journey"', '<section class="journey is-short"', 1).replace('href="#services"', 'href="#after-journey"')
+    section += '\n<div id="after-journey"></div>'
+    s = re.search(r'<script src="https://cdnjs[^"]*gsap\.min\.js"></script>\s*<script src="[^"]*ScrollTrigger\.min\.js"></script>\s*<script>\n/\* Scroll journey.*?</script>', HOME, re.S)
+    assert s
+    return section, s.group(0)
+
+
+def form_script():
+    m = re.search(r'<script>\n/\* Quote requests\..*?</script>', HOME, re.S)
+    assert m
+    return m.group(0)
+
+
+def with_journey(html):
+    section, scr = journey_parts()
+    if 'id="quote"' not in html:
+        section = section.replace('href="#quote"', 'href="/contact/"')
+    i = html.index('</section>', html.index('<section class="page-hero">')) + len('</section>')
+    html = html[:i] + '\n' + section + html[i:]
+    return html.replace('</body>', scr + '\n</body>')
+
+
+def with_form(html, cls=''):
+    html = html.replace('</body>', form_script() + '\n</body>')
+    if cls:
+        html = html.replace('<main id="main"', '<main id="main" class="%s"' % cls, 1)
+    return html
+
+
+def faq_items():
+    return [
+        ('How much does a move cost?', 'We charge by the hour with a two-hour minimum. Your total depends on home size, stairs, distance and heavy items. Get a free estimate and we will give you your hourly rate, the time we expect it to take, and any extra charges before you book.'),
+        ('What does the two-hour minimum mean?', 'Every move is billed for at least two hours. The clock starts when we arrive and stops when the last item is placed.'),
+        ('What can add to the price?', 'Stairs, long carries from the truck to the door, and items over 300 lbs, like gun safes, may add to the price. We tell you before you book.'),
+        ('How fast will I get my estimate?', 'Most estimates are back the same day. Kareem calls you with your hourly rate and the time we expect the move to take.'),
+        ('What are the packages?', 'Labor Only is two movers loading or unloading your own truck, container or storage unit. Full-Service adds the box truck, wrapped and padded furniture, and beds taken apart and set up. White-Glove adds floor runners and door-frame guards, boxed TVs, art and mirrors, furniture placed room by room, and an extra crew member.'),
+        ('Do you bring the truck?', 'Yes. The box truck, moving blankets, stretch wrap, dollies and straps are included with a full-service move. Need help with your own rental truck instead? Choose labor only.'),
+        ('Do you protect floors and door frames?', 'Floor runners and door-frame guards are part of the White-Glove package. On every full-service move your furniture is wrapped and padded.'),
+        ('Will you take my bed apart and set it back up?', 'Yes. Beds are taken apart and set back up on full-service moves.'),
+        ('Can you move a gun safe or appliances?', 'Yes. Tell us the size and where it is going (garage, upstairs, etc.) so we bring the right equipment. Items over 300 lbs may add to the price.'),
+        ('Do you move apartments and condos?', 'Yes, from studios to three bedrooms, including walk-ups and elevator buildings. Tell us the floor and elevator situation at both addresses when you request your estimate.'),
+        ('How big is the arrival window?', 'A two-hour arrival window, and we keep you posted on timing so you are not waiting around all day.'),
+        ('How far ahead should I book?', 'One to two weeks is ideal. Weekends and the last few days of the month book first, so reach out early if your date is fixed.'),
+        ('Is there a launch offer?', 'Yes: $50 off moves booked by Dec 31, 2026.'),
+        ('Which areas do you serve?', 'Tampa, Carrollwood, Wesley Chapel and Lutz, plus Brandon, Riverview, Temple Terrace, Westchase, Zephyrhills and the other areas on our service areas page. If you are close by, call us anyway.'),
+    ]
+
+
+def faq_details(items, open_first=True):
+    return ''.join('<details%s><summary>%s</summary><p>%s</p></details>' % (' open' if i == 0 and open_first else '', esc(q), esc(a)) for i, (q, a) in enumerate(items))
+
+
+def services_hub():
+    svc = ''.join(
+        '<article class="card"><h2><a href="/services/%s/">%s</a></h2><p>%s</p>%s<p style="margin-top:16px"><a class="btn btn-ghost" href="/services/%s/">See %s</a></p></article>'
+        % (s['slug'], esc(s['name']), esc(s['lede']), ticks(s['included'][:4]), s['slug'], esc(s['short'].lower())) for s in SERVICES)
+    b = sec('<div class="cols">' + svc + '</div>\n<p class="after" style="margin-top:28px"><b>Not sure what it will take?</b> Text a photo of your big items to <a class="ph" href="sms:+18134363216">(813) 436-3216</a> and we will tell you.</p>')
+    b += '\n' + sec('<h2 style="font-size:clamp(26px,3vw,36px)">What comes with a full-service move</h2>' + cards([
+        ('On the truck', ticks(['Box truck, moving blankets, stretch wrap, dollies and straps', 'Furniture wrapped and padded', 'Beds taken apart and set back up', 'Loaded tight so nothing shifts on the drive'])),
+        ('Three ways to book', '<p>Choose the level of help that fits your move. Every package is billed by the hour with a two-hour minimum.</p>' + ticks(['Labor Only: two movers for your own truck, container or storage unit', 'Full-Service: the truck and crew for apartments and homes', 'White-Glove: extra protection and an extra crew member']) + '<p style="margin-top:16px"><a class="btn btn-ghost" href="/pricing/">Compare packages and pricing</a></p>'),
+    ]), alt=True)
+    b += '\n' + home_section('how')
+    b += '\n' + sec('<h2 style="font-size:clamp(26px,3vw,36px)">Quick answers</h2><div class="faq" style="margin-top:20px">' + faq_details([faq_items()[i] for i in (0, 5, 8)]) + '</div><p class="after" style="margin-top:20px"><a href="/faq/">See all questions</a></p>', alt=True)
+    b += '\n' + sec('<h2 style="font-size:clamp(26px,3vw,36px)">Where we move</h2><p class="after">Local moves across Tampa Bay.</p>' + all_area_chips())
+    p, html = hub_page('/services/', 'Moving Services in Tampa Bay | Roomi Movers',
+                       'Home moves, apartment and condo moves, loading and unloading, and heavy or specialty items across Tampa, Wesley Chapel, Lutz and Carrollwood. Hourly rate, free estimate.',
+                       'Services', 'Moving services for every kind of move',
+                       'Four services, one hourly rate. Pick the one that fits, or tell us about your move and we will recommend it.', b)
+    return p, with_journey(html)
+
+
+def pricing_page():
+    b = home_section('pricing')
+    b += '\n' + sec('<h2 style="font-size:clamp(26px,3vw,36px)">How the clock works</h2><ol class="steps" style="margin-top:24px">'
+                    '<li><h3>We arrive</h3><p>The clock starts when we arrive. You get a two-hour arrival window and updates on timing.</p></li>'
+                    '<li><h3>We wrap, load and move</h3><p>We walk through with you, wrap and pad your furniture and get everything where it needs to go.</p></li>'
+                    '<li><h3>The last item is placed</h3><p>The clock stops when the last item is placed. There is a two-hour minimum on every move.</p></li></ol>', alt=True)
+    b += '\n' + sec('<h2 style="font-size:clamp(26px,3vw,36px)">What changes your total</h2>' + cards([
+        ('Home size and stairs', para('A larger home takes more time, and stairs slow every trip. Tell us the rooms and the floors at both addresses.')),
+        ('Distance and long carries', para('The drive and the walk from the truck to your door both count. Tell us how far the truck will be from the door.')),
+        ('Heavy items', para('Items over 300 lbs, like gun safes, may add to the price. Send us the size and where it is going.')),
+        ('Package', para('Labor Only, Full-Service and White-Glove include different help, so choose the one that fits your move.')),
+    ]))
+    b += '\n' + sec('<div class="cols"><div class="card"><h2>Get the most accurate estimate</h2>' + ticks(['The number of rooms or your home size', 'Stairs and elevators at both addresses', 'Big or heavy items, with a photo texted to (813) 436-3216', 'Your move date']) +
+                    '<p style="margin-top:18px"><a class="btn btn-primary" href="/contact/">Get a Free Estimate</a></p></div>'
+                    '<div class="card"><h2>Launch special</h2><p><b>$50 off moves booked by Dec 31, 2026.</b></p><p>Mention it when we call you back with your estimate.</p></div></div>', alt=True)
+    b += '\n' + home_section('how')
+    p, html = hub_page('/pricing/', 'Pricing: Hourly Rate, Two-Hour Minimum | Roomi Movers',
+                       'Roomi Movers bills by the hour with a two-hour minimum. Labor-only, full-service and white-glove packages, with a free estimate before you book.',
+                       'Pricing', 'One hourly rate, explained up front',
+                       'Every package is billed by the hour with a two-hour minimum. Your free estimate shows the rate and the time we expect, so there are no surprises on moving day.', b)
+    return p, with_journey(html)
+
+
+def areas_hub():
+    core = [a for a in AREAS if not a.get('extra')]
+    crd = ''.join(
+        '<article class="card"><h2><a href="/areas/%s/">%s</a></h2><p>%s</p>%s<p style="margin-top:16px"><a class="btn btn-ghost" href="/areas/%s/">Movers in %s</a></p></article>'
+        % (a['slug'], esc(a['name']), esc(a['lede']), facts_html(a['facts'][:2]), a['slug'], esc(a['name'])) for a in core)
+    b = sec('<div class="cols">' + crd + '</div>')
+    b += '\n' + sec('<h2 style="font-size:clamp(26px,3vw,36px)">All the areas we serve</h2><p class="after" style="margin-bottom:14px">Choose your area for local details and to request an estimate there.</p>' + all_area_chips() +
+                    '<p class="after" style="margin-top:24px">Outside these areas? Call us anyway at <a class="ph" href="tel:+18134363216">(813) 436-3216</a>.</p>', alt=True)
+    b += '\n' + sec('<h2 style="font-size:clamp(26px,3vw,36px)">In every area</h2>' + cards([
+        ('What you get', ticks(['A free estimate with your hourly rate and expected time', 'A two-hour arrival window, with updates on timing', 'Furniture wrapped and padded on full-service moves', 'The new place left clean'])),
+        ('How to start', '<p>Pick your area above and use the form on its page, or call or text <a class="ph" href="tel:+18134363216">(813) 436-3216</a>. Most estimates are back the same day.</p>'),
+    ]))
+    b += '\n' + home_section('quote').replace('Tell us about your move', 'Get a free estimate for your area')
+    p, html = hub_page('/areas/', 'Service Areas: Tampa, Wesley Chapel, Lutz & Carrollwood | Roomi Movers',
+                       'Roomi Movers is based in Tampa and moves homes and apartments in Tampa, Wesley Chapel, Lutz, Carrollwood and 16 nearby areas. Hourly rate, free estimate.',
+                       'Service areas', 'Proudly moving Tampa Bay',
+                       'Based in Tampa and serving the areas around it. Choose your area for local planning notes and what to know before moving day.', b)
+    return p, with_journey(with_form(html))
+
+
+def about_page():
+    b = home_section('about')
+    b += '\n' + sec('<h2 style="font-size:clamp(26px,3vw,36px)">What you can count on</h2>' + cards([
+        ('A clear hourly rate', para('You get your rate and the time we expect before you book, with any extra charges named up front.')),
+        ('A two-hour arrival window', para('We keep you posted on timing so you are not waiting around all day.')),
+        ('Furniture wrapped and padded', para('We treat your home like our own, with your furniture wrapped and the load packed tight so nothing shifts.')),
+        ('The new place left clean', para('Beds set back up, every piece in place, and the new place left clean.')),
+    ]), alt=True)
+    b += '\n' + home_section('reviews')
+    p, html = hub_page('/about/', 'About Roomi Movers | Family-Run Movers in Tampa',
+                       'Roomi Movers is run by Kareem Aboroomi and his family in Tampa. Meet the team behind the truck and learn how we treat your home like our own.',
+                       'About', 'A local, family-run moving company',
+                       'Roomi Movers is run by Kareem Aboroomi and his family, right here in Tampa. When you call, you talk to the person who shows up at your door.', b)
+    return p, with_journey(html)
+
+
+def faq_page():
+    items = faq_items()
+    ld = [{'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in items]}]
+    b = sec('<div class="faq">' + faq_details(items) + '</div>')
+    b += '\n' + sec('<div class="cols"><div class="card"><h2>Still have a question?</h2><p>Call or text Kareem and get a straight answer.</p><p style="margin-top:16px">'
+                    '<a class="btn btn-primary" href="tel:+18134363216">Call (813) 436-3216</a> <a class="btn btn-ghost" href="sms:+18134363216">Text us</a></p></div>'
+                    '<div class="card"><h2>Ready for your price?</h2><p>Your free estimate shows your hourly rate and the time we expect.</p><p style="margin-top:16px"><a class="btn btn-ghost" href="/contact/">Get a Free Estimate</a></p></div></div>', alt=True)
+    p, html = hub_page('/faq/', 'Moving FAQ: Pricing, Trucks, Booking | Roomi Movers',
+                       'Answers to common questions about Roomi Movers: hourly pricing, the two-hour minimum, the truck, packages, heavy items, booking and the areas we serve.',
+                       'FAQ', 'Your questions, answered',
+                       'Hourly pricing, what is included, and how to book. Do not see your question? Call or text us.', b, ld)
+    return p, with_journey(html)
+
+
+def contact_page():
+    b = home_section('quote')
+    b += '\n' + sec('<div class="cols"><div class="card"><h2>Other ways to reach us</h2>' + ticks(['Call (813) 436-3216', 'Text a photo of your big items to (813) 436-3216', 'Email makeroom@roomimovers.com']) +
+                    '<p style="margin-top:16px"><a class="btn btn-ghost" href="tel:+18134363216">Call now</a> <a class="btn btn-ghost" href="sms:+18134363216">Text us</a></p></div>'
+                    '<div class="card"><h2>What happens next</h2><ol class="steps" style="margin-top:12px;grid-template-columns:1fr">'
+                    '<li><h3>We review your request</h3><p>Kareem looks at your rooms, stairs and big items.</p></li>'
+                    '<li><h3>You get your estimate</h3><p>He calls with your hourly rate and the time we expect. Most estimates are back the same day.</p></li>'
+                    '<li><h3>You lock in your date</h3><p>We confirm your rate, crew size and a two-hour arrival window.</p></li></ol></div></div>', alt=True)
+    p, html = hub_page('/contact/', 'Contact & Free Estimate | Roomi Movers',
+                       'Request a free moving estimate from Roomi Movers, or call or text (813) 436-3216. Most estimates are back the same day.',
+                       'Contact', 'Get your free estimate',
+                       'Tell us about your move and Kareem will get back to you with your hourly rate and an estimate. Most estimates are back the same day.', b)
+    return p, with_journey(with_form(html, 'is-contact'))
+
+
+def privacy_page():
+    b = sec('<div class="prose">'
+            '<h2>What we collect</h2><p>When you request an estimate we collect the details you type into the form: your name, phone number, move date, home size, the cities or ZIP codes you are moving from and to, and any notes about stairs or heavy items.</p>'
+            '<h2 style="margin-top:28px">How we use it</h2><p>We use it to call you with your estimate and to plan your move. We do not sell your information.</p>'
+            '<h2 style="margin-top:28px">Who handles it</h2><p>Estimate requests are sent from this website to Roomi Movers through FormSubmit, a form-delivery service that emails each request to us. Calls and texts to (813) 436-3216 are handled by Roomi Movers directly.</p>'
+            '<h2 style="margin-top:28px">Your choices</h2><p>To ask us to delete your request, call or text (813) 436-3216 or email makeroom@roomimovers.com.</p>'
+            '<p style="margin-top:28px;color:var(--muted)">Last updated October 2026.</p></div>')
+    return hub_page('/privacy/', 'Privacy Policy | Roomi Movers',
+                    'How Roomi Movers uses the details you share when you request a moving estimate.',
+                    'Privacy', 'Privacy policy', 'How we handle the details you share when you request an estimate.', b)
+
+
+def notfound_page():
+    b = sec('<div class="card" style="max-width:640px"><h2>That page does not exist</h2><p>The page you were looking for may have moved. Try one of these instead.</p>'
+            '<p style="margin-top:16px"><a class="btn btn-primary" href="/">Go to the home page</a> <a class="btn btn-ghost" href="/services/">See services</a> <a class="btn btn-ghost" href="/contact/">Get a free estimate</a></p></div>')
+    p, html = hub_page('/404.html', 'Page not found | Roomi Movers', 'Page not found.', 'Page not found', 'Page not found', 'Let us get you back on the road.', b)
+    return p, html.replace('<meta name="viewport"', '<meta name="robots" content="noindex">\n<meta name="viewport"', 1)
+
+
 def main():
     build_css()
     paths = ['/']
-    for fn in (services_hub, pricing_page, areas_hub, about_page, faq_page, contact_page):
+    for fn in (services_hub, pricing_page, areas_hub, about_page, faq_page, contact_page, privacy_page):
         path, html = fn()
         out = ROOT / path.strip('/') / 'index.html'
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -695,6 +892,8 @@ def main():
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(html, encoding='utf-8', newline='\n')
             paths.append(path)
+    _, nf = notfound_page()
+    (ROOT / '404.html').write_text(nf, encoding='utf-8', newline='\n')
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
         '  <url><loc>%s%s</loc><lastmod>%s</lastmod></url>\n' % (SITE, p, UPDATED) for p in paths) + '</urlset>\n'
     (ROOT / 'sitemap.xml').write_text(sitemap, encoding='utf-8', newline='\n')
