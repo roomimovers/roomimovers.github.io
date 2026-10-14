@@ -924,6 +924,7 @@ def journey_parts():
     m = re.search(r'<section class="journey".*?</section>', HOME, re.S)
     assert m
     section = m.group(0).replace('<section class="journey"', '<section class="journey is-short"', 1).replace('href="#services"', 'href="#after-journey"')
+    section = section.replace('src="images/', 'src="/images/').replace('srcset="images/', 'srcset="/images/')
     section += '\n<div id="after-journey"></div>'
     s = re.search(r'<script src="https://cdnjs[^"]*gsap\.min\.js"[^>]*></script>\s*<script src="[^"]*ScrollTrigger\.min\.js"[^>]*></script>\s*<script>\n/\* Scroll journey.*?</script>', HOME, re.S)
     assert s

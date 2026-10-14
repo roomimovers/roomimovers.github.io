@@ -269,7 +269,6 @@ footer a{color:#E9E2D6}
 .journey svg .j-fillbg,.journey svg .j-house.j-fillbg{fill:#FBF7F0}
 .j-hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:opacity .4s;display:none}
 .journey.is-live .j-hint{display:block}
-.j-skip:hover{color:var(--ink)}
 
 .journey svg .j-ink{fill:none;stroke:#12306B;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
 .journey svg .j-house{fill:none;stroke:#061A3C;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -353,7 +352,6 @@ footer a{color:#E9E2D6}
   .fcols a{display:inline-block;padding:10px 0}
   .fcols ul{gap:0}
   .crumbs a{display:inline-block;padding:11px 2px}
-  .j-skip{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
   .brand{min-height:44px}
   .card-fine,.card-kicker{font-size:14px}
   .fcols a{padding:10px 10px;margin-left:-10px}
@@ -431,9 +429,6 @@ footer,.fcols a,.legal{font-size:16px}
 .j-intro{display:grid;gap:10px;justify-items:start;padding-block:26px 6px}
 .j-title{font-size:clamp(30px,8vw,46px);font-weight:900;letter-spacing:-.025em;color:var(--ink)}
 .j-sub{color:var(--muted);font-size:clamp(17px,4.4vw,20px);margin:0;max-width:34em}
-.j-skip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:2px solid var(--field-line,#7C869C);border-radius:999px;background:#fff;color:var(--ink);font:800 15px var(--body);text-decoration:none}
-.j-skip::after{content:"\2193"}
-.j-skip:hover{border-color:var(--coral)}
 .j-block{position:relative;min-height:56vh;min-height:56svh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:12px;padding:30px 0 30px 22px}
 .j-block::before{content:"";position:absolute;left:0;top:16%;bottom:16%;width:4px;border-radius:4px;background:var(--line);transition:background-color .35s ease}
 .j-block.is-active::before{background:var(--coral)}
@@ -481,6 +476,24 @@ footer,.fcols a,.legal{font-size:16px}
   .j-block h3{font-size:clamp(24px,3vw,32px)}
 }
 @media (prefers-reduced-motion:reduce){.j-block::before{transition:none}}
+/* Kareem travels with the scene: a small owner card beside the animation on desktop, and beside the estimate button on phones */
+.j-owner{display:flex;align-items:center;gap:14px;padding:10px 18px 10px 10px;border:1px solid var(--line);border-radius:18px;background:var(--card);max-width:420px}
+.j-owner img{width:60px;height:60px;border-radius:50%;object-fit:cover;object-position:50% 14%;flex:none;box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--coral)}
+.j-owner-t{display:grid;gap:2px}
+.j-owner-t b{font-family:var(--display);font-weight:800;font-size:18px;line-height:1.2;color:var(--ink)}
+.j-owner-t span{font-size:16px;line-height:1.35;color:var(--muted)}
+.j-stagecol .j-owner{display:none}
+.j-block .j-owner{margin-top:6px}
+@media (min-width:900px), (max-height:540px) and (orientation:landscape) and (min-width:600px){
+  .j-stagecol .j-owner{display:flex}
+  .j-block .j-owner{display:none}
+  .j-stage{max-height:calc(100svh - var(--bar-h,60px) - 230px)}
+}
+@media (max-height:540px) and (orientation:landscape){
+  .j-stagecol .j-owner{display:none}
+  .j-block .j-owner{display:flex}
+  .j-stage{max-height:calc(100svh - var(--bar-h,60px) - 24px)}
+}
 
 /* inner pages */
 .page-hero{background:var(--band);padding-block:44px 56px}
